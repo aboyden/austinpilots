@@ -5,16 +5,16 @@ no build step required on your end.
 
 ## To finish setup
 
-1. **Logo** — save your real logo as `assets/img/logo.png`, then in
-   `_includes/header.html` change the `<img src="...">` from
-   `logo-placeholder.svg` to `logo.png`.
-2. **Next meetup** — in `index.html`, fill in the date/time/location/details,
+1. **Next meetup** — in `index.html`, fill in the date/time/location/details,
    and replace the two `href="#"` links with your actual Facebook event URL
    and GroupMe join link.
-3. **Contact link** — in `_includes/footer.html`, replace the placeholder
+2. **Contact link** — in `_includes/footer.html`, replace the placeholder
    email address.
-4. **Flight schools / software pages** — edit `flight-schools.html` and
+3. **Flight schools / software pages** — edit `flight-schools.html` and
    `aviation-software.html` directly; each entry is one `.card` block.
+
+The real logo is wired in at `assets/img/logo.png` (`assets/img/logo-placeholder.svg`
+is unused now and can be deleted whenever).
 
 ## Publishing on GitHub Pages
 
