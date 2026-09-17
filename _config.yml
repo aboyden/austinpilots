@@ -1,0 +1,10 @@
+title: Austin Pilots
+description: >-
+  A community for general aviation pilots and aviation enthusiasts
+  in the Austin, Texas area — fly-outs, hangar talk, and monthly meetups.
+
+# Served at the custom domain in CNAME (austinpilots.net), so this stays at the root.
+baseurl: ""
+url: "https://austinpilots.net"
+
+markdown: kramdown

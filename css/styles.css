@@ -1,0 +1,375 @@
+/* Austin Pilots — shared site styles */
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --navy: #1c3f61;
+  --navy-dark: #142c44;
+  --red: #9c2b32;
+  --red-dark: #7c2128;
+  --cream: #faf8f4;
+  --paper: #ffffff;
+  --ink: #1a1d1f;
+  --ink-soft: #4a5259;
+  --line: #dfe2e5;
+  --gold: #c9974f;
+  --radius: 10px;
+  --max-width: 1080px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--cream);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Faint sectional-chart backdrop, fixed behind all content */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(28, 63, 97, 0.05), transparent 42%),
+    radial-gradient(circle at 82% 78%, rgba(156, 43, 50, 0.045), transparent 46%),
+    url('../assets/img/sectional-pattern.svg');
+  background-size: auto, auto, 620px 620px;
+  background-repeat: no-repeat, no-repeat, repeat;
+  background-color: var(--cream);
+}
+
+a { color: var(--navy); }
+a:hover { color: var(--red); }
+
+img { max-width: 100%; display: block; }
+
+.wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Header / nav */
+.site-header {
+  background: var(--paper);
+  border-bottom: 3px solid var(--navy);
+}
+
+.site-header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+}
+
+.brand img {
+  height: 64px;
+  width: auto;
+}
+
+.brand-text {
+  font-family: 'Oswald', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--navy);
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.brand-text span {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+nav.main-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+nav.main-nav a {
+  display: inline-block;
+  padding: 9px 16px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  color: var(--navy);
+  letter-spacing: 0.01em;
+}
+
+nav.main-nav a:hover {
+  background: var(--navy);
+  color: var(--paper);
+}
+
+nav.main-nav a.active {
+  background: var(--red);
+  color: var(--paper);
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  padding: 72px 0 56px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -120px;
+  width: 420px;
+  height: 420px;
+  transform: translateY(-50%);
+  background: url('../assets/img/compass-rose.svg') center / contain no-repeat;
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.eyebrow {
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.3em;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--red);
+  text-transform: uppercase;
+  margin: 0 0 14px;
+}
+
+.hero h1 {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(34px, 5vw, 54px);
+  line-height: 1.1;
+  color: var(--navy-dark);
+  margin: 0 0 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.hero p.lede {
+  max-width: 620px;
+  margin: 0 auto;
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+/* Section shell */
+section.block {
+  padding: 44px 0;
+}
+
+section.block h2 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 26px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--navy-dark);
+  margin: 0 0 8px;
+}
+
+section.block .section-sub {
+  color: var(--ink-soft);
+  margin: 0 0 28px;
+  max-width: 640px;
+  line-height: 1.6;
+}
+
+/* Meetup card */
+.meetup {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--red);
+  border-radius: var(--radius);
+  padding: 32px;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 32px;
+}
+
+@media (max-width: 720px) {
+  .meetup { grid-template-columns: 1fr; }
+}
+
+.meetup-details dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 16px;
+}
+
+.meetup-details dt {
+  font-weight: 600;
+  color: var(--navy);
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding-top: 2px;
+}
+
+.meetup-details dd {
+  margin: 0;
+  font-size: 16px;
+  color: var(--ink);
+}
+
+.meetup-links {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  justify-content: center;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  border: 1px solid transparent;
+  text-align: center;
+}
+
+.btn-facebook {
+  background: #1c3f61;
+  color: #fff;
+}
+.btn-facebook:hover { background: var(--navy-dark); color: #fff; }
+
+.btn-groupme {
+  background: #fff;
+  color: var(--navy);
+  border-color: var(--navy);
+}
+.btn-groupme:hover { background: var(--navy); color: #fff; }
+
+.btn small {
+  display: block;
+  font-weight: 400;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.placeholder-note {
+  font-size: 13px;
+  color: var(--ink-soft);
+  background: #fbf3e7;
+  border: 1px dashed var(--gold);
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-top: 4px;
+}
+
+/* Card grids (flight schools, software) */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card h3 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 18px;
+  margin: 0;
+  color: var(--navy-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.card .tag {
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--red);
+  background: rgba(156, 43, 50, 0.08);
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+.card p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  flex-grow: 1;
+}
+
+.card a.card-link {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.card.placeholder {
+  border-style: dashed;
+  border-color: var(--gold);
+  background: #fffaf2;
+  color: var(--ink-soft);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Footer */
+.site-footer {
+  border-top: 1px solid var(--line);
+  margin-top: 40px;
+  padding: 28px 0 40px;
+}
+
+.site-footer .wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.site-footer a { color: var(--ink-soft); }
+.site-footer a:hover { color: var(--red); }

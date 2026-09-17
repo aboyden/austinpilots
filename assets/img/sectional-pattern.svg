@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="620" viewBox="0 0 620 620">
+  <defs>
+    <style>
+      .grid { stroke: #1c3f61; stroke-width: 1; opacity: 0.07; }
+      .tick { stroke: #1c3f61; stroke-width: 1; opacity: 0.09; }
+      .ring { stroke: #9c2b32; stroke-width: 1; fill: none; opacity: 0.06; }
+      .dot { fill: #1c3f61; opacity: 0.1; }
+      .cross { stroke: #9c2b32; stroke-width: 1; opacity: 0.08; }
+    </style>
+  </defs>
+
+  <!-- lat/long style grid -->
+  <line x1="0" y1="0" x2="0" y2="620" class="grid" />
+  <line x1="310" y1="0" x2="310" y2="620" class="grid" />
+  <line x1="0" y1="0" x2="620" y2="0" class="grid" />
+  <line x1="0" y1="310" x2="620" y2="310" class="grid" />
+
+  <!-- tick marks along the grid lines -->
+  <g class="tick">
+    <line x1="0" y1="77" x2="10" y2="77" />
+    <line x1="0" y1="155" x2="10" y2="155" />
+    <line x1="0" y1="232" x2="10" y2="232" />
+    <line x1="0" y1="387" x2="10" y2="387" />
+    <line x1="0" y1="465" x2="10" y2="465" />
+    <line x1="0" y1="542" x2="10" y2="542" />
+    <line x1="77" y1="0" x2="77" y2="10" />
+    <line x1="155" y1="0" x2="155" y2="10" />
+    <line x1="232" y1="0" x2="232" y2="10" />
+    <line x1="387" y1="0" x2="387" y2="10" />
+    <line x1="465" y1="0" x2="465" y2="10" />
+    <line x1="542" y1="0" x2="542" y2="10" />
+  </g>
+
+  <!-- VOR-style compass rings at a couple of grid intersections -->
+  <g>
+    <circle cx="155" cy="465" r="34" class="ring" />
+    <circle cx="155" cy="465" r="34" class="ring" transform="rotate(45 155 465)" stroke-dasharray="1 7" />
+    <circle cx="155" cy="465" r="3" class="dot" />
+
+    <circle cx="465" cy="155" r="46" class="ring" />
+    <circle cx="465" cy="155" r="46" class="ring" transform="rotate(30 465 155)" stroke-dasharray="1 7" />
+    <circle cx="465" cy="155" r="3" class="dot" />
+  </g>
+
+  <!-- small airport-style markers -->
+  <g class="cross">
+    <line x1="290" y1="90" x2="330" y2="90" />
+    <line x1="310" y1="70" x2="310" y2="110" />
+    <line x1="60" y1="330" x2="94" y2="330" />
+    <line x1="77" y1="313" x2="77" y2="347" />
+    <line x1="540" y1="470" x2="574" y2="470" />
+    <line x1="557" y1="453" x2="557" y2="487" />
+  </g>
+
+  <g class="dot">
+    <circle cx="232" cy="542" r="2.5" />
+    <circle cx="387" cy="232" r="2.5" />
+    <circle cx="465" cy="465" r="2.5" />
+    <circle cx="155" cy="155" r="2.5" />
+  </g>
+</svg>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160">
+  <circle cx="80" cy="80" r="74" fill="#ffffff" stroke="#1c3f61" stroke-width="6" />
+  <path d="M80 6 A74 74 0 0 1 154 80 L6 80 A74 74 0 0 1 80 6 Z" fill="#9c2b32" opacity="0.9" />
+  <text x="80" y="98" text-anchor="middle" font-family="Georgia, serif" font-size="34" font-weight="700" fill="#1c3f61">AP</text>
+  <path d="M40 122 h20 l4 -6 h32 l4 6 h20" fill="none" stroke="#1c3f61" stroke-width="4" stroke-linecap="round" />
+</svg>
