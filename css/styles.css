@@ -354,6 +354,23 @@ section.block .section-sub {
   text-align: center;
 }
 
+.card.featured {
+  border-color: var(--red);
+  border-width: 2px;
+  box-shadow: 0 4px 18px rgba(156, 43, 50, 0.08);
+}
+
+.card .tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.card .tag-top-pick {
+  color: #7a5417;
+  background: rgba(201, 151, 79, 0.18);
+}
+
 /* Footer */
 .site-footer {
   border-top: 1px solid var(--line);
