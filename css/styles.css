@@ -21,6 +21,8 @@
 
 html { scroll-behavior: smooth; }
 
+html, body { max-width: 100%; overflow-x: hidden; }
+
 body {
   margin: 0;
   font-family: 'Inter', system-ui, sans-serif;
@@ -33,8 +35,12 @@ body {
 body::before {
   content: "";
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   z-index: -1;
+  pointer-events: none;
   background:
     radial-gradient(circle at 18% 12%, rgba(28, 63, 97, 0.04), transparent 42%),
     radial-gradient(circle at 82% 78%, rgba(156, 43, 50, 0.035), transparent 46%),
@@ -140,6 +146,7 @@ nav.main-nav a.active {
   position: relative;
   padding: 72px 0 56px;
   overflow: hidden;
+  overflow: clip;
   text-align: center;
 }
 
@@ -438,3 +445,6 @@ textarea.template { line-height: 1.55; resize: vertical; }
   .btn { flex-direction: column; gap: 2px; }
   .meetup { padding: 22px 20px; }
 }
+
+main, section, .wrap, .card, .panel, .meetup, .meetup-details, .meetup-links { min-width: 0; }
+p, dd, li, h1, h2, h3, strong, a { overflow-wrap: anywhere; }
