@@ -36,11 +36,13 @@ body::before {
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(circle at 18% 12%, rgba(28, 63, 97, 0.05), transparent 42%),
-    radial-gradient(circle at 82% 78%, rgba(156, 43, 50, 0.045), transparent 46%),
-    url('../assets/img/sectional-pattern.svg');
-  background-size: auto, auto, 620px 620px;
-  background-repeat: no-repeat, no-repeat, repeat;
+    radial-gradient(circle at 18% 12%, rgba(28, 63, 97, 0.04), transparent 42%),
+    radial-gradient(circle at 82% 78%, rgba(156, 43, 50, 0.035), transparent 46%),
+    url('../assets/img/sectional-bg.jpg');
+  background-size: auto, auto, cover;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-position: center, center, center;
+  background-attachment: fixed, fixed, fixed;
   background-color: var(--cream);
 }
 
