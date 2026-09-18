@@ -448,3 +448,8 @@ textarea.template { line-height: 1.55; resize: vertical; }
 
 main, section, .wrap, .card, .panel, .meetup, .meetup-details, .meetup-links { min-width: 0; }
 p, dd, li, h1, h2, h3, strong, a { overflow-wrap: anywhere; }
+
+/* Tighter vertical spacing on the home page */
+.home .hero { padding: 48px 0 24px; }
+.home section.block { padding: 20px 0; }
+.home section.block .section-sub { margin-bottom: 18px; }
