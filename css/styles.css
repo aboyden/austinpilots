@@ -392,3 +392,59 @@ section.block .section-sub {
 
 .site-footer a { color: var(--ink-soft); }
 .site-footer a:hover { color: var(--red); }
+
+/* Take-action callout (home) */
+.callout {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 22px 26px;
+  background: var(--navy-dark);
+  color: #fff;
+  border-radius: var(--radius);
+  border-left: 6px solid var(--red);
+  text-decoration: none;
+}
+.callout:hover { background: var(--navy); color: #fff; }
+.callout-tag {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.callout-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+.callout-text { font-size: 15px; line-height: 1.55; color: #e3e8ee; }
+
+/* Landing-fees page */
+.card.personalize { border-top: 4px solid var(--gold); }
+.card.personalize ul { margin: 0; padding-left: 20px; color: var(--ink-soft); line-height: 1.7; font-size: 14.5px; }
+.field-label {
+  display: block;
+  margin: 18px 0 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--navy);
+}
+.field {
+  width: 100%;
+  padding: 12px 14px;
+  font: inherit;
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.field:focus { outline: 2px solid var(--navy); outline-offset: 1px; }
+textarea.template { line-height: 1.55; resize: vertical; }
+.action-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
+.action-row .btn { cursor: pointer; font-family: inherit; }
+.fine-print { font-size: 13px; color: var(--ink-soft); margin: 10px 0 0; }

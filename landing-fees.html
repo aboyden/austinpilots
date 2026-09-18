@@ -1,0 +1,131 @@
+---
+layout: default
+title: AUS Landing Fees
+description: Speak up about the new Austin-Bergstrom general aviation landing fees — a ready-to-edit email to City Council and Austin Aviation.
+---
+
+<section class="hero" style="padding-bottom: 24px;">
+  <div class="wrap">
+    <p class="eyebrow">Take Action</p>
+    <h1>AUS Landing Fees</h1>
+    <p class="lede">
+      New general aviation landing fees at Austin-Bergstrom take effect October 1.
+      A short, personal email to the people who decide can make a real difference —
+      here's a starting point.
+    </p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <h2>Why it matters</h2>
+    <p class="section-sub">
+      As written, the schedule is a flat $50 landing fee ($100 during F1, NASCAR,
+      SXSW, and UT home-game weekends) on every aircraft up to 12,500 lbs — a
+      Cessna 172 on a training flight is charged the same as a light jet. The ask
+      below is narrow: exempt aircraft under 6,000 lbs, the primary and instrument
+      trainer fleet, and keep the fee focused on the larger aircraft it was aimed at.
+    </p>
+
+    <div class="card personalize">
+      <h3>Make it yours — it works better</h3>
+      <p>
+        Council offices can spot a form letter immediately, and a message in your own
+        words carries far more weight. Before you send, rewrite at least a few
+        sentences. Some questions to help you think it through:
+      </p>
+      <ul>
+        <li>Do we want AUS charging a substantial fee to land?</li>
+        <li>Will this spread to other airports in the area?</li>
+        <li>Will you then be affected — as a student, renter, owner, instructor, or someone who flies in for a meal or a meetup?</li>
+      </ul>
+      <p>
+        Your own story (what you fly, what you'd pay, who you know who's training)
+        is the strongest part. Feel free to cut anything that isn't true for you.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <h2>Your email</h2>
+    <p class="section-sub">
+      Edit the text below, then open it in your email app or copy it. It's addressed
+      to <strong>District2@austintexas.gov</strong> and
+      <strong>John.Gallo@FlyAustin.com</strong>. The Mayor's office takes
+      messages through a web form —
+      <a href="http://austintexas.gov/mayor/" target="_blank" rel="noopener">contact the Mayor here</a>
+      and paste the same text.
+    </p>
+
+    <label class="field-label" for="subject">Subject</label>
+    <input id="subject" class="field" type="text" value="Please exempt small trainer aircraft from the new AUS landing fee">
+
+    <label class="field-label" for="body">Message</label>
+    <textarea id="body" class="field template" rows="24">Dear Council Member Fuentes,
+
+I'm an Austin-area private pilot writing about the new general aviation fees at Austin-Bergstrom taking effect October 1.
+
+I support the goal behind Resolution 20250813-015: making sure private aviation contributes fairly to airport infrastructure. But Austin Aviation's implementation memo applies a flat $50 landing fee, rising to $100 during F1, NASCAR, SXSW, and UT home game weekends, to every aircraft up to 12,500 lbs, with no distinction between a Cessna 172 on a training flight and a light jet just under that threshold.
+
+That falls hardest on people who can't pass the cost along: flight students and renters paying out of pocket.
+
+I'm asking the Council to direct Austin Aviation to exempt aircraft under 6,000 lbs maximum takeoff weight, essentially the entire primary and instrument trainer fleet (Cessna 172s and 152s, Piper Warriors and Archers, Diamond DA40s, and similar), from both the standard and event-surge landing fees. This isn't a novel carve-out: Corpus Christi International, a fellow Texas airport, already limits its GA landing fees to aircraft 6,000 lbs and above and exempts everything lighter. Other airports use similar thresholds for the same reason, to protect based flight training operations while still collecting fees from the larger private and business aircraft the resolution was actually aimed at.
+
+A 6,000 lb cutoff keeps the new fee focused on the aircraft it was meant for without pricing flight students and renters out of training at their own city's airport.
+
+I'd appreciate knowing whether this fee schedule is still open for input before October 1, and I'm happy to share more detail on the impact to the local flight training community.
+
+Thank you for representing the district that's home to AUS.
+
+[Your name]
+[Phone or email]</textarea>
+
+    <div class="action-row">
+      <a id="mailto-btn" class="btn btn-facebook" href="mailto:District2@austintexas.gov,John.Gallo@FlyAustin.com?subject=Please%20exempt%20small%20trainer%20aircraft%20from%20the%20new%20AUS%20landing%20fee">Open in my email app</a>
+      <button id="copy-btn" class="btn btn-groupme" type="button">Copy message</button>
+      <a class="btn btn-groupme" href="http://austintexas.gov/mayor/" target="_blank" rel="noopener">Contact the Mayor</a>
+    </div>
+    <p id="copy-status" class="fine-print" aria-live="polite"></p>
+    <p class="fine-print">
+      Remember to replace <code>[Your name]</code> and <code>[Phone or email]</code>
+      before sending. Please double-check the facts and figures against the
+      current fee memo yourself.
+    </p>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var to = 'District2@austintexas.gov,John.Gallo@FlyAustin.com';
+    var subject = document.getElementById('subject');
+    var body = document.getElementById('body');
+    var mailBtn = document.getElementById('mailto-btn');
+    var copyBtn = document.getElementById('copy-btn');
+    var status = document.getElementById('copy-status');
+
+    function buildMailto() {
+      return 'mailto:' + to +
+        '?subject=' + encodeURIComponent(subject.value) +
+        '&body=' + encodeURIComponent(body.value.replace(/\r?\n/g, '\r\n'));
+    }
+
+    mailBtn.addEventListener('click', function () {
+      mailBtn.href = buildMailto();
+    });
+
+    copyBtn.addEventListener('click', function () {
+      var text = body.value;
+      function done(ok) {
+        status.textContent = ok ? 'Copied — paste it into your email or the Mayor\'s contact form.' : 'Couldn\'t copy automatically; select the text and copy it manually.';
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+      } else {
+        body.select();
+        try { done(document.execCommand('copy')); } catch (e) { done(false); }
+      }
+    });
+  })();
+</script>
