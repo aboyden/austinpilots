@@ -8,8 +8,10 @@ no build step required on your end.
 1. **Next meetup** — in `index.html`, fill in the date/time/location/details,
    and replace the two `href="#"` links with your actual Facebook event URL
    and GroupMe join link.
-2. **Contact link** — in `_includes/footer.html`, replace the placeholder
-   email address.
+2. **Contact form** — `contact.html` posts to FormSubmit and emails
+   contact@austinpilots.net (change the address in the form's `action` URL).
+   The very first submission triggers a one-time activation email from
+   FormSubmit to that address — click its link, then submissions flow through.
 3. **Flight schools / software pages** — edit `flight-schools.html` and
    `aviation-software.html` directly; each entry is one `.card` block.
 

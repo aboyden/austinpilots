@@ -1,0 +1,43 @@
+---
+layout: default
+title: Contact Us
+description: Get in touch with Austin Pilots.
+---
+
+<section class="hero" style="padding-bottom: 24px;">
+  <div class="wrap">
+    <p class="eyebrow">Get in Touch</p>
+    <h1>Contact Us</h1>
+    <p class="lede">
+      Questions, ideas for a meetup, a flight school or aviation project we should
+      list? Send us a note and we'll get back to you.
+    </p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="panel">
+      <form action="https://formsubmit.co/contact@austinpilots.net" method="POST">
+        <label class="field-label" for="name" style="margin-top: 0;">Your name</label>
+        <input id="name" class="field" type="text" name="name" required autocomplete="name">
+
+        <label class="field-label" for="email">Your email</label>
+        <input id="email" class="field" type="email" name="email" required autocomplete="email">
+
+        <label class="field-label" for="message">Message</label>
+        <textarea id="message" class="field" name="message" rows="8" required></textarea>
+
+        <input type="hidden" name="_subject" value="New message from the Austin Pilots website">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="{{ '/contact-thanks.html' | absolute_url }}">
+        <input type="text" name="_honey" style="display: none;" tabindex="-1" autocomplete="off">
+
+        <div class="action-row">
+          <button class="btn btn-facebook" type="submit">Send message</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
