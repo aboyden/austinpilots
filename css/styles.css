@@ -208,7 +208,7 @@ section.block h2 {
 section.block .section-sub {
   color: var(--ink-soft);
   margin: 0 0 28px;
-  max-width: 640px;
+  max-width: none;
   line-height: 1.6;
 }
 
