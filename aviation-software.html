@@ -4,11 +4,11 @@ title: Aviation Software
 description: Aviation software, tools, and projects built by people in the Austin aviation community.
 ---
 
-<section class="hero" style="padding-bottom: 24px;">
+<section class="hero" style="padding-bottom: 8px;">
   <div class="wrap">
     <p class="eyebrow">Built by the Community</p>
     <h1>Aviation Software</h1>
-    <p class="lede">
+    <p class="lede" style="max-width: 820px;">
       Several folks in this group build software for aviation — flight planning
       tools, ADS-B projects, logbook apps, and more. This page is a directory of
       that work. If that's you, add a card below.
@@ -16,33 +16,43 @@ description: Aviation software, tools, and projects built by people in the Austi
   </div>
 </section>
 
-<section class="block">
+<!--
+  When there are project cards to show, wrap them in:
+  <section class="block"><div class="wrap"><div class="card-grid"> ... </div></div></section>
+
+  Copy this card for each project/person. Fields:
+  - tag: category, e.g. "Flight Planning", "ADS-B", "Logbook", "Weather"
+  - h3: project or product name
+  - p: one or two sentence description
+  - card-link: link to the project, GitHub repo, or website
+  - byline (optional): who built it / maintains it
+
+  <div class="card">
+    <span class="tag">Example Category</span>
+    <h3>Project Name</h3>
+    <p>Short description of what it does and who it's for.</p>
+    <p style="font-size: 13px; color: var(--ink-soft);">Built by REPLACE — Austin Pilots member</p>
+    <a class="card-link" href="#" target="_blank" rel="noopener">Visit project &rarr;</a>
+  </div>
+-->
+
+<section class="block ad-block">
   <div class="wrap">
-    <div class="card-grid">
+    <p class="eyebrow" style="text-align: center;">Sponsors</p>
+    <div class="ad-slot">
+      <a href="https://flybound.app/?utm_source=austinpilots.net&utm_medium=banner&utm_campaign=flybound-300x250"
+         target="_blank" rel="noopener sponsored">
+        <img src="https://flybound.app/brand/ads/flybound-300x250.png"
+             srcset="https://flybound.app/brand/ads/flybound-300x250.png 1x,
+                     https://flybound.app/brand/ads/flybound-300x250@2x.png 2x"
+             width="300" height="250"
+             alt="Flybound — day-trip go/no-go for VFR pilots. Free on iPhone."
+             style="display: block; border: 0; max-width: 100%; height: auto;">
+      </a>
 
-      <!--
-        Copy this card for each project/person. Fields:
-        - tag: category, e.g. "Flight Planning", "ADS-B", "Logbook", "Weather"
-        - h3: project or product name
-        - p: one or two sentence description
-        - card-link: link to the project, GitHub repo, or website
-        - byline (optional): who built it / maintains it
-      -->
-      <div class="card">
-        <span class="tag">Example Category</span>
-        <h3>Project Name</h3>
-        <p>Short description of what it does and who it's for.</p>
-        <p style="font-size: 13px; color: var(--ink-soft);">Built by REPLACE — Austin Pilots member</p>
-        <a class="card-link" href="#" target="_blank" rel="noopener">Visit project &rarr;</a>
+      <div class="ad-unit placeholder">
+        <p>Ad space available — contact us</p>
       </div>
-
-      <div class="card placeholder">
-        <p>
-          Add your project here — copy the card above in
-          <code>aviation-software.html</code> and fill in the details.
-        </p>
-      </div>
-
     </div>
   </div>
 </section>
