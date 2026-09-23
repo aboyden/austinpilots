@@ -379,6 +379,39 @@ section.block .section-sub {
   background: rgba(201, 151, 79, 0.18);
 }
 
+/* Sponsor ad slot */
+section.ad-block {
+  padding-top: 30px;
+}
+
+.ad-slot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 225px;
+}
+
+.ad-unit.placeholder {
+  width: 300px;
+  height: 250px;
+  border-style: dashed;
+  border-color: var(--gold);
+  border-width: 1px;
+  border-radius: var(--radius);
+  background: #fffaf2;
+  color: var(--ink-soft);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.ad-unit.placeholder p {
+  margin: 0;
+  font-size: 14px;
+}
+
 /* Footer */
 .site-footer {
   border-top: 1px solid var(--line);
