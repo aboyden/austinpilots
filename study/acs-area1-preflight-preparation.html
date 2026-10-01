@@ -140,6 +140,37 @@
   .reg-text { flex: 1; font-size: 15px; }
   .reg-text strong { color: var(--heading); }
 
+  /* Real-world scenario box */
+  .scenario {
+    background: linear-gradient(135deg, rgba(79,142,247,0.07), rgba(124,106,247,0.05));
+    border: 1px solid rgba(79,142,247,0.25);
+    border-radius: 14px;
+    padding: 26px 28px;
+    margin: 28px 0;
+  }
+  .scenario-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 14px;
+  }
+  .scenario h4 { color: var(--heading); font-size: 16px; margin: 0 0 10px; }
+  .scenario p { font-size: 15px; }
+  .scenario .payoff { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--border); font-size: 14.5px; }
+  .scenario .payoff strong { color: var(--green); }
+
+  /* Worked steps */
+  .steps { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; margin: 18px 0; }
+  .step-item { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 14px; }
+  .step-item:last-child { margin-bottom: 0; }
+  .step-num { background: var(--accent); color: #fff; min-width: 30px; height: 26px; padding: 0 6px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 11.5px; font-weight: 800; margin-top: 2px; }
+  .step-text { flex: 1; font-size: 14.5px; }
+  .step-text strong { color: var(--heading); }
+
+  /* METAR/TAF decode */
+  .raw-code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: var(--surface2); border: 1px solid var(--border); padding: 14px 18px; border-radius: 8px; font-size: 13.5px; letter-spacing: 0.3px; margin-bottom: 16px; overflow-x: auto; white-space: pre-wrap; word-break: break-word; }
+  .decode-grid { display: grid; grid-template-columns: auto 1fr; gap: 9px 16px; font-size: 14px; }
+  .decode-grid .tok { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-weight: 700; color: var(--accent); white-space: nowrap; }
+
   /* Key takeaways */
   .takeaways { background: linear-gradient(135deg, rgba(79,142,247,0.08) 0%, rgba(124,106,247,0.08) 100%); border: 1px solid rgba(79,142,247,0.25); border-radius: 14px; padding: 32px; margin: 48px 0 0; }
   .takeaways h3 { font-size: 18px; font-weight: 800; color: var(--heading); margin: 0 0 20px; }
@@ -222,7 +253,7 @@
     skills associated with requirements to act as pilot-in-command under instrument flight rules.</div>
   </div>
 
-  <h3>Certification, Recency, and Recordkeeping <span class="acs-ref">IR.I.A.K1</span></h3>
+  <h3>🪪 Certification, Recency, and Recordkeeping <span class="acs-ref">IR.I.A.K1</span></h3>
   <div class="concept-grid">
     <div class="concept-card">
       <h4>Instrument Currency — 6 HITS in 6</h4>
@@ -253,13 +284,26 @@
     </div>
   </div>
 
-  <h3>Privileges and Limitations <span class="acs-ref">IR.I.A.K2</span></h3>
+  <div class="scenario">
+    <div class="scenario-label">🧭 Real-World Scenario — The Lapsed Pilot</div>
+    <h4>Maria's currency clock</h4>
+    <p>Maria flew her 6th approach of the cycle on <strong>March 1</strong>. Life gets busy and she doesn't fly
+    another approach for a while. Here's what the calendar actually allows her to do:</p>
+    <div class="steps">
+      <div class="step-item"><div class="step-num">THRU SEP 1</div><div class="step-text"><strong>Month 6:</strong> She's fully current. Any IFR flight is legal, no safety pilot or instructor needed.</div></div>
+      <div class="step-item"><div class="step-num">SEP–MAR</div><div class="step-text"><strong>Months 7–12:</strong> She's lapsed, but still inside the 6/6/12 window. She can fly 6 approaches, holding, and course tracking with a safety pilot — no instructor required — and be legal again the moment she finishes.</div></div>
+      <div class="step-item"><div class="step-num">AFTER MAR 1</div><div class="step-text"><strong>Past month 12:</strong> The safety-pilot-only option is gone. She now needs a full Instrument Proficiency Check with a CFII, examiner, or other authorized person — no matter how close she was to finishing on her own.</div></div>
+    </div>
+    <div class="payoff"><strong>The lesson:</strong> the 6-month and 12-month marks aren't the same deadline with rising urgency — they're two different sets of rules. One extra day past month 12 changes who has to sign off her return to currency.</div>
+  </div>
+
+  <h3>✅ Privileges and Limitations <span class="acs-ref">IR.I.A.K2</span></h3>
   <p>The instrument rating removes the restriction in 61.3(e) that would otherwise prohibit you from acting as PIC
   under IFR or in weather conditions less than the minimums for VFR. Without it, you're limited to VFR (or, for a
   sport/recreational pilot, additional restrictions apply). The rating doesn't expire on its own — what lapses is
   your <em>currency</em> under 61.57, which is a separate, renewable requirement from the certificate itself.</p>
 
-  <h3>Part 68 BasicMed Privileges and Limitations <span class="acs-ref">IR.I.A.K3</span></h3>
+  <h3>⚕️ Part 68 BasicMed Privileges and Limitations <span class="acs-ref">IR.I.A.K3</span></h3>
   <p>BasicMed (14 CFR part 68) lets a pilot act as PIC without holding a current FAA medical certificate, provided
   all of the following are met:</p>
   <div class="reg-list">
@@ -276,7 +320,23 @@
     book, double-check the current numbers against 14 CFR part 68 before your checkride.
   </div>
 
-  <h3>Risk Management</h3>
+  <div class="scenario">
+    <div class="scenario-label">🧑‍✈️ Real-World Scenario — Does Dave Qualify?</div>
+    <h4>Dave wants to fly his Cessna 182 to the coast with his wife and two friends</h4>
+    <p>Dave's 182 is certificated at 3,100 lbs — comfortably under 12,500. He's planning to carry 4 passengers
+    plus himself (5 occupants total), cruising at 8,500 ft and 140 KIAS, entirely within the U.S. He last held a
+    third-class medical back in 2015. Three years ago, his family doctor completed a Comprehensive Medical
+    Examination Checklist with him. He finished the free online BasicMed course 18 months ago.</p>
+    <div class="steps">
+      <div class="step-item"><div class="step-num">✓</div><div class="step-text">Weight, occupants, speed, and altitude are all inside the BasicMed limits.</div></div>
+      <div class="step-item"><div class="step-num">✓</div><div class="step-text">His 2015 medical satisfies "held a medical certificate after July 14, 2006" — it doesn't matter that it expired as a medical certificate years ago.</div></div>
+      <div class="step-item"><div class="step-num">✓</div><div class="step-text">The CMEC from 3 years ago is inside the 48-month window.</div></div>
+      <div class="step-item"><div class="step-num">✓</div><div class="step-text">The course from 18 months ago is inside the 24-month window.</div></div>
+    </div>
+    <div class="payoff"><strong>Dave is good to go under BasicMed.</strong> Change just one fact — say his CMEC was from 5 years ago instead of 3 — and he's grounded under BasicMed until he redoes it, even though everything else checks out.</div>
+  </div>
+
+  <h3>⚠️ Risk Management</h3>
   <div class="concept-grid">
     <div class="concept-card">
       <h4><span class="acs-ref risk">IR.I.A.R1</span> Proficiency vs. Currency</h4>
@@ -318,7 +378,7 @@
     skills associated with obtaining, understanding, and applying weather information for a flight under IFR.</div>
   </div>
 
-  <h3>Sources of Weather Data <span class="acs-ref">IR.I.B.K1</span></h3>
+  <h3>🌐 Sources of Weather Data <span class="acs-ref">IR.I.B.K1</span></h3>
   <p>The two FAA-recognized sources for a preflight weather briefing are the <strong>National Weather Service</strong>
   (aviationweather.gov, the authoritative source for raw and graphical products) and <strong>Flight Service</strong>
   — operated under contract by Leidos as 1-800-WX-BRIEF / 1800wxbrief.com, which also files and activates/closes
@@ -326,7 +386,7 @@
   Garmin Pilot, ForeFlight's own briefing partner, etc.) typically source the same underlying NWS/Flight Service
   data through an approved data provider.</p>
 
-  <h3>Acceptable Weather Products <span class="acs-ref">IR.I.B.K2</span></h3>
+  <h3>📊 Acceptable Weather Products <span class="acs-ref">IR.I.B.K2</span></h3>
   <p class="task-objective" style="border: none; padding: 0; margin: 0 0 12px;">The ACS requires knowledge of at
   least three of the following sub-elements:</p>
   <table class="data-table">
@@ -342,7 +402,24 @@
     </tbody>
   </table>
 
-  <h3>Meteorology for IFR Flight <span class="acs-ref">IR.I.B.K3</span></h3>
+  <div class="scenario">
+    <div class="scenario-label">📟 Real-World Scenario — Decoding a METAR</div>
+    <h4>What this actually says about KAUS</h4>
+    <div class="raw-code">KAUS 151753Z 18012G18KT 10SM FEW035 SCT250 28/19 A2995 RMK AO2 SLP140 T02780194</div>
+    <div class="decode-grid">
+      <div class="tok">KAUS</div><div>Austin-Bergstrom International Airport</div>
+      <div class="tok">151753Z</div><div>Observed on the 15th at 1753 Zulu (UTC)</div>
+      <div class="tok">18012G18KT</div><div>Wind from 180° at 12 knots, gusting to 18</div>
+      <div class="tok">10SM</div><div>Visibility 10 statute miles</div>
+      <div class="tok">FEW035 SCT250</div><div>A few clouds at 3,500 ft AGL, scattered at 25,000 ft AGL</div>
+      <div class="tok">28/19</div><div>Temperature 28°C, dewpoint 19°C</div>
+      <div class="tok">A2995</div><div>Altimeter setting 29.95 inHg</div>
+      <div class="tok">RMK AO2 SLP140 T02780194</div><div>Remarks: automated station with a precipitation discriminator; sea-level pressure 1014.0 mb; precise temperature/dewpoint 27.8°C / 19.4°C</div>
+    </div>
+    <div class="payoff"><strong>Why the remarks group matters:</strong> the rounded 28/19 in the main body is fine for a quick look, but T02780194 is the precise reading the forecast models actually ingest — worth knowing it's there if a number ever looks a little off.</div>
+  </div>
+
+  <h3>🌡️ Meteorology for IFR Flight <span class="acs-ref">IR.I.B.K3</span></h3>
   <p class="task-objective" style="border: none; padding: 0; margin: 0 0 12px;">At least three of the following
   must be analyzed for the planned departure, en route, alternate, and destination phases:</p>
   <div class="concept-grid">
@@ -360,13 +437,26 @@
     <div class="concept-card"><h4><span class="acs-ref">K3l</span> Obstructions to Visibility</h4><p>Smoke, haze, volcanic ash, blowing dust/sand — reduce visibility without necessarily showing as cloud, and some (volcanic ash) are a serious airframe/engine hazard distinct from normal IMC.</p></div>
   </div>
 
-  <h3>Flight Deck Weather Displays <span class="acs-ref">IR.I.B.K4</span></h3>
+  <h3>📺 Flight Deck Weather Displays <span class="acs-ref">IR.I.B.K4</span></h3>
   <p>Know the capabilities and limitations of your installed datalink weather (ADS-B FIS-B or SiriusXM): FIS-B
   NEXRAD on ADS-B is typically several minutes old by the time it displays (it is <em>not</em> real-time), has no
   cell-phone-style continuous update, and should never be used for close-in thunderstorm penetration decisions —
   it's a strategic, not tactical, tool.</p>
 
-  <h3>Risk Management</h3>
+  <div class="scenario">
+    <div class="scenario-label">🌩️ Real-World Scenario — The Go/No-Go Call</div>
+    <h4>Saturday morning fly-out</h4>
+    <p>Your destination TAF shows the ceiling dropping to 1,500 broken with 4SM visibility right around your
+    arrival time. An AIRMET Zulu covers your route for icing between 6,000 and 10,000 ft, with the freezing level
+    forecast at 7,000 ft. A PIREP from 20 minutes ago reports light rime ice at 8,000 ft along your route.</p>
+    <div class="payoff">None of this makes the flight illegal — but a non-FIKI trainer, a destination ceiling
+    already near your personal minimums, and a PIREP confirming the exact hazard the AIRMET warned about adds up
+    to a "no-go" or "different altitude/route" decision, not a "let's see how it looks" one.
+    <span class="acs-ref risk">IR.I.B.R1</span> is exactly this judgment call — the regulations don't make it for
+    you.</div>
+  </div>
+
+  <h3>⚠️ Risk Management</h3>
   <div class="concept-grid">
     <div class="concept-card">
       <h4><span class="acs-ref risk">IR.I.B.R1</span> Go/No-Go &amp; Divert Decisions</h4>
@@ -392,7 +482,7 @@
     skills associated with planning an IFR cross-country and filing an IFR flight plan.</div>
   </div>
 
-  <h3>Route Planning <span class="acs-ref">IR.I.C.K1</span></h3>
+  <h3>🧭 Route Planning <span class="acs-ref">IR.I.C.K1</span></h3>
   <div class="reg-list">
     <div class="reg-item"><div class="reg-letter">a</div><div class="reg-text">Available <strong>navigational facilities</strong> along the route — VOR, GPS/RNAV waypoints, and the airway or direct/RNAV routing they support.</div></div>
     <div class="reg-item"><div class="reg-letter">b</div><div class="reg-text"><strong>Special use airspace</strong> — MOAs, restricted/prohibited areas, warning areas — and whether they're active for your transit time.</div></div>
@@ -404,7 +494,7 @@
     <div class="reg-item"><div class="reg-letter">h</div><div class="reg-text"><strong>Terminal Procedures Publications (TPP)</strong> — the approach plate/SID/STAR booklet for your departure, en route, and arrival airports.</div></div>
   </div>
 
-  <h3>Altitude Selection <span class="acs-ref">IR.I.C.K2</span></h3>
+  <h3>⛰️ Altitude Selection <span class="acs-ref">IR.I.C.K2</span></h3>
   <p>Account for terrain and obstacles (use the MEA, MOCA, or your own obstacle clearance — 1,000 ft in non-mountainous
   terrain, 2,000 ft in designated mountainous areas, per 91.177 for off-airway/direct routing), single-engine glide
   distance over inhospitable terrain, the IFR cruising altitude rule (14 CFR 91.179 — magnetic course 0°–179° flies
@@ -413,14 +503,14 @@
   cabin pressure altitude for that portion of flight over 30 minutes, required at all times above 14,000 ft, and
   required for every occupant above 15,000 ft).</p>
 
-  <h3>Calculations <span class="acs-ref">IR.I.C.K3</span></h3>
+  <h3>🧮 Calculations <span class="acs-ref">IR.I.C.K3</span></h3>
   <div class="concept-grid">
     <div class="concept-card"><h4><span class="acs-ref">K3a</span> Time, Climb/Descent, Course, Distance, Heading, TAS, Groundspeed</h4><p>Standard E6B/flight-computer work: correct indicated airspeed for altitude/temperature to get TAS, then apply the wind triangle to get heading and groundspeed.</p></div>
     <div class="concept-card"><h4><span class="acs-ref">K3b</span> ETA, Including UTC Conversion</h4><p>IFR flight plans and clearances are typically worked in Coordinated Universal Time (Zulu) — know your local-to-UTC offset and how to convert quickly.</p></div>
     <div class="concept-card"><h4><span class="acs-ref">K3c</span> Fuel Requirements, Including Reserve</h4><p>14 CFR 91.167: enough fuel to reach the first airport of intended landing, then to the alternate (if one is required), then <strong>45 minutes</strong> at normal cruising speed — the same 45-minute figure applies day or night under IFR.</p></div>
   </div>
 
-  <h3>Elements of an IFR Flight Plan <span class="acs-ref">IR.I.C.K4</span></h3>
+  <h3>📝 Elements of an IFR Flight Plan <span class="acs-ref">IR.I.C.K4</span></h3>
   <p>Whether filed on paper (FAA Form 7233-1) or electronically, the core fields are the same: aircraft
   identification; aircraft type and special equipment suffix; true airspeed; departure point and proposed
   departure time; requested cruising altitude; route of flight; destination and estimated time en route; an
@@ -428,7 +518,7 @@
   persons on board; and aircraft color. Equipment suffixes communicate your navigation/surveillance capability
   (e.g., RNAV/GPS, DME, transponder with Mode C, ADS-B Out) to ATC's automation.</p>
 
-  <h3>Activating and Closing an IFR Flight Plan <span class="acs-ref">IR.I.C.K5</span></h3>
+  <h3>📡 Activating and Closing an IFR Flight Plan <span class="acs-ref">IR.I.C.K5</span></h3>
   <div class="concept-grid">
     <div class="concept-card">
       <h4>Controlled Airspace</h4>
@@ -446,7 +536,21 @@
     </div>
   </div>
 
-  <h3>Risk Management</h3>
+  <div class="scenario">
+    <div class="scenario-label">🗺️ Real-World Scenario — Planning KAUS to KGGG</div>
+    <h4>Walking one trip through every piece of Task C</h4>
+    <p>You're flying from Austin-Bergstrom (KAUS) to East Texas Regional (KGGG) in Longview — about 190 nm on a
+    magnetic course of roughly 030°, in a 172 cruising at 110 KTAS.</p>
+    <div class="steps">
+      <div class="step-item"><div class="step-num">a–h</div><div class="step-text"><strong>Route:</strong> no preferred route is published for this city pair, so you expect a direct or short airway-to-direct clearance. You confirm no MOA sits along the way, note KGGG's two runways and its ILS, and check NOTAMs — today's shows KGGG's ILS glideslope out of service, so you brief the localizer-only minimums instead.</div></div>
+      <div class="step-item"><div class="step-num">ALT</div><div class="step-text"><strong>Altitude:</strong> magnetic course 030° falls in the 0°–179° range, so you need an odd thousand — 7,000 ft clears the flat Central/East Texas terrain with plenty of margin and sits comfortably above the freezing level from your weather briefing.</div></div>
+      <div class="step-item"><div class="step-num">CALC</div><div class="step-text"><strong>Calculations:</strong> 110 KTAS with a 15-knot headwind component nets about 95 kt groundspeed. 190 nm ÷ 95 kt ≈ 2 hours even. Departing at 1400Z puts your ETA at 1600Z. At 9 GPH that's 18 gallons en route, plus 45 minutes' reserve (about 7 gallons) — call it 25 gallons minimum, and you depart with 40 in the tanks.</div></div>
+      <div class="step-item"><div class="step-num">PLAN</div><div class="step-text"><strong>Flight plan:</strong> you file N12345, a C172/G, true airspeed 110, departing KAUS at 1400Z, cruising 7,000, direct to KGGG, estimating 2+00 en route, 4+00 fuel on board, 2 souls on board — no alternate required if the destination forecast still meets the 1-2-3 rule when you check it closer to departure.</div></div>
+      <div class="step-item"><div class="step-num">ACT</div><div class="step-text"><strong>Activating/closing:</strong> both ends are towered, so your clearance activates the plan on departure and ATC closes it automatically when you land — no phone call needed either way on this particular trip.</div></div>
+    </div>
+  </div>
+
+  <h3>⚠️ Risk Management</h3>
   <div class="concept-grid">
     <div class="concept-card"><h4><span class="acs-ref risk">IR.I.C.R1</span> Pilot</h4><p>Your own currency, proficiency, and physical/mental readiness for this specific flight.</p></div>
     <div class="concept-card"><h4><span class="acs-ref risk">IR.I.C.R2</span> Aircraft</h4><p>Performance, equipment, and airworthiness limitations for the planned route and conditions.</p></div>

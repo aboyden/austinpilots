@@ -138,6 +138,36 @@
   .reg-text { flex: 1; font-size: 15px; }
   .reg-text strong { color: var(--heading); }
 
+  /* Real-world scenario box */
+  .scenario {
+    background: linear-gradient(135deg, rgba(124,106,247,0.07), rgba(79,142,247,0.05));
+    border: 1px solid rgba(124,106,247,0.25);
+    border-radius: 14px;
+    padding: 26px 28px;
+    margin: 28px 0;
+  }
+  .scenario-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--accent2); margin-bottom: 14px;
+  }
+  .scenario h4 { color: var(--heading); font-size: 16px; margin: 0 0 10px; }
+  .scenario p { font-size: 15px; }
+  .scenario .payoff { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--border); font-size: 14.5px; }
+  .scenario .payoff strong { color: var(--green); }
+
+  /* Worked steps */
+  .steps { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; margin: 18px 0; }
+  .step-item { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 14px; }
+  .step-item:last-child { margin-bottom: 0; }
+  .step-num { background: var(--accent2); color: #fff; min-width: 30px; height: 26px; padding: 0 6px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 11.5px; font-weight: 800; margin-top: 2px; }
+  .step-text { flex: 1; font-size: 14.5px; }
+  .step-text strong { color: var(--heading); }
+
+  /* Numeric worked-example grid */
+  .calc-grid { display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; font-size: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; margin: 16px 0; }
+  .calc-grid .tok { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-weight: 700; color: var(--accent2); white-space: nowrap; }
+
   .takeaways { background: linear-gradient(135deg, rgba(124,106,247,0.08) 0%, rgba(79,142,247,0.08) 100%); border: 1px solid rgba(124,106,247,0.25); border-radius: 14px; padding: 32px; margin: 48px 0 0; }
   .takeaways h3 { font-size: 18px; font-weight: 800; color: var(--heading); margin: 0 0 20px; }
   .takeaway-item { display: flex; gap: 12px; margin-bottom: 14px; font-size: 15px; align-items: flex-start; }
@@ -216,7 +246,7 @@
     skills associated with anti-icing or deicing systems, and other systems related to IFR flight.</div>
   </div>
 
-  <h3>Anti-Icing and Deicing Systems <span class="acs-ref">IR.II.A.K1</span></h3>
+  <h3>❄️ Anti-Icing and Deicing Systems <span class="acs-ref">IR.II.A.K1</span></h3>
   <table class="data-table">
     <thead><tr><th>System</th><th>How it works</th><th>Key limitation</th></tr></thead>
     <tbody>
@@ -229,7 +259,7 @@
     </tbody>
   </table>
 
-  <h3>Flight Control Systems <span class="acs-ref">IR.II.A.K2</span></h3>
+  <h3>🕹️ Flight Control Systems <span class="acs-ref">IR.II.A.K2</span></h3>
   <p>Most light GA airplanes actuate primary flight controls through mechanical cables, pulleys, and/or pushrods
   connecting the yoke/stick and rudder pedals directly to the control surfaces. Trim is typically a separate,
   smaller mechanical or electric system (electric trim run from a switch on the yoke, or a manual trim wheel/cable)
@@ -238,7 +268,24 @@
   must be able to disconnect instantly (yoke-mounted disconnect button, autopilot master switch, or circuit
   breaker) if it misbehaves — a runaway trim or autopilot hardover is a known IMC emergency scenario.</p>
 
-  <h3>Risk Management</h3>
+  <div class="scenario">
+    <div class="scenario-label">🧊 Real-World Scenario — The Encounter</div>
+    <h4>Level at 6,000, inside a cloud layer, in a non-FIKI 182</h4>
+    <p>You're level at 6,000 ft, inside a cloud deck the forecast didn't flag for icing. Twenty minutes in, you
+    notice a thin rime buildup on the leading edge of the wing strut — maybe a quarter inch. Your 182 has pneumatic
+    boots, but they're not FIKI-certified; the POH is clear they're for getting <em>out</em> of an inadvertent
+    encounter, not staying <em>in</em> one.</p>
+    <div class="steps">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">Cycle the boots once ice has built a little (too early and it can bridge over them) and confirm it's shedding.</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">Ask ATC for a block altitude or climb/descend out of the icing layer — toward warmer air below if terrain allows, or above the tops if you know them.</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">Turn on pitot heat if it isn't already on, and watch the airspeed indicator for the first sign of a pitot blockage.</div></div>
+    </div>
+    <div class="payoff">The equipment bought you time and options — it didn't make the airplane icing-capable.
+    <span class="acs-ref risk">IR.II.A.R1</span> is this exact distinction: boots or TKS on a non-FIKI airplane are
+    for executing an exit, not for continuing to fly as planned.</div>
+  </div>
+
+  <h3>⚠️ Risk Management</h3>
   <div class="concept-grid">
     <div class="concept-card">
       <h4><span class="acs-ref risk">IR.II.A.R1</span> Operating in Icing Conditions</h4>
@@ -273,7 +320,7 @@
     skills associated with managing instruments appropriate for an IFR flight.</div>
   </div>
 
-  <h3>Flight Instrument Systems <span class="acs-ref">IR.II.B.K1</span></h3>
+  <h3>🖥️ Flight Instrument Systems <span class="acs-ref">IR.II.B.K1</span></h3>
   <div class="concept-grid">
     <div class="concept-card">
       <h4><span class="acs-ref">K1a</span> Pitot-Static System</h4>
@@ -322,7 +369,30 @@
   avionics receive FIS-B weather/NOTAMs and TIS-B traffic for free, broadcast on 978 MHz (UAT) or 1090 MHz (1090ES)
   depending on your equipment.</p>
 
-  <h3>Navigation Systems <span class="acs-ref">IR.II.B.K2</span></h3>
+  <div class="scenario">
+    <div class="scenario-label">📡 Real-World Scenario — Do I Need ADS-B Out for This Flight?</div>
+    <h4>Departing a small non-towered field, routing through Class C into a Class B shelf</h4>
+    <p>You're departing a non-towered grass strip (no ADS-B requirement there), climbing through Class C airspace
+    around a regional airport, and your route grazes the outer shelf of a nearby Class B.</p>
+    <div class="payoff">The strip itself doesn't require it — but the moment you enter that Class C airspace, or
+    operate within the lateral boundaries of the Class B's surface area (or above it, up to 10,000 ft MSL, per
+    91.225's "Mode C veil"), <strong>ADS-B Out is required</strong>. "I'm not landing at the Class B airport" doesn't
+    exempt you — the rule is about the airspace you're in, not your destination.</div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-label">📏 Real-World Scenario — Why DME ≠ Ground Distance</div>
+    <h4>Flying directly over a VOR/DME at 6,000 ft, with the station at 500 ft elevation</h4>
+    <p>Your height above the station is 5,500 ft, or about 0.9 nautical miles straight up. Because DME measures the
+    direct, line-of-sight (slant-range) distance to the station, not the distance along the ground, your DME
+    readout at the moment you're directly overhead won't show 0.0 nm — it will show approximately <strong>0.9 nm</strong>,
+    purely from your altitude above the station.</p>
+    <div class="payoff">The error shrinks fast as ground distance grows (at 10 nm out, the same 5,500 ft altitude
+    difference barely moves the reading), which is exactly why the effect matters most close to the station — and
+    why DME-based step-down fixes near the field are worth double-checking against other cues.</div>
+  </div>
+
+  <h3>🧭 Navigation Systems <span class="acs-ref">IR.II.B.K2</span></h3>
   <div class="concept-grid">
     <div class="concept-card">
       <h4><span class="acs-ref">K2a</span> VOR</h4>
@@ -357,14 +427,14 @@
     <div class="concept-card"><h4>FMS &amp; Autopilot</h4><p>An FMS (mostly turbine/advanced aircraft) integrates navigation, performance, and flight planning into one system. An autopilot reduces manual workload (heading/nav/approach/altitude modes) but must still be actively monitored — know your specific modes and disconnect method cold, since IMC is the worst time to be figuring it out.</p></div>
   </div>
 
-  <h3><span class="acs-ref">IR.II.B.K3</span> Electronic Flight Bag (EFB)</h3>
+  <h3>📱 <span class="acs-ref">IR.II.B.K3</span> Electronic Flight Bag (EFB)</h3>
   <p>If you fly with an EFB (tablet-based charts/weather/flight planning), know its battery endurance and have a
   charging plan, keep a second, independent source of current charts (a backup tablet/phone app, or paper) in case
   the primary fails or its subscription lapses, and mount it securely so it can't become a loose hazard in
   turbulence. Part 91 operations don't require FAA authorization to use an EFB the way air carrier operations do,
   but the same good practices apply.</p>
 
-  <h3>Risk Management</h3>
+  <h3>⚠️ Risk Management</h3>
   <div class="concept-grid">
     <div class="concept-card"><h4><span class="acs-ref risk">IR.II.B.R1</span> Automated Systems</h4><p>Monitoring and managing autopilot/FMS behavior rather than treating it as "set and forget."</p></div>
     <div class="concept-card"><h4><span class="acs-ref risk">IR.II.B.R2</span> Approved vs. Non-Approved Devices</h4><p>A handheld/portable GPS or tablet app is generally not approved as a sole means of IFR navigation — know what's installed and certified in your aircraft versus what's a convenience backup.</p></div>
@@ -386,7 +456,7 @@
     skills associated with conducting a preflight check on the aircraft's instruments necessary for an IFR flight.</div>
   </div>
 
-  <h3>Purpose and Defect Detection <span class="acs-ref">IR.II.C.K1</span></h3>
+  <h3>🔍 Purpose and Defect Detection <span class="acs-ref">IR.II.C.K1</span></h3>
   <table class="data-table">
     <thead><tr><th>Check</th><th>What a defect looks like</th></tr></thead>
     <tbody>
@@ -400,7 +470,20 @@
     </tbody>
   </table>
 
-  <h3>IFR Airworthiness <span class="acs-ref">IR.II.C.K2</span></h3>
+  <div class="scenario">
+    <div class="scenario-label">✈️ Real-World Scenario — Strapping In</div>
+    <h4>A minute-by-minute cockpit check before an IFR departure</h4>
+    <div class="steps">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">Master on. The attitude indicator starts to tumble upright — you note the time and plan to recheck it in a few minutes rather than taxiing immediately.</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">Set the altimeter to the current ATIS setting. It reads 495 ft against a field elevation of 542 ft — a 47 ft difference, comfortably inside the 75 ft tolerance.</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">During taxi, the heading indicator reads 270° on a taxiway you know runs east-west — it agrees with the compass, so no precession has crept in overnight.</div></div>
+      <div class="step-item"><div class="step-num">4</div><div class="step-text">Lined up for takeoff, you note both ASIs (student and instructor side) coming alive together as the aircraft accelerates — if one lagged, this is the moment to abort, not a "we'll watch it" item.</div></div>
+    </div>
+    <div class="payoff">None of this takes more than a minute, and all of it happens before you're relying on any
+    of these instruments in cloud — which is the entire point of <span class="acs-ref">IR.II.C.K1</span>.</div>
+  </div>
+
+  <h3>📜 IFR Airworthiness <span class="acs-ref">IR.II.C.K2</span></h3>
   <h4>Required Inspections</h4>
   <div class="reg-list">
     <div class="reg-item"><div class="reg-letter">1</div><div class="reg-text"><strong>91.411</strong> — pitot-static system, altimeter, and altitude reporting equipment tested and inspected within the preceding <strong>24 calendar months</strong> for IFR flight in controlled airspace.</div></div>
@@ -427,7 +510,7 @@
   reinforced in Task I.C), and the aircraft's Certificate of Airworthiness, registration, POH/AFM, and
   weight-and-balance data as applicable to the aircraft.</p>
 
-  <h3>Flying with Inoperative Equipment <span class="acs-ref">IR.II.C.K3</span></h3>
+  <h3>🚫 Flying with Inoperative Equipment <span class="acs-ref">IR.II.C.K3</span></h3>
   <p>14 CFR 91.213 gives you two legal paths when something is inoperative:</p>
   <div class="reg-list">
     <div class="reg-item"><div class="reg-letter">1</div><div class="reg-text"><strong>Aircraft has an approved Minimum Equipment List (MEL):</strong> operate strictly within the MEL's conditions, limitations, and time limits for the inoperative item.</div></div>
@@ -440,7 +523,22 @@
     it's squarely on the required list.
   </div>
 
-  <h3>Risk Management</h3>
+  <div class="scenario">
+    <div class="scenario-label">🔧 Real-World Scenario — Two Burned-Out Items, Two Different Answers</div>
+    <h4>Preflight turns up two things not working</h4>
+    <p>Walking the preflight, you find the landing/taxi light has burned out, and separately, the VSI needle is
+    stuck at +200 ft/min even with the aircraft parked and level.</p>
+    <div class="steps">
+      <div class="step-item"><div class="step-num">LIGHT</div><div class="step-text">Not on the 91.205(d) IFR list, not part of the aircraft's day-VFR type-certification equipment, and not an AD item on this airframe. An A&amp;P can placard it "Inoperative" and log the entry — you're legal to depart IFR (daytime; a landing light has its own separate night-operation logic under 91.205(c) if relevant).</div></div>
+      <div class="step-item"><div class="step-num">VSI</div><div class="step-text">Not on the 91.205(d) list either — the VSI isn't one of the GRABCARD items. By the same logic as the light, it can be placarded and deactivated, and the flight can still legally go IFR.</div></div>
+    </div>
+    <div class="payoff">The two findings get the same <em>legal</em> answer, but think about the <em>risk</em>
+    difference: losing a landing light costs you nothing in cruise or in IMC, while flying with a known-bad VSI
+    removes one of your two altitude-trend instruments during an approach — legal and wise are not the same
+    question. <span class="acs-ref risk">IR.II.C.R1</span> is asking you to notice that gap.</div>
+  </div>
+
+  <h3>⚠️ Risk Management</h3>
   <div class="concept-grid">
     <div class="concept-card"><h4><span class="acs-ref risk">IR.II.C.R1</span> Operating with Inoperative Equipment</h4><p>Legal under 91.213 is not the same as wise for the specific flight you're about to fly — a placarded backup instrument on a hard IMC day is a different risk picture than the same item on a CAVU currency flight.</p></div>
     <div class="concept-card"><h4><span class="acs-ref risk">IR.II.C.R2</span> Outdated Navigation Publications/Databases</h4><p>Expired charts or a lapsed GPS database are easy to overlook and directly affect approach legality and accuracy — check currency as part of every preflight, not just occasionally.</p></div>
