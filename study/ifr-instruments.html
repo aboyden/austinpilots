@@ -676,6 +676,15 @@ function updateFailureState() {
 
   if (!p && !d && !s) {
     explain = 'All systems normal. Ram air enters the pitot tube; static pressure is sensed at the static ports. All three pitot-static instruments read correctly.';
+  } else if (!p && d && !s) {
+    // Only drain blocked (unusual but possible) — irrelevant while the main pitot opening is clear
+    explain = 'Drain hole blocked, pitot tube and static port clear. In normal flight, the drain hole\'s only job is to expel condensation and light water. With the main pitot opening still clear, ram air flows in normally and the ASI reads correctly — the drain only matters once the pitot tube itself also becomes blocked (it\'s then the only path for trapped pressure to escape).';
+  } else if (!p && s) {
+    // Static blocked; drain's state is irrelevant since the main pitot opening is clear either way
+    setCard('asi', 'erratic', 'Incorrect (trapped reference)');
+    setCard('alt', 'fail', 'FROZEN at block altitude');
+    setCard('vsi', 'fail', 'Reads ZERO');
+    explain = '⚠️ Static port blocked (the pitot drain hole doesn\'t matter here — the main pitot opening is clear, so ram air still flows normally). The altimeter freezes at the altitude where the port blocked — it has no way to sense pressure changes. The VSI instantly reads zero (no rate of pressure change). The ASI still senses ram air, but its static reference is now frozen, so it reads too fast if you descend below the blockage altitude and too slow if you climb above it. Switch to alternate static source. If none available, break the VSI glass as a last resort.';
   } else if (p && !d && !s) {
     // Pitot blocked, drain open: trapped air leaks out drain, no ram air
     setCard('asi', 'fail', 'Reads ZERO');
@@ -684,20 +693,18 @@ function updateFailureState() {
     // Pitot and drain both blocked: air is trapped
     setCard('asi', 'erratic', 'Climbs = fast, Descends = slow');
     explain = '🚨 BOTH pitot tube AND drain hole blocked (as in: ice blocks the tube completely with no drain escape). Pitot pressure is now trapped and sealed. As you climb, static pressure decreases — but pitot pressure is sealed and appears relatively high. The ASI reads AS IF it\'s going faster. Descending: static rises, sealed pitot appears relatively lower — ASI reads slow. This is the most dangerous icing scenario. The ASI essentially acts like an altimeter. Pitot heat is the cure.';
-  } else if (!p && !d && s) {
-    // Static blocked, pitot fine
-    setCard('asi', 'erratic', 'Incorrect (trapped reference)');
+  } else if (p && !d && s) {
+    // Pitot blocked with open drain, AND static also blocked
+    setCard('asi', 'erratic', 'Unreliable — drifts with altitude');
     setCard('alt', 'fail', 'FROZEN at block altitude');
     setCard('vsi', 'fail', 'Reads ZERO');
-    explain = '⚠️ Static port blocked. The altimeter freezes at the altitude where the port blocked — it has no way to sense pressure changes. The VSI instantly reads zero (no rate of pressure change). The ASI is also affected: it still senses ram air, but its static reference is now frozen, so readings become unreliable. Switch to alternate static source. If none available, break the VSI glass as a last resort.';
+    explain = '🚨 Pitot blocked with the drain still open, AND the static port is also blocked. Ram pressure bleeds out the drain toward the ambient pressure near the mast, while the ASI\'s static reference is frozen at the altitude where it blocked — so instead of settling cleanly at zero, the reading drifts unpredictably as you change altitude. The altimeter is frozen and the VSI reads zero, same as any static blockage. Switch to alternate static immediately; this combination leaves you with no trustworthy airspeed.';
   } else if (p && d && s) {
-    setCard('asi', 'fail', 'ZERO');
+    // Pitot AND drain blocked (sealed, trapped) AND static blocked (frozen)
+    setCard('asi', 'erratic', 'FROZEN — stuck at last reading');
     setCard('alt', 'fail', 'FROZEN');
     setCard('vsi', 'fail', 'Reads ZERO');
-    explain = '🚨 Everything blocked. Both pitot and static ports are blocked. You have no reliable airspeed, no altimeter, and no VSI. This scenario underscores why pitot heat and proper preflight of static ports is critical. Use power settings from memory, switch to alternate static, and fly by GPS altitude if available.';
-  } else if (!p && d && !s) {
-    // Only drain blocked (unusual but possible)
-    explain = 'Drain hole blocked, pitot tube and static port clear. In normal flight, the drain hole\'s only job is to expel condensation and light water. If the drain is blocked but pitot is open, the ASI will read normally — the blockage only matters if the pitot tube also becomes blocked (prevents pressure escape).';
+    explain = '🚨 Everything blocked. With the drain also sealed, pitot pressure is trapped rather than venting, so the ASI doesn\'t drop to zero — it sticks at whatever differential existed the moment everything sealed up, the same trapped-air effect as "pitot + drain blocked" above, except now the static side is frozen too so there\'s no climb/descend drift to tip you off. The altimeter is frozen and the VSI reads zero. Use power settings from memory, switch to alternate static, and fly by GPS altitude if available.';
   }
 
   document.getElementById('failureExplain').textContent = explain;
