@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>IFR Ground School — ACS Index</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #22263a;
+    --border: #2e3348;
+    --accent: #4f8ef7;
+    --accent2: #7c6af7;
+    --green: #34d399;
+    --yellow: #fbbf24;
+    --text: #e2e8f0;
+    --muted: #8892aa;
+    --heading: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 16px;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #0a0e1a 0%, #1a2040 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 24px 36px;
+    text-align: center;
+  }
+  .module-tag {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+  .header h1 { font-size: 32px; font-weight: 800; color: var(--heading); margin-bottom: 10px; }
+  .header p { color: var(--muted); font-size: 15px; max-width: 640px; margin: 0 auto; }
+  .header .edition { margin-top: 14px; font-size: 13px; color: var(--muted); }
+  .header .edition strong { color: var(--text); }
+
+  .container { max-width: 880px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; font-size: 13px; color: var(--muted); margin-bottom: 32px; }
+  .status-badge { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; padding: 3px 10px; border-radius: 999px; }
+  .status-badge.available { color: var(--green); background: rgba(52,211,153,0.12); border: 1px solid rgba(52,211,153,0.35); }
+  .status-badge.pending { color: var(--muted); background: rgba(255,255,255,0.04); border: 1px solid var(--border); }
+
+  .area-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 28px 24px;
+    margin-bottom: 20px;
+  }
+  .area-card.available { border-color: rgba(52,211,153,0.3); }
+
+  .area-head { display: flex; gap: 18px; align-items: flex-start; margin-bottom: 16px; }
+  .area-num {
+    width: 44px; height: 44px; min-width: 44px;
+    border-radius: 10px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px; font-weight: 800; color: var(--accent);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .area-card.available .area-num { background: rgba(52,211,153,0.1); border-color: rgba(52,211,153,0.35); color: var(--green); }
+  .area-title-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 4px; }
+  .area-head h2 { font-size: 19px; font-weight: 800; color: var(--heading); }
+  .area-sub { font-size: 12.5px; color: var(--muted); }
+
+  .task-list { list-style: none; margin: 0 0 18px; padding: 0; }
+  .task-list li { display: flex; gap: 12px; padding: 7px 0; font-size: 14.5px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .task-list li:last-child { border-bottom: none; }
+  .task-letter {
+    width: 22px; height: 22px; min-width: 22px;
+    border-radius: 50%;
+    background: var(--surface2);
+    color: var(--muted);
+    font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 1px;
+  }
+  .task-text { flex: 1; }
+  .task-related { display: inline-block; margin-left: 8px; font-size: 12px; color: var(--accent2); }
+
+  .area-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 14px; font-weight: 700; color: #fff;
+    background: var(--accent); text-decoration: none;
+    padding: 9px 18px; border-radius: 8px;
+  }
+  .area-link:hover { opacity: 0.88; }
+  .area-link.secondary { background: transparent; color: var(--accent2); border: 1px solid rgba(124,106,247,0.4); padding: 8px 16px; margin-left: 8px; }
+
+  .note {
+    background: rgba(79,142,247,0.06);
+    border: 1px solid rgba(79,142,247,0.2);
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 13.5px;
+    color: var(--muted);
+    margin-top: 28px;
+  }
+  .note strong { color: var(--text); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="module-tag">IFR Ground School</div>
+  <h1>Airman Certification Standards Index</h1>
+  <p>Every Area of Operation and Task in the Instrument Rating — Airplane ACS, in the order the FAA publishes
+  them. Built pages are linked; the rest are listed for reference until they're written.</p>
+  <div class="edition">Source: <strong>FAA-S-ACS-8C</strong> — Instrument Rating, Airplane (effective May 2024)</div>
+</div>
+
+<div class="container">
+  <div class="legend">
+    <span class="status-badge available">Available</span> a ground-school page exists for this Area
+    <span class="status-badge pending">Not yet built</span> listed from the ACS, no page yet
+  </div>
+
+  <!-- AREA I -->
+  <div class="area-card available">
+    <div class="area-head">
+      <div class="area-num">I</div>
+      <div>
+        <div class="area-title-row">
+          <h2>Preflight Preparation</h2>
+          <span class="status-badge available">Available</span>
+        </div>
+        <div class="area-sub">3 tasks</div>
+      </div>
+    </div>
+    <ul class="task-list">
+      <li><span class="task-letter">A</span><span class="task-text">Pilot Qualifications</span></li>
+      <li><span class="task-letter">B</span><span class="task-text">Weather Information</span></li>
+      <li><span class="task-letter">C</span><span class="task-text">Cross-Country Flight Planning</span></li>
+    </ul>
+    <a class="area-link" href="acs-area1-preflight-preparation.html">Open Area I &rarr;</a>
+  </div>
+
+  <!-- AREA II -->
+  <div class="area-card available">
+    <div class="area-head">
+      <div class="area-num">II</div>
+      <div>
+        <div class="area-title-row">
+          <h2>Preflight Procedures</h2>
+          <span class="status-badge available">Available</span>
+        </div>
+        <div class="area-sub">3 tasks</div>
+      </div>
+    </div>
+    <ul class="task-list">
+      <li><span class="task-letter">A</span><span class="task-text">Aircraft Systems Related to Instrument Flight Rules (IFR) Operations</span></li>
+      <li><span class="task-letter">B</span><span class="task-text">Aircraft Flight Instruments and Navigation Equipment <span class="task-related">— six-pack detail in Module: Instruments &amp; Systems</span></span></li>
+      <li><span class="task-letter">C</span><span class="task-text">Instrument Flight Deck Check</span></li>
+    </ul>
+    <a class="area-link" href="acs-area2-preflight-procedures.html">Open Area II &rarr;</a>
+  </div>
+
+  <!-- AREA III -->
+  <div class="area-card">
+    <div class="area-head">
+      <div class="area-num">III</div>
+      <div>
+        <div class="area-title-row">
+          <h2>Air Traffic Control Clearances and Procedures</h2>
+          <span class="status-badge pending">Not yet built</span>
+        </div>
+        <div class="area-sub">2 tasks</div>
+      </div>
+    </div>
+    <ul class="task-list">
+      <li><span class="task-letter">A</span><span class="task-text">Compliance with Air Traffic Control Clearances</span></li>
+      <li><span class="task-letter">B</span><span class="task-text">Holding Procedures</span></li>
+    </ul>
+  </div>
+
+  <!-- AREA IV -->
+  <div class="area-card">
+    <div class="area-head">
+      <div class="area-num">IV</div>
+      <div>
+        <div class="area-title-row">
+          <h2>Flight by Reference to Instruments</h2>
+          <span class="status-badge pending">Not yet built</span>
+        </div>
+        <div class="area-sub">2 tasks</div>
+      </div>
+    </div>
+    <ul class="task-list">
+      <li><span class="task-letter">A</span><span class="task-text">Instrument Flight</span></li>
+      <li><span class="task-letter">B</span><span class="task-text">Recovery from Unusual Flight Attitudes <span class="task-related">— partial-panel case in Module: Instruments &amp; Systems</span></span></li>
+    </ul>
+  </div>
+
+  <!-- AREA V -->
+  <div class="area-card">
+    <div class="area-head">
+      <div class="area-num">V</div>
+      <div>
+        <div class="area-title-row">
+          <h2>Navigation Systems</h2>
+          <span class="status-badge pending">Not yet built</span>
+        </div>
+        <div class="area-sub">2 tasks</div>
+      </div>
+    </div>
+    <ul class="task-list">
+      <li><span class="task-letter">A</span><span class="task-text">Intercepting and Tracking Navigational Systems and DME Arcs <span class="task-related">— VOR portion in Module: VOR Navigation</span></span></li>
+      <li><span class="task-letter">B</span><span class="task-text">Departure, En Route, and Arrival Operations</span></li>
+    </ul>
+  </div>
+
+  <!-- AREA VI -->
+  <div class="area-card">
+    <div class="area-head">
+      <div class="area-num">VI</div>
+      <div>
+        <div class="area-title-row">
+          <h2>Instrument Approach Procedures</h2>
+          <span class="status-badge pending">Not yet built</span>
+        </div>
+        <div class="area-sub">4 tasks</div>
+      </div>
+    </div>
+    <ul class="task-list">
+      <li><span class="task-letter">A</span><span class="task-text">Non-precision Approach</span></li>
+      <li><span class="task-letter">B</span><span class="task-text">Precision Approach</span></li>
+      <li><span class="task-letter">C</span><span class="task-text">Missed Approach</span></li>
+      <li><span class="task-letter">D</span><span class="task-text">Circling Approach</span></li>
+    </ul>
+  </div>
+
+  <!-- AREA VII -->
+  <div class="area-card">
+    <div class="area-head">
+      <div class="area-num">VII</div>
+      <div>
+        <div class="area-title-row">
+          <h2>Emergency Operations</h2>
+          <span class="status-badge pending">Not yet built</span>
+        </div>
+        <div class="area-sub">4 tasks</div>
+      </div>
+    </div>
+    <ul class="task-list">
+      <li><span class="task-letter">A</span><span class="task-text">Loss of Communications</span></li>
+      <li><span class="task-letter">B</span><span class="task-text">One Engine Inoperative (Simulated) during Straight-and-Level Flight and Turns (AMEL, AMES)</span></li>
+      <li><span class="task-letter">C</span><span class="task-text">Instrument Approach and Landing with an Inoperative Engine (Simulated) (AMEL, AMES)</span></li>
+      <li><span class="task-letter">D</span><span class="task-text">Approach with Loss of Primary Flight Instrument Indicators <span class="task-related">— covered in Module: Instruments &amp; Systems</span></span></li>
+    </ul>
+  </div>
+
+  <!-- AREA VIII -->
+  <div class="area-card">
+    <div class="area-head">
+      <div class="area-num">VIII</div>
+      <div>
+        <div class="area-title-row">
+          <h2>Postflight Procedures</h2>
+          <span class="status-badge pending">Not yet built</span>
+        </div>
+        <div class="area-sub">1 task</div>
+      </div>
+    </div>
+    <ul class="task-list">
+      <li><span class="task-letter">A</span><span class="task-text">Checking Instruments and Equipment</span></li>
+    </ul>
+  </div>
+
+  <div class="note">
+    <strong>Note on Tasks B and C/D in some Areas:</strong> AMEL/AMES-tagged tasks (Area VII, Tasks B &amp; C) apply
+    only to multiengine checkrides and are skipped for a single-engine add-on. The "Module" cross-links above point
+    to the two standalone lesson pages built earlier in this course (Instruments &amp; Systems, VOR Navigation) —
+    they cover part of their linked Task's knowledge, not all of it; see each Area page's own notes for the exact gap.
+  </div>
+</div>
+
+</body>
+</html>
