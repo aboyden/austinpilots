@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>IFR Ground School — Area I: Preflight Preparation</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #22263a;
+    --border: #2e3348;
+    --accent: #4f8ef7;
+    --accent2: #7c6af7;
+    --green: #34d399;
+    --red: #f87171;
+    --yellow: #fbbf24;
+    --orange: #fb923c;
+    --text: #e2e8f0;
+    --muted: #8892aa;
+    --heading: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #0a0e1a 0%, #1a2040 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 24px 0;
+    text-align: center;
+  }
+  .module-tag {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+  .header h1 { font-size: 32px; font-weight: 800; color: var(--heading); margin-bottom: 8px; }
+  .header p { color: var(--muted); font-size: 15px; }
+  .progress-bar { width: 200px; height: 4px; background: var(--surface2); border-radius: 2px; margin: 16px auto 0; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.5s; }
+
+  /* Nav */
+  .section-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15,17,23,0.95); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px; display: flex; gap: 0; overflow-x: auto; scrollbar-width: none;
+  }
+  .section-nav::-webkit-scrollbar { display: none; }
+  .nav-item {
+    padding: 14px 16px; font-size: 13px; font-weight: 600; color: var(--muted);
+    white-space: nowrap; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s;
+  }
+  .nav-item:hover { color: var(--text); }
+  .nav-item.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  .lesson-section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .lesson-section h2 { font-size: 26px; font-weight: 800; color: var(--heading); margin-bottom: 10px; }
+  .lesson-section p { margin-bottom: 16px; }
+  .lesson-section p:last-child { margin-bottom: 0; }
+  .lesson-section h3 { font-size: 18px; font-weight: 700; color: var(--heading); margin: 28px 0 12px; }
+  .lesson-section h4 { font-size: 14px; font-weight: 700; color: var(--heading); margin: 20px 0 8px; }
+
+  /* Task header block */
+  .task-block { margin: 40px 0 24px; }
+  .task-block:first-of-type { margin-top: 0; }
+  .task-title { font-size: 20px; font-weight: 800; color: var(--heading); margin-bottom: 6px; }
+  .task-refs { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+  .task-refs strong { color: var(--muted); }
+  .task-objective { font-size: 14px; color: var(--text); font-style: italic; padding-bottom: 18px; margin-bottom: 20px; border-bottom: 1px solid var(--border); }
+
+  /* ACS reference chips */
+  .acs-ref {
+    display: inline-block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--accent);
+    background: rgba(79,142,247,0.12);
+    border: 1px solid rgba(79,142,247,0.35);
+    border-radius: 5px;
+    padding: 1px 6px;
+    margin: 0 2px;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  .acs-ref.risk { color: var(--yellow); background: rgba(251,191,36,0.12); border-color: rgba(251,191,36,0.35); }
+  .acs-legend { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; font-size: 12.5px; color: var(--muted); margin: 4px 0 0; }
+  .acs-legend span.acs-ref { margin-right: 2px; }
+
+  .callout { border-radius: 10px; padding: 18px 22px; margin: 24px 0; border-left: 4px solid; font-size: 15px; }
+  .callout-key { background: rgba(79,142,247,0.08); border-color: var(--accent); }
+  .callout-warn { background: rgba(251,191,36,0.08); border-color: var(--yellow); }
+  .callout-tip { background: rgba(52,211,153,0.08); border-color: var(--green); }
+  .callout-danger { background: rgba(248,113,113,0.08); border-color: var(--red); }
+  .callout-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+  .callout-key .callout-title { color: var(--accent); }
+  .callout-warn .callout-title { color: var(--yellow); }
+  .callout-tip .callout-title { color: var(--green); }
+  .callout-danger .callout-title { color: var(--red); }
+
+  /* Table */
+  .data-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  .data-table th { background: var(--surface2); color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+  .data-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .ok-cell { color: var(--green); font-weight: 700; }
+  .fail-cell { color: var(--red); font-weight: 700; }
+  .warn-cell { color: var(--yellow); font-weight: 700; }
+
+  /* Concept grid */
+  .concept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  .concept-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+  .concept-card h4 { color: var(--heading); font-size: 14px; font-weight: 700; margin: 0 0 6px; }
+  .concept-card p { font-size: 14px; color: var(--muted); margin: 0; }
+
+  /* Reg list */
+  .reg-list { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 8px 24px; margin: 20px 0; }
+  .reg-item { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .reg-item:last-child { border-bottom: none; }
+  .reg-letter { background: var(--accent); color: #fff; width: 26px; height: 26px; min-width: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; margin-top: 2px; }
+  .reg-text { flex: 1; font-size: 15px; }
+  .reg-text strong { color: var(--heading); }
+
+  /* Key takeaways */
+  .takeaways { background: linear-gradient(135deg, rgba(79,142,247,0.08) 0%, rgba(124,106,247,0.08) 100%); border: 1px solid rgba(79,142,247,0.25); border-radius: 14px; padding: 32px; margin: 48px 0 0; }
+  .takeaways h3 { font-size: 18px; font-weight: 800; color: var(--heading); margin: 0 0 20px; }
+  .takeaway-item { display: flex; gap: 12px; margin-bottom: 14px; font-size: 15px; align-items: flex-start; }
+  .takeaway-dot { width: 8px; height: 8px; min-width: 8px; background: var(--accent); border-radius: 50%; margin-top: 8px; }
+
+  /* Quiz */
+  .quiz-section { padding: 56px 0; }
+  .quiz-section h2 { font-size: 26px; font-weight: 800; color: var(--heading); margin-bottom: 6px; }
+  .question-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin-bottom: 20px; }
+  .q-number { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: var(--accent); margin-bottom: 10px; }
+  .q-text { font-size: 16px; font-weight: 600; color: var(--heading); margin-bottom: 20px; line-height: 1.5; }
+  .q-options { display: flex; flex-direction: column; gap: 10px; }
+  .q-option { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: var(--surface2); border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 15px; }
+  .q-option:hover { border-color: var(--accent); background: rgba(79,142,247,0.06); }
+  .q-option.correct { border-color: var(--green); background: rgba(52,211,153,0.08); }
+  .q-option.wrong { border-color: var(--red); background: rgba(248,113,113,0.08); }
+  .q-option.disabled { pointer-events: none; }
+  .option-letter { width: 26px; height: 26px; min-width: 26px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--muted); transition: all 0.2s; }
+  .q-option.correct .option-letter { background: var(--green); color: #000; }
+  .q-option.wrong .option-letter { background: var(--red); color: #fff; }
+  .option-text { flex: 1; line-height: 1.5; }
+  .q-explanation { margin-top: 16px; padding: 14px 16px; background: rgba(79,142,247,0.07); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; font-size: 14px; display: none; line-height: 1.6; }
+  .q-explanation.show { display: block; }
+  .q-explanation strong { color: var(--accent); }
+
+  .score-bar { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-top: 24px; text-align: center; display: none; }
+  .score-bar.show { display: block; }
+  .score-number { font-size: 48px; font-weight: 800; color: var(--accent); }
+  .score-label { font-size: 15px; color: var(--muted); margin-top: 4px; }
+  .restart-btn { margin-top: 16px; padding: 10px 24px; background: var(--accent); color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; }
+  .restart-btn:hover { opacity: 0.85; }
+
+  @media (max-width: 640px) {
+    .concept-grid { grid-template-columns: 1fr; }
+    .header h1 { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="module-tag">ACS Area of Operation I</div>
+  <h1>Preflight Preparation</h1>
+  <p>Pilot Qualifications · Weather Information · Cross-Country Flight Planning</p>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<nav class="section-nav">
+  <div class="nav-item active" data-section="s1">Pilot Qual.</div>
+  <div class="nav-item" data-section="s2">Weather</div>
+  <div class="nav-item" data-section="s3">XC Planning</div>
+  <div class="nav-item" data-section="s4">Quiz</div>
+</nav>
+
+<!-- ── Intro ── -->
+<section class="lesson-section" style="padding-bottom: 24px;">
+<div class="container">
+  <p style="color: var(--muted);">
+    This page is built directly from <strong>FAA-S-ACS-8C</strong>, Instrument Rating — Airplane Airman
+    Certification Standards (effective May 2024). Every item below is tagged with its exact ACS reference —
+    <span class="acs-ref">IR.I.A.K1</span> for a Knowledge element, <span class="acs-ref risk">IR.I.A.R1</span>
+    for a Risk Management element — so you can trace each fact back to the standard it's testing. This isn't a
+    substitute for reading the ACS and the referenced handbooks yourself; it's a study aid organized the same way
+    the document is.
+  </p>
+</div>
+</section>
+
+<!-- ── S1: Pilot Qualifications ── -->
+<section id="s1" class="lesson-section">
+<div class="container">
+  <div class="section-label">Area I · Task A</div>
+  <h2>Pilot Qualifications</h2>
+
+  <div class="task-block">
+    <div class="task-refs"><strong>References:</strong> 14 CFR part 61; AC 68-1; FAA-H-8083-2, -3, -15, -25</div>
+    <div class="task-objective">Objective: the applicant exhibits satisfactory knowledge, risk management, and
+    skills associated with requirements to act as pilot-in-command under instrument flight rules.</div>
+  </div>
+
+  <h3>Certification, Recency, and Recordkeeping <span class="acs-ref">IR.I.A.K1</span></h3>
+  <div class="concept-grid">
+    <div class="concept-card">
+      <h4>Instrument Currency — 6 HITS in 6</h4>
+      <p>To act as PIC under IFR or in weather below VFR minimums, within the preceding 6 calendar months you
+      need 6 instrument approaches, holding procedures and tasks, and intercepting/tracking courses via
+      navigational electronic systems (14 CFR 61.57(c)). These can be done in the aircraft, a full flight
+      simulator, or an approved flight training device (FTD/AATD) with a safety pilot or instructor as required.</p>
+    </div>
+    <div class="concept-card">
+      <h4>Lapsed Currency — the 6/6/12 Window</h4>
+      <p>If you lapse currency, you have an additional 6 months (months 7–12) to regain it with a safety pilot,
+      without an instructor. Beyond 12 months total, you need an Instrument Proficiency Check (IPC) with a CFII,
+      examiner, or other authorized person (61.57(d)) — there's no more "self-currency" option.</p>
+    </div>
+    <div class="concept-card">
+      <h4>Recordkeeping</h4>
+      <p>Log the date, type and location of each instrument approach, and the name of the safety pilot if one was
+      required (61.51(g)). A safety pilot is required whenever you're under a view-limiting device and the
+      aircraft is not equipped with functional dual controls, or more precisely whenever simulated instrument
+      conditions are flown — the safety pilot must hold at least a private pilot certificate with the category/class
+      rating for the aircraft, per 61.51 and 91.109.</p>
+    </div>
+    <div class="concept-card">
+      <h4>Certification Basics</h4>
+      <p>An instrument rating requires a minimum 50 hours of cross-country PIC time (at least 10 in an airplane,
+      if seeking the airplane rating), 40 hours of actual/simulated instrument time, and the required training
+      events under 61.65, plus the knowledge and practical tests.</p>
+    </div>
+  </div>
+
+  <h3>Privileges and Limitations <span class="acs-ref">IR.I.A.K2</span></h3>
+  <p>The instrument rating removes the restriction in 61.3(e) that would otherwise prohibit you from acting as PIC
+  under IFR or in weather conditions less than the minimums for VFR. Without it, you're limited to VFR (or, for a
+  sport/recreational pilot, additional restrictions apply). The rating doesn't expire on its own — what lapses is
+  your <em>currency</em> under 61.57, which is a separate, renewable requirement from the certificate itself.</p>
+
+  <h3>Part 68 BasicMed Privileges and Limitations <span class="acs-ref">IR.I.A.K3</span></h3>
+  <p>BasicMed (14 CFR part 68) lets a pilot act as PIC without holding a current FAA medical certificate, provided
+  all of the following are met:</p>
+  <div class="reg-list">
+    <div class="reg-item"><div class="reg-letter">1</div><div class="reg-text"><strong>Hold a U.S. driver's license</strong> and comply with any of its medical restrictions.</div></div>
+    <div class="reg-item"><div class="reg-letter">2</div><div class="reg-text"><strong>Have held a regular FAA medical certificate at some point after July 14, 2006</strong> (first-, second-, or third-class), and not have had the most recent one revoked, suspended, or denied.</div></div>
+    <div class="reg-item"><div class="reg-letter">3</div><div class="reg-text"><strong>Complete a Comprehensive Medical Examination Checklist (CMEC)</strong> with a state-licensed physician no more than <strong>48 months (4 years)</strong> before the flight, and retain the completed checklist.</div></div>
+    <div class="reg-item"><div class="reg-letter">4</div><div class="reg-text"><strong>Complete a free online BasicMed medical education course</strong> (AOPA or Mayo Clinic) no more than <strong>24 months (2 years)</strong> before the flight, and retain the certificate of completion.</div></div>
+    <div class="reg-item"><div class="reg-letter">5</div><div class="reg-text"><strong>Operating limits:</strong> aircraft authorized to carry no more than <strong>7 occupants total</strong> and no more than <strong>6 passengers</strong>, with a maximum certificated takeoff weight of <strong>12,500 lbs</strong>, operated within the United States, at <strong>250 KIAS or less</strong>, at <strong>18,000 ft MSL or below</strong>, not for compensation or hire (with the usual limited exceptions), single-pilot operations, and not in operations requiring a type rating.</div></div>
+  </div>
+  <div class="callout callout-warn">
+    <div class="callout-title">Know this is a moving target</div>
+    The weight/passenger limits above were raised by the FAA Reauthorization Act of 2024 (effective November
+    2024) — BasicMed used to cap out at 6,000 lbs / 5 passengers / 6 occupants. If you're studying from an older
+    book, double-check the current numbers against 14 CFR part 68 before your checkride.
+  </div>
+
+  <h3>Risk Management</h3>
+  <div class="concept-grid">
+    <div class="concept-card">
+      <h4><span class="acs-ref risk">IR.I.A.R1</span> Proficiency vs. Currency</h4>
+      <p>Legally current (6 HITS in 6 months) does not mean proficient. A pilot who scraped by on 6 approaches
+      flown in good VMC with a safety pilot is legal, but may not be ready for an actual approach to minimums in
+      IMC. Be honest about the gap between the two.</p>
+    </div>
+    <div class="concept-card">
+      <h4><span class="acs-ref risk">IR.I.A.R2</span> Personal Minimums</h4>
+      <p>Set ceiling/visibility, crosswind, and currency-based minimums for yourself that are more conservative
+      than the regulatory minimums, and raise them further when rusty, tired, or flying an unfamiliar
+      aircraft/route.</p>
+    </div>
+    <div class="concept-card">
+      <h4><span class="acs-ref risk">IR.I.A.R3</span> Fitness for Flight</h4>
+      <p>Use IMSAFE (Illness, Medication, Stress, Alcohol, Fatigue, Emotion) before every flight. 14 CFR 61.53
+      prohibits acting as PIC with a known medical deficiency or while using medication that affects faculties
+      in a way contrary to safety — this applies under BasicMed too, even without a medical certificate to
+      invalidate.</p>
+    </div>
+    <div class="concept-card">
+      <h4><span class="acs-ref risk">IR.I.A.R4</span> Unfamiliar Aircraft/Avionics</h4>
+      <p>A new-to-you G1000 or glass panel autopilot adds workload exactly when you can least afford it — in
+      IMC. Get dedicated transition training before filing IFR in an unfamiliar avionics suite.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ── S2: Weather Information ── -->
+<section id="s2" class="lesson-section">
+<div class="container">
+  <div class="section-label">Area I · Task B</div>
+  <h2>Weather Information</h2>
+
+  <div class="task-block">
+    <div class="task-refs"><strong>References:</strong> 14 CFR part 91; AC 91-92; AIM; FAA-H-8083-2, -3, -25, -28</div>
+    <div class="task-objective">Objective: the applicant exhibits satisfactory knowledge, risk management, and
+    skills associated with obtaining, understanding, and applying weather information for a flight under IFR.</div>
+  </div>
+
+  <h3>Sources of Weather Data <span class="acs-ref">IR.I.B.K1</span></h3>
+  <p>The two FAA-recognized sources for a preflight weather briefing are the <strong>National Weather Service</strong>
+  (aviationweather.gov, the authoritative source for raw and graphical products) and <strong>Flight Service</strong>
+  — operated under contract by Leidos as 1-800-WX-BRIEF / 1800wxbrief.com, which also files and activates/closes
+  IFR flight plans and provides live briefers and in-flight weather via radio. Third-party EFB apps (ForeFlight,
+  Garmin Pilot, ForeFlight's own briefing partner, etc.) typically source the same underlying NWS/Flight Service
+  data through an approved data provider.</p>
+
+  <h3>Acceptable Weather Products <span class="acs-ref">IR.I.B.K2</span></h3>
+  <p class="task-objective" style="border: none; padding: 0; margin: 0 0 12px;">The ACS requires knowledge of at
+  least three of the following sub-elements:</p>
+  <table class="data-table">
+    <thead><tr><th>Product</th><th>What it tells you</th></tr></thead>
+    <tbody>
+      <tr><td><span class="acs-ref">IR.I.B.K2a</span> METAR / SPECI / PIREP</td><td>METAR = scheduled hourly surface observation; SPECI = unscheduled special observation when conditions change significantly. PIREP = pilot report of actual conditions (turbulence, icing, cloud tops, etc.) — often the most current, ground-truth data available.</td></tr>
+      <tr><td><span class="acs-ref">IR.I.B.K2b</span> Surface Analysis Chart / CVA</td><td>Surface Analysis shows current frontal positions, pressure centers, and station plots. The Ceiling and Visibility Analysis (CVA) overlays current ceiling/visibility categories (VFR/MVFR/IFR/LIFR) derived from satellite and surface data.</td></tr>
+      <tr><td><span class="acs-ref">IR.I.B.K2c</span> TAF</td><td>Terminal Aerodrome Forecast — a coded forecast for a 5-statute-mile radius around an airport, typically valid 24–30 hours, used to plan destination/alternate weather.</td></tr>
+      <tr><td><span class="acs-ref">IR.I.B.K2d</span> GFA</td><td>Graphical Forecast for Aviation — the web-based, graphical replacement for the old textual Area Forecast (FA); shows forecast sky condition, visibility/obstructions, wind, icing, turbulence, and more on an interactive map, in 3-hour increments out to 15 hours (with extended panels further out).</td></tr>
+      <tr><td><span class="acs-ref">IR.I.B.K2e</span> Winds and Temperatures Aloft (FB)</td><td>Forecast wind direction/speed and temperature at standard altitudes — critical for TAS/groundspeed calculations, icing risk (freezing level), and oxygen/performance planning.</td></tr>
+      <tr><td><span class="acs-ref">IR.I.B.K2f</span> Convective Outlook (AC)</td><td>Storm Prediction Center's Day 1/2/3 outlook for organized severe convective activity — useful for strategic, long-lead-time planning around thunderstorm complexes.</td></tr>
+      <tr><td><span class="acs-ref">IR.I.B.K2g</span> In-flight Advisories — AIRMET / SIGMET / Convective SIGMET</td><td>AIRMET (Sierra/Tango/Zulu: IFR conditions/mountain obscuration, turbulence/strong surface wind, icing/freezing level) covers conditions of concern mainly to light aircraft. SIGMET covers more severe hazards (severe turbulence/icing, dust/sandstorms, volcanic ash) affecting all aircraft. Convective SIGMET covers lines of thunderstorms, embedded TS, areas of TS, or severe/hail/wind criteria.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Meteorology for IFR Flight <span class="acs-ref">IR.I.B.K3</span></h3>
+  <p class="task-objective" style="border: none; padding: 0; margin: 0 0 12px;">At least three of the following
+  must be analyzed for the planned departure, en route, alternate, and destination phases:</p>
+  <div class="concept-grid">
+    <div class="concept-card"><h4><span class="acs-ref">K3a</span> Atmospheric Composition &amp; Stability</h4><p>Stable air resists vertical motion (smooth, stratiform clouds, poor mixing/haze trapping); unstable air favors convection (cumulus buildups, better mixing, turbulence).</p></div>
+    <div class="concept-card"><h4><span class="acs-ref">K3b</span> Wind</h4><p>Windshear (abrupt change in speed/direction with altitude — a major factor near fronts, low-level jets, and convection) and mountain wave (strong downdrafts/turbulence on the lee side of ridges when wind crosses perpendicular to terrain at speed).</p></div>
+    <div class="concept-card"><h4><span class="acs-ref">K3c</span> Temperature &amp; Heat Exchange</h4><p>Drives convection, determines the freezing level, and governs density altitude performance effects.</p></div>
+    <div class="concept-card"><h4><span class="acs-ref">K3d</span> Moisture / Precipitation</h4><p>Dewpoint spread predicts cloud/fog formation; precipitation type and intensity affect visibility and icing risk.</p></div>
+    <div class="concept-card"><h4><span class="acs-ref">K3e</span> Weather System Formation</h4><p>Air masses and fronts (cold/warm/stationary/occluded) — the basic building blocks for forecasting where and when weather will change along a route.</p></div>
+    <div class="concept-card"><h4><span class="acs-ref">K3f</span> Clouds</h4><p>Cloud families (low/middle/high, cumuliform/stratiform) hint at stability, icing type, and turbulence potential.</p></div>
+    <div class="concept-card"><h4><span class="acs-ref">K3g</span> Turbulence</h4><p>Mechanical (terrain/friction), thermal (convective), wind shear, and wake turbulence — know the causes and how PIREPs/AIRMETs report intensity.</p></div>
+    <div class="concept-card"><h4><span class="acs-ref">K3h</span> Thunderstorms &amp; Microbursts</h4><p>Three stages (cumulus/mature/dissipating); microbursts produce extreme, short-duration wind shear that has caused fatal accidents on approach — give all convection wide berth.</p></div>
+    <div class="concept-card"><h4><span class="acs-ref">K3i</span> Icing &amp; Freezing Level</h4><p>Structural icing requires visible moisture at or below freezing; know the freezing level along your route and the difference between rime, clear, and mixed ice.</p></div>
+    <div class="concept-card"><h4><span class="acs-ref">K3j</span> Fog / Mist</h4><p>Radiation, advection, upslope, and precipitation-induced fog each form under different conditions — know which type you're likely to encounter and how it typically clears.</p></div>
+    <div class="concept-card"><h4><span class="acs-ref">K3k</span> Frost</h4><p>Forms on a cold-soaked airframe in humid air even when the ambient temperature is above freezing; disrupts airflow over the wing enough to be a takeoff hazard — must be removed, not just "brushed off."</p></div>
+    <div class="concept-card"><h4><span class="acs-ref">K3l</span> Obstructions to Visibility</h4><p>Smoke, haze, volcanic ash, blowing dust/sand — reduce visibility without necessarily showing as cloud, and some (volcanic ash) are a serious airframe/engine hazard distinct from normal IMC.</p></div>
+  </div>
+
+  <h3>Flight Deck Weather Displays <span class="acs-ref">IR.I.B.K4</span></h3>
+  <p>Know the capabilities and limitations of your installed datalink weather (ADS-B FIS-B or SiriusXM): FIS-B
+  NEXRAD on ADS-B is typically several minutes old by the time it displays (it is <em>not</em> real-time), has no
+  cell-phone-style continuous update, and should never be used for close-in thunderstorm penetration decisions —
+  it's a strategic, not tactical, tool.</p>
+
+  <h3>Risk Management</h3>
+  <div class="concept-grid">
+    <div class="concept-card">
+      <h4><span class="acs-ref risk">IR.I.B.R1</span> Go/No-Go &amp; Divert Decisions</h4>
+      <p>Covers <span class="acs-ref risk">R1a</span> circumstances favoring diversion, <span class="acs-ref risk">R1b</span> your personal weather minimums, and <span class="acs-ref risk">R1c</span> hazardous weather including known/forecast icing or turbulence aloft. Decide your "out" before you need it.</p>
+    </div>
+    <div class="concept-card">
+      <h4><span class="acs-ref risk">IR.I.B.R2</span> Use &amp; Limitations</h4>
+      <p>Of <span class="acs-ref risk">R2a</span> installed onboard weather equipment, <span class="acs-ref risk">R2b</span> aviation weather reports and forecasts (all are probabilistic, not guarantees), and <span class="acs-ref risk">R2c</span> in-flight weather resources (datalink lag, radio reception gaps).</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ── S3: Cross-Country Flight Planning ── -->
+<section id="s3" class="lesson-section">
+<div class="container">
+  <div class="section-label">Area I · Task C</div>
+  <h2>Cross-Country Flight Planning</h2>
+
+  <div class="task-block">
+    <div class="task-refs"><strong>References:</strong> 14 CFR part 91; AIM; Chart Supplements; FAA-H-8083-2, -3, -15, -16, -25; IFR Enroute Charts; NOTAMs; IFR Navigation Charts</div>
+    <div class="task-objective">Objective: the applicant exhibits satisfactory knowledge, risk management, and
+    skills associated with planning an IFR cross-country and filing an IFR flight plan.</div>
+  </div>
+
+  <h3>Route Planning <span class="acs-ref">IR.I.C.K1</span></h3>
+  <div class="reg-list">
+    <div class="reg-item"><div class="reg-letter">a</div><div class="reg-text">Available <strong>navigational facilities</strong> along the route — VOR, GPS/RNAV waypoints, and the airway or direct/RNAV routing they support.</div></div>
+    <div class="reg-item"><div class="reg-letter">b</div><div class="reg-text"><strong>Special use airspace</strong> — MOAs, restricted/prohibited areas, warning areas — and whether they're active for your transit time.</div></div>
+    <div class="reg-item"><div class="reg-letter">c</div><div class="reg-text"><strong>Preferred routes</strong> published in the Chart Supplement for busy city pairs, which ATC will often assign or expect you to file.</div></div>
+    <div class="reg-item"><div class="reg-letter">d</div><div class="reg-text"><strong>Primary and alternate airports</strong> — runway lengths, approaches available, and fuel/services.</div></div>
+    <div class="reg-item"><div class="reg-letter">e</div><div class="reg-text"><strong>Enroute charts</strong> (IFR Low/High) for airway structure, MEAs, MOCAs, and reporting points.</div></div>
+    <div class="reg-item"><div class="reg-letter">f</div><div class="reg-text"><strong>Chart Supplements</strong> for airport/facility data, communications frequencies, and special notices.</div></div>
+    <div class="reg-item"><div class="reg-letter">g</div><div class="reg-text"><strong>NOTAMs</strong> for runway/taxiway closures, approach outages, TFRs, and obstruction changes not yet charted.</div></div>
+    <div class="reg-item"><div class="reg-letter">h</div><div class="reg-text"><strong>Terminal Procedures Publications (TPP)</strong> — the approach plate/SID/STAR booklet for your departure, en route, and arrival airports.</div></div>
+  </div>
+
+  <h3>Altitude Selection <span class="acs-ref">IR.I.C.K2</span></h3>
+  <p>Account for terrain and obstacles (use the MEA, MOCA, or your own obstacle clearance — 1,000 ft in non-mountainous
+  terrain, 2,000 ft in designated mountainous areas, per 91.177 for off-airway/direct routing), single-engine glide
+  distance over inhospitable terrain, the IFR cruising altitude rule (14 CFR 91.179 — magnetic course 0°–179° flies
+  odd thousands, 180°–359° flies even thousands, below FL180), the effect of wind on fuel and groundspeed, and
+  oxygen requirements (14 CFR 91.211: supplemental oxygen required for the required flight crew above 12,500 ft MSL
+  cabin pressure altitude for that portion of flight over 30 minutes, required at all times above 14,000 ft, and
+  required for every occupant above 15,000 ft).</p>
+
+  <h3>Calculations <span class="acs-ref">IR.I.C.K3</span></h3>
+  <div class="concept-grid">
+    <div class="concept-card"><h4><span class="acs-ref">K3a</span> Time, Climb/Descent, Course, Distance, Heading, TAS, Groundspeed</h4><p>Standard E6B/flight-computer work: correct indicated airspeed for altitude/temperature to get TAS, then apply the wind triangle to get heading and groundspeed.</p></div>
+    <div class="concept-card"><h4><span class="acs-ref">K3b</span> ETA, Including UTC Conversion</h4><p>IFR flight plans and clearances are typically worked in Coordinated Universal Time (Zulu) — know your local-to-UTC offset and how to convert quickly.</p></div>
+    <div class="concept-card"><h4><span class="acs-ref">K3c</span> Fuel Requirements, Including Reserve</h4><p>14 CFR 91.167: enough fuel to reach the first airport of intended landing, then to the alternate (if one is required), then <strong>45 minutes</strong> at normal cruising speed — the same 45-minute figure applies day or night under IFR.</p></div>
+  </div>
+
+  <h3>Elements of an IFR Flight Plan <span class="acs-ref">IR.I.C.K4</span></h3>
+  <p>Whether filed on paper (FAA Form 7233-1) or electronically, the core fields are the same: aircraft
+  identification; aircraft type and special equipment suffix; true airspeed; departure point and proposed
+  departure time; requested cruising altitude; route of flight; destination and estimated time en route; an
+  alternate airport (if required); fuel on board; remarks; pilot's name, address, and phone number; number of
+  persons on board; and aircraft color. Equipment suffixes communicate your navigation/surveillance capability
+  (e.g., RNAV/GPS, DME, transponder with Mode C, ADS-B Out) to ATC's automation.</p>
+
+  <h3>Activating and Closing an IFR Flight Plan <span class="acs-ref">IR.I.C.K5</span></h3>
+  <div class="concept-grid">
+    <div class="concept-card">
+      <h4>Controlled Airspace</h4>
+      <p>File with Flight Service or your EFB provider; your plan is activated automatically when ATC issues your
+      clearance (typically via clearance delivery, ground, or tower) and you depart. ATC usually closes it for
+      you automatically upon landing at a towered airport.</p>
+    </div>
+    <div class="concept-card">
+      <h4>Uncontrolled Airspace / Non-Towered Field</h4>
+      <p>You may need to get your clearance by phone or via a remote communications outlet before taxiing, often
+      with a clearance void time if there's no way to get it airborne. After landing at an airport without a
+      tower or reliable ATC/FSS radio contact, <strong>you must close the flight plan yourself</strong> — by radio
+      before losing contact, or by phone after landing — or search and rescue procedures may be initiated when
+      you don't show up as "closed."</p>
+    </div>
+  </div>
+
+  <h3>Risk Management</h3>
+  <div class="concept-grid">
+    <div class="concept-card"><h4><span class="acs-ref risk">IR.I.C.R1</span> Pilot</h4><p>Your own currency, proficiency, and physical/mental readiness for this specific flight.</p></div>
+    <div class="concept-card"><h4><span class="acs-ref risk">IR.I.C.R2</span> Aircraft</h4><p>Performance, equipment, and airworthiness limitations for the planned route and conditions.</p></div>
+    <div class="concept-card"><h4><span class="acs-ref risk">IR.I.C.R3</span> Environment</h4><p>Weather, airports, airspace, terrain, and obstacles — plus <span class="acs-ref risk">external pressures</span> (get-there-itis, schedules, passengers).</p></div>
+    <div class="concept-card"><h4><span class="acs-ref risk">IR.I.C.R5 / R6</span> Service &amp; App Limitations</h4><p>ATC services (radar coverage gaps, workload-driven delays) and electronic flight planning apps (routing/terrain/fuel estimates are only as good as their data and your inputs) both have limits — cross-check, don't blindly trust.</p></div>
+    <div class="concept-card"><h4><span class="acs-ref risk">IR.I.C.R7</span> Fuel Planning</h4><p>Build in margin beyond the legal 45-minute reserve for routing changes, holding, or a missed approach — the reserve is a floor, not a target.</p></div>
+  </div>
+
+  <div class="callout callout-tip">
+    <div class="callout-title">Memory Aid — PAVE</div>
+    <strong>P</strong>ilot, <strong>A</strong>ircraft, en<strong>V</strong>ironment, <strong>E</strong>xternal
+    pressures — a simple frame for the R1–R4 risk categories that show up across nearly every ACS task.
+  </div>
+
+  <div class="takeaways">
+    <h3>📋 Key Takeaways</h3>
+    <div class="takeaway-item"><div class="takeaway-dot"></div><div>Currency (6 approaches/holding/tracking in 6 months) and proficiency are different things — the ACS tests whether you know the difference <span class="acs-ref risk">IR.I.A.R1</span>.</div></div>
+    <div class="takeaway-item"><div class="takeaway-dot"></div><div>BasicMed's current limits are 12,500 lbs, 6 passengers, 7 occupants, ≤250 KIAS, ≤18,000 ft MSL <span class="acs-ref">IR.I.A.K3</span> — a 2024 change from the older, lower limits.</div></div>
+    <div class="takeaway-item"><div class="takeaway-dot"></div><div>You need working knowledge of at least three weather products <span class="acs-ref">IR.I.B.K2</span> and at least three meteorological hazard categories <span class="acs-ref">IR.I.B.K3</span> for any given flight.</div></div>
+    <div class="takeaway-item"><div class="takeaway-dot"></div><div>IFR fuel reserve is 45 minutes at normal cruise, day or night, after reaching your destination and alternate (if required) <span class="acs-ref">IR.I.C.K3c</span>.</div></div>
+    <div class="takeaway-item"><div class="takeaway-dot"></div><div>Closing your own flight plan at a non-towered field with no ATC/FSS contact is a pilot responsibility, not something that happens automatically <span class="acs-ref">IR.I.C.K5</span>.</div></div>
+  </div>
+</div>
+</section>
+
+<!-- ── Quiz ── -->
+<section id="s4" class="quiz-section">
+<div class="container">
+  <div class="section-label">Area I · Knowledge Check</div>
+  <h2>Knowledge Check</h2>
+  <p style="color: var(--muted); margin-bottom: 32px;">8 questions covering Tasks A, B, and C.</p>
+  <div id="quizContainer"></div>
+  <div class="score-bar" id="scoreBar">
+    <div class="score-number" id="scoreNum"></div>
+    <div class="score-label" id="scoreLabel"></div>
+    <button class="restart-btn" onclick="restartQuiz()">Try Again</button>
+  </div>
+</div>
+</section>
+
+<script>
+const questions = [
+  {
+    q: "You've lapsed instrument currency entirely — it's been 13 months since your last 6 approaches. What must you do before acting as PIC under IFR?",
+    options: [
+      "Fly 6 approaches, holding, and course tracking with a safety pilot within 6 months",
+      "Complete an Instrument Proficiency Check (IPC) with an authorized instructor or examiner",
+      "Nothing — currency only matters in actual IMC, not simulated conditions",
+      "Retake the instrument rating knowledge test"
+    ],
+    correct: 1,
+    explanation: "Under 61.57(d), once you're beyond 12 months without the required instrument experience, a safety-pilot-only refresh is no longer available — you need an Instrument Proficiency Check with a CFII, examiner, or other authorized person. The 6-month self-refresh window only applies in months 7–12 after lapsing. (IR.I.A.K1 / IR.I.A.R1)"
+  },
+  {
+    q: "Under current BasicMed rules (post-2024 Reauthorization Act), what is the maximum certificated takeoff weight you may fly?",
+    options: ["6,000 lbs", "9,000 lbs", "12,500 lbs", "There is no weight limit"],
+    correct: 2,
+    explanation: "The FAA Reauthorization Act of 2024 raised the BasicMed weight cap from 6,000 lbs to 12,500 lbs, the passenger limit from 5 to 6, and the total occupant limit from 6 to 7. The altitude (18,000 ft MSL) and speed (250 KIAS) caps are unchanged. (IR.I.A.K3)"
+  },
+  {
+    q: "Which weather product is specifically the graphical, web-based replacement for the old textual Area Forecast (FA)?",
+    options: ["TAF", "GFA", "METAR", "Convective SIGMET"],
+    correct: 1,
+    explanation: "The Graphical Forecast for Aviation (GFA) replaced the textual Area Forecast. It presents forecast sky condition, visibility, wind, icing, and turbulence on an interactive map in time increments, rather than as a text product. (IR.I.B.K2d)"
+  },
+  {
+    q: "A SIGMET and a Convective SIGMET differ mainly in that:",
+    options: [
+      "SIGMET is only for IFR-rated pilots; Convective SIGMET is for everyone",
+      "SIGMET covers non-convective severe hazards (severe icing/turbulence, dust storms, volcanic ash) affecting all aircraft; Convective SIGMET specifically covers thunderstorm-related hazards",
+      "SIGMET is valid for 6 hours and Convective SIGMET for 24 hours",
+      "They are the same product issued by different offices"
+    ],
+    correct: 1,
+    explanation: "SIGMETs cover hazards like severe turbulence, severe icing, dust/sandstorms, and volcanic ash — significant to all aircraft. Convective SIGMETs are specifically for thunderstorm lines, embedded thunderstorms, areas of thunderstorms, and associated severe criteria (hail, wind gusts, tornadoes). (IR.I.B.K2g)"
+  },
+  {
+    q: "What is the IFR fuel reserve requirement under 14 CFR 91.167?",
+    options: [
+      "30 minutes day, 45 minutes night, at normal cruise",
+      "45 minutes at normal cruising speed, regardless of day or night, after reaching the destination and alternate (if required)",
+      "A fixed 1 hour of fuel at any power setting",
+      "No specific reserve — only enough fuel to reach the destination"
+    ],
+    correct: 1,
+    explanation: "Unlike the VFR day/night 30/45-minute split under 91.151, the IFR reserve under 91.167 is a flat 45 minutes at normal cruising speed, applied after fuel to the destination and (if required) the alternate — day or night makes no difference. (IR.I.C.K3c)"
+  },
+  {
+    q: "The 'odd course, odd altitude / even course, even altitude' IFR cruising altitude rule (91.179) is based on:",
+    options: ["True course", "Magnetic course", "Magnetic heading", "GPS track"],
+    correct: 1,
+    explanation: "91.179 assigns cruising altitudes based on magnetic course: 0°–179° uses odd thousands (3,000, 5,000, 7,000...), 180°–359° uses even thousands (2,000, 4,000, 6,000...), below FL180. It's course, not heading — heading includes a wind-correction angle that course does not. (IR.I.C.K2)"
+  },
+  {
+    q: "You land at a non-towered airport at the end of an IFR flight, and you lose radio contact with ATC/Flight Service before you can report landing. What must you do?",
+    options: [
+      "Nothing — the flight plan closes automatically once your transponder stops squawking",
+      "Call Flight Service or ATC by phone after landing to close the flight plan yourself",
+      "Wait for ATC to call the airport to confirm your landing",
+      "File a new flight plan to cancel the old one"
+    ],
+    correct: 1,
+    explanation: "At a non-towered field with no reliable ATC/FSS radio contact, closing the IFR flight plan is the pilot's responsibility — normally by phone to Flight Service after landing. If it isn't closed, search-and-rescue procedures can be triggered after the overdue time. (IR.I.C.K5)"
+  },
+  {
+    q: "Which of these is a Risk Management element under Task A, Pilot Qualifications, rather than a Knowledge element?",
+    options: [
+      "Certification requirements and recordkeeping",
+      "Privileges and limitations of the rating",
+      "Proficiency versus currency",
+      "Part 68 BasicMed privileges and limitations"
+    ],
+    correct: 2,
+    explanation: "Proficiency vs. currency (IR.I.A.R1) is a Risk Management element — it's about judgment, not a fact to recite. The other three options are Knowledge elements (K1, K2, K3)."
+  }
+];
+
+let answers = new Array(questions.length).fill(null);
+let answered = 0;
+
+function buildQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  answers = new Array(questions.length).fill(null);
+  answered = 0;
+  document.getElementById('scoreBar').classList.remove('show');
+
+  questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = `q${qi}`;
+
+    const num = document.createElement('div');
+    num.className = 'q-number';
+    num.textContent = `QUESTION ${qi + 1} OF ${questions.length}`;
+    card.appendChild(num);
+
+    const text = document.createElement('div');
+    text.className = 'q-text';
+    text.textContent = q.q;
+    card.appendChild(text);
+
+    const opts = document.createElement('div');
+    opts.className = 'q-options';
+    q.options.forEach((opt, oi) => {
+      const btn = document.createElement('div');
+      btn.className = 'q-option';
+      btn.innerHTML = `<div class="option-letter">${'ABCD'[oi]}</div><div class="option-text">${opt}</div>`;
+      btn.addEventListener('click', () => selectAnswer(qi, oi));
+      opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+
+    const exp = document.createElement('div');
+    exp.className = 'q-explanation';
+    exp.innerHTML = `<strong>Explanation:</strong> ${q.explanation}`;
+    card.appendChild(exp);
+
+    container.appendChild(card);
+  });
+}
+
+function selectAnswer(qi, oi) {
+  if (answers[qi] !== null) return;
+  answers[qi] = oi;
+  answered++;
+
+  const card = document.getElementById(`q${qi}`);
+  const opts = card.querySelectorAll('.q-option');
+  const exp = card.querySelector('.q-explanation');
+  opts.forEach((opt, idx) => {
+    opt.classList.add('disabled');
+    if (idx === questions[qi].correct) opt.classList.add('correct');
+    else if (idx === oi && oi !== questions[qi].correct) opt.classList.add('wrong');
+  });
+  exp.classList.add('show');
+  if (answered === questions.length) showScore();
+  updateProgress();
+}
+
+function showScore() {
+  const correct = answers.filter((a, i) => a === questions[i].correct).length;
+  const pct = Math.round((correct / questions.length) * 100);
+  const scoreBar = document.getElementById('scoreBar');
+  document.getElementById('scoreNum').textContent = `${correct}/${questions.length}`;
+  document.getElementById('scoreLabel').textContent = `${pct}% — ${pct >= 80 ? '✅ Solid grasp of Area I.' : pct >= 60 ? '📚 Review the sections above.' : '🔄 Work through the lesson again before your oral.'}`;
+  scoreBar.classList.add('show');
+}
+
+function restartQuiz() { buildQuiz(); updateProgress(); }
+buildQuiz();
+
+const sectionIds = ['s1','s2','s3','s4'];
+
+function updateProgress() {
+  const scrolled = sectionIds.filter(id => {
+    const el = document.getElementById(id);
+    return el && el.getBoundingClientRect().top < window.innerHeight * 0.6;
+  }).length;
+  const quizPct = answered / questions.length;
+  const total = (scrolled / sectionIds.length) * 0.7 + quizPct * 0.3;
+  document.getElementById('progressFill').style.width = Math.round(total * 100) + '%';
+}
+
+const navItems = document.querySelectorAll('.nav-item');
+navItems.forEach(item => {
+  item.addEventListener('click', () => {
+    const t = document.getElementById(item.dataset.section);
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+window.addEventListener('scroll', () => {
+  let current = sectionIds[0];
+  sectionIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < 120) current = id;
+  });
+  navItems.forEach(item => item.classList.toggle('active', item.dataset.section === current));
+  updateProgress();
+}, { passive: true });
+</script>
+</body>
+</html>

@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>IFR Ground School — Area II: Preflight Procedures</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #22263a;
+    --border: #2e3348;
+    --accent: #4f8ef7;
+    --accent2: #7c6af7;
+    --green: #34d399;
+    --red: #f87171;
+    --yellow: #fbbf24;
+    --orange: #fb923c;
+    --text: #e2e8f0;
+    --muted: #8892aa;
+    --heading: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #0a0e1a 0%, #1a2040 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 24px 0;
+    text-align: center;
+  }
+  .module-tag {
+    display: inline-block;
+    background: var(--accent2);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+  .header h1 { font-size: 32px; font-weight: 800; color: var(--heading); margin-bottom: 8px; }
+  .header p { color: var(--muted); font-size: 15px; }
+  .progress-bar { width: 200px; height: 4px; background: var(--surface2); border-radius: 2px; margin: 16px auto 0; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent2); width: 0%; transition: width 0.5s; }
+
+  .section-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15,17,23,0.95); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px; display: flex; gap: 0; overflow-x: auto; scrollbar-width: none;
+  }
+  .section-nav::-webkit-scrollbar { display: none; }
+  .nav-item {
+    padding: 14px 16px; font-size: 13px; font-weight: 600; color: var(--muted);
+    white-space: nowrap; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s;
+  }
+  .nav-item:hover { color: var(--text); }
+  .nav-item.active { color: var(--accent2); border-bottom-color: var(--accent2); }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  .lesson-section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent2); margin-bottom: 8px; }
+  .lesson-section h2 { font-size: 26px; font-weight: 800; color: var(--heading); margin-bottom: 10px; }
+  .lesson-section p { margin-bottom: 16px; }
+  .lesson-section p:last-child { margin-bottom: 0; }
+  .lesson-section h3 { font-size: 18px; font-weight: 700; color: var(--heading); margin: 28px 0 12px; }
+  .lesson-section h4 { font-size: 14px; font-weight: 700; color: var(--heading); margin: 20px 0 8px; }
+
+  .task-block { margin: 40px 0 24px; }
+  .task-block:first-of-type { margin-top: 0; }
+  .task-title { font-size: 20px; font-weight: 800; color: var(--heading); margin-bottom: 6px; }
+  .task-refs { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+  .task-refs strong { color: var(--muted); }
+  .task-objective { font-size: 14px; color: var(--text); font-style: italic; padding-bottom: 18px; margin-bottom: 20px; border-bottom: 1px solid var(--border); }
+
+  .acs-ref {
+    display: inline-block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--accent2);
+    background: rgba(124,106,247,0.12);
+    border: 1px solid rgba(124,106,247,0.35);
+    border-radius: 5px;
+    padding: 1px 6px;
+    margin: 0 2px;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  .acs-ref.risk { color: var(--yellow); background: rgba(251,191,36,0.12); border-color: rgba(251,191,36,0.35); }
+
+  .cross-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12.5px; font-weight: 600; color: var(--green);
+    background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.3);
+    border-radius: 6px; padding: 3px 10px; margin: 4px 6px 4px 0;
+  }
+
+  .callout { border-radius: 10px; padding: 18px 22px; margin: 24px 0; border-left: 4px solid; font-size: 15px; }
+  .callout-key { background: rgba(79,142,247,0.08); border-color: var(--accent); }
+  .callout-warn { background: rgba(251,191,36,0.08); border-color: var(--yellow); }
+  .callout-tip { background: rgba(52,211,153,0.08); border-color: var(--green); }
+  .callout-danger { background: rgba(248,113,113,0.08); border-color: var(--red); }
+  .callout-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+  .callout-key .callout-title { color: var(--accent); }
+  .callout-warn .callout-title { color: var(--yellow); }
+  .callout-tip .callout-title { color: var(--green); }
+  .callout-danger .callout-title { color: var(--red); }
+
+  .data-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  .data-table th { background: var(--surface2); color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+  .data-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .ok-cell { color: var(--green); font-weight: 700; }
+  .fail-cell { color: var(--red); font-weight: 700; }
+  .warn-cell { color: var(--yellow); font-weight: 700; }
+
+  .concept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  .concept-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+  .concept-card h4 { color: var(--heading); font-size: 14px; font-weight: 700; margin: 0 0 6px; }
+  .concept-card p { font-size: 14px; color: var(--muted); margin: 0; }
+
+  .reg-list { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 8px 24px; margin: 20px 0; }
+  .reg-item { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .reg-item:last-child { border-bottom: none; }
+  .reg-letter { background: var(--accent2); color: #fff; width: 26px; height: 26px; min-width: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; margin-top: 2px; }
+  .reg-text { flex: 1; font-size: 15px; }
+  .reg-text strong { color: var(--heading); }
+
+  .takeaways { background: linear-gradient(135deg, rgba(124,106,247,0.08) 0%, rgba(79,142,247,0.08) 100%); border: 1px solid rgba(124,106,247,0.25); border-radius: 14px; padding: 32px; margin: 48px 0 0; }
+  .takeaways h3 { font-size: 18px; font-weight: 800; color: var(--heading); margin: 0 0 20px; }
+  .takeaway-item { display: flex; gap: 12px; margin-bottom: 14px; font-size: 15px; align-items: flex-start; }
+  .takeaway-dot { width: 8px; height: 8px; min-width: 8px; background: var(--accent2); border-radius: 50%; margin-top: 8px; }
+
+  .quiz-section { padding: 56px 0; }
+  .quiz-section h2 { font-size: 26px; font-weight: 800; color: var(--heading); margin-bottom: 6px; }
+  .question-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin-bottom: 20px; }
+  .q-number { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: var(--accent2); margin-bottom: 10px; }
+  .q-text { font-size: 16px; font-weight: 600; color: var(--heading); margin-bottom: 20px; line-height: 1.5; }
+  .q-options { display: flex; flex-direction: column; gap: 10px; }
+  .q-option { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: var(--surface2); border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 15px; }
+  .q-option:hover { border-color: var(--accent2); background: rgba(124,106,247,0.06); }
+  .q-option.correct { border-color: var(--green); background: rgba(52,211,153,0.08); }
+  .q-option.wrong { border-color: var(--red); background: rgba(248,113,113,0.08); }
+  .q-option.disabled { pointer-events: none; }
+  .option-letter { width: 26px; height: 26px; min-width: 26px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--muted); transition: all 0.2s; }
+  .q-option.correct .option-letter { background: var(--green); color: #000; }
+  .q-option.wrong .option-letter { background: var(--red); color: #fff; }
+  .option-text { flex: 1; line-height: 1.5; }
+  .q-explanation { margin-top: 16px; padding: 14px 16px; background: rgba(124,106,247,0.07); border-left: 3px solid var(--accent2); border-radius: 0 8px 8px 0; font-size: 14px; display: none; line-height: 1.6; }
+  .q-explanation.show { display: block; }
+  .q-explanation strong { color: var(--accent2); }
+
+  .score-bar { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-top: 24px; text-align: center; display: none; }
+  .score-bar.show { display: block; }
+  .score-number { font-size: 48px; font-weight: 800; color: var(--accent2); }
+  .score-label { font-size: 15px; color: var(--muted); margin-top: 4px; }
+  .restart-btn { margin-top: 16px; padding: 10px 24px; background: var(--accent2); color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; }
+  .restart-btn:hover { opacity: 0.85; }
+
+  @media (max-width: 640px) {
+    .concept-grid { grid-template-columns: 1fr; }
+    .header h1 { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="module-tag">ACS Area of Operation II</div>
+  <h1>Preflight Procedures</h1>
+  <p>Aircraft Systems for IFR · Instruments &amp; Navigation Equipment · Instrument Flight Deck Check</p>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<nav class="section-nav">
+  <div class="nav-item active" data-section="s1">Aircraft Systems</div>
+  <div class="nav-item" data-section="s2">Instruments &amp; Nav</div>
+  <div class="nav-item" data-section="s3">Flight Deck Check</div>
+  <div class="nav-item" data-section="s4">Quiz</div>
+</nav>
+
+<section class="lesson-section" style="padding-bottom: 24px;">
+<div class="container">
+  <p style="color: var(--muted);">
+    Built from <strong>FAA-S-ACS-8C</strong>, Instrument Rating — Airplane ACS (effective May 2024). Each item
+    carries its exact ACS code — <span class="acs-ref">IR.II.A.K1</span> for Knowledge,
+    <span class="acs-ref risk">IR.II.A.R1</span> for Risk Management. Where a knowledge element is already covered
+    in depth elsewhere in this course, you'll see a <span class="cross-link">→ cross-link</span> instead of a
+    repeat — this page focuses new material on what those modules don't already cover.
+  </p>
+</div>
+</section>
+
+<!-- ── S1: Aircraft Systems Related to IFR Operations ── -->
+<section id="s1" class="lesson-section">
+<div class="container">
+  <div class="section-label">Area II · Task A</div>
+  <h2>Aircraft Systems Related to IFR Operations</h2>
+
+  <div class="task-block">
+    <div class="task-refs"><strong>References:</strong> 14 CFR part 91; AC 91-74; FAA-H-8083-2, -3, -15, -25; POH/AFM</div>
+    <div class="task-objective">Objective: the applicant exhibits satisfactory knowledge, risk management, and
+    skills associated with anti-icing or deicing systems, and other systems related to IFR flight.</div>
+  </div>
+
+  <h3>Anti-Icing and Deicing Systems <span class="acs-ref">IR.II.A.K1</span></h3>
+  <table class="data-table">
+    <thead><tr><th>System</th><th>How it works</th><th>Key limitation</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Airframe — pneumatic boots</strong></td><td>Rubber boots on leading edges inflate in a timed cycle to crack off accreted ice.</td><td>Must let ice build slightly before cycling, or it can "bridge" over the inflated boot; not FIKI by itself on many light aircraft.</td></tr>
+      <tr><td><strong>Airframe — TKS "weeping wing"</strong></td><td>Glycol-based fluid seeps through tiny laser-drilled holes in porous panels, preventing ice from bonding.</td><td>Finite fluid supply (timed endurance); some installations are certified for flight into known icing (FIKI), others are for inadvertent-icing exit only — know which your aircraft has.</td></tr>
+      <tr><td><strong>Propeller</strong></td><td>Electrothermal heating elements in the blade boots (cycled), or alcohol slung outward from a slinger ring onto the blades.</td><td>Finite electrical/fluid capacity; uneven shedding can cause prop vibration.</td></tr>
+      <tr><td><strong>Induction/intake</strong></td><td>Carburetor heat routes unfiltered, heated air to prevent/clear carb ice; fuel-injected engines have an alternate air source if the primary filter ices over.</td><td>Carb heat reduces available power and can raise detonation risk at high power settings — follow POH guidance on when to apply it.</td></tr>
+      <tr><td><strong>Fuel system</strong></td><td>Vented caps/lines keep tanks venting to ambient pressure; some aircraft have a fuel heater ahead of the fuel control.</td><td>A frozen/blocked fuel vent can starve the engine even with fuel remaining in the tank — a classic, easily missed icing failure.</td></tr>
+      <tr><td><strong>Pitot-static</strong></td><td>Electric pitot heat; some aircraft also have heated static ports.</td><td>Covered in depth in <span class="cross-link">→ Module: Instruments &amp; Systems</span> (pitot-static failure modes).</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Flight Control Systems <span class="acs-ref">IR.II.A.K2</span></h3>
+  <p>Most light GA airplanes actuate primary flight controls through mechanical cables, pulleys, and/or pushrods
+  connecting the yoke/stick and rudder pedals directly to the control surfaces. Trim is typically a separate,
+  smaller mechanical or electric system (electric trim run from a switch on the yoke, or a manual trim wheel/cable)
+  that adjusts a trim tab or repositions a spring. An autopilot interfaces with these same control surfaces through
+  electric servos (often friction-clutched capstans on a cable run), which the pilot can physically overpower and
+  must be able to disconnect instantly (yoke-mounted disconnect button, autopilot master switch, or circuit
+  breaker) if it misbehaves — a runaway trim or autopilot hardover is a known IMC emergency scenario.</p>
+
+  <h3>Risk Management</h3>
+  <div class="concept-grid">
+    <div class="concept-card">
+      <h4><span class="acs-ref risk">IR.II.A.R1</span> Operating in Icing Conditions</h4>
+      <p>Know whether your aircraft is certified for flight into known icing (FIKI) or not — most training
+      aircraft are not, and anti-/de-ice equipment on a non-FIKI aircraft is for exiting an inadvertent encounter,
+      not dispatching into forecast icing.</p>
+    </div>
+    <div class="concept-card">
+      <h4><span class="acs-ref risk">IR.II.A.R2</span> Limitations of Anti-/De-Icing Systems</h4>
+      <p>Every system above has a finite capacity (fluid, electrical, or cycle-timing) and does not eliminate ice
+      everywhere on the airframe (antennas, windshield edges, and unprotected surfaces still accrete).</p>
+    </div>
+    <div class="concept-card">
+      <h4><span class="acs-ref risk">IR.II.A.R3</span> Automated Systems in IMC</h4>
+      <p>An autopilot reduces workload but can mask a developing problem (e.g., it will quietly trim against an
+      ice-induced control force until it runs out of authority, then disconnect abruptly). Hand-fly periodically
+      and monitor trim position.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ── S2: Aircraft Flight Instruments and Navigation Equipment ── -->
+<section id="s2" class="lesson-section">
+<div class="container">
+  <div class="section-label">Area II · Task B</div>
+  <h2>Aircraft Flight Instruments and Navigation Equipment</h2>
+
+  <div class="task-block">
+    <div class="task-refs"><strong>References:</strong> 14 CFR part 91; AC 90-100, 90-105, 90-107, 91-78, 91.21-1; AIM; FAA-H-8083-2, -3, -15, -25</div>
+    <div class="task-objective">Objective: the applicant exhibits satisfactory knowledge, risk management, and
+    skills associated with managing instruments appropriate for an IFR flight.</div>
+  </div>
+
+  <h3>Flight Instrument Systems <span class="acs-ref">IR.II.B.K1</span></h3>
+  <div class="concept-grid">
+    <div class="concept-card">
+      <h4><span class="acs-ref">K1a</span> Pitot-Static System</h4>
+      <p>The ASI, altimeter, and VSI, and every pitot/static blockage failure mode.
+      <span class="cross-link">→ Module: Instruments &amp; Systems, Section 1 &amp; 4</span></p>
+    </div>
+    <div class="concept-card">
+      <h4><span class="acs-ref">K1b</span> Gyroscopic / Electric / Vacuum</h4>
+      <p>The AI, HI, and turn coordinator, their power sources, and partial-panel operation.
+      <span class="cross-link">→ Module: Instruments &amp; Systems, Section 2 &amp; 5</span></p>
+    </div>
+    <div class="concept-card">
+      <h4><span class="acs-ref">K1d</span> Magnetic Compass</h4>
+      <p>Turning errors, acceleration errors, deviation, and variation.
+      <span class="cross-link">→ Module: Instruments &amp; Systems, Section 3</span></p>
+    </div>
+    <div class="concept-card">
+      <h4><span class="acs-ref">K1c</span> Electrical Systems, PFD/MFD, Transponder, ADS-B</h4>
+      <p>New material — covered in full below, since the other modules focus on the classic six-pack rather than
+      glass-panel avionics.</p>
+    </div>
+  </div>
+
+  <h4>Electrical Systems</h4>
+  <p>A typical single-engine IFR aircraft has one engine-driven alternator (or generator) charging a battery
+  through a bus, protected by circuit breakers/fuses. Some aircraft split the bus into an "essential" side (feeds
+  flight instruments, nav/com, and a standby attitude source) and a "non-essential" side (feeds things like cabin
+  lighting) so that a partial electrical failure can be isolated by shedding non-essential loads. Know your
+  aircraft's battery-only endurance for its essential bus — on an all-glass panel, that number is the real answer
+  to "what happens if the alternator fails in IMC."</p>
+
+  <h4>Primary Flight Display (PFD) and Multi-Function Display (MFD)</h4>
+  <p>A PFD presents the same information as the round-dial six-pack — attitude, airspeed, altitude, heading, VSI,
+  turn rate — as a single electronic display, usually driven by an Air Data, Attitude, and Heading Reference System
+  (ADAHRS) rather than individual vacuum/electric gyros. An MFD typically shows a moving map, engine
+  data, and supplementary navigation information. Many systems have a <strong>reversionary mode</strong>: if the
+  PFD fails, the MFD can be reconfigured to show the primary flight instruments, and a separate battery-powered
+  standby attitude indicator provides a last-resort backup independent of the main electrical bus.</p>
+
+  <h4>Transponder and ADS-B</h4>
+  <p>The transponder replies to secondary radar interrogation with your assigned code and, in Mode C/S, pressure
+  altitude — this is how ATC and TCAS-equipped aircraft see your altitude. <strong>ADS-B Out</strong> broadcasts
+  your GPS-derived position, altitude, and velocity automatically and is required in the airspace specified by 14
+  CFR 91.225 (generally Class A, B, and C airspace, and above/within the Class B/C "Mode C veil," among other
+  defined areas) — know the rule by airspace, not just "everywhere." <strong>ADS-B In</strong> lets your own
+  avionics receive FIS-B weather/NOTAMs and TIS-B traffic for free, broadcast on 978 MHz (UAT) or 1090 MHz (1090ES)
+  depending on your equipment.</p>
+
+  <h3>Navigation Systems <span class="acs-ref">IR.II.B.K2</span></h3>
+  <div class="concept-grid">
+    <div class="concept-card">
+      <h4><span class="acs-ref">K2a</span> VOR</h4>
+      <p>How it works, the CDI, radials, intercepting/tracking, service volumes, and receiver accuracy checks.
+      <span class="cross-link">→ Module: VOR Navigation (all sections)</span></p>
+    </div>
+    <div class="concept-card">
+      <h4><span class="acs-ref">K2a</span> DME</h4>
+      <p>UHF paired-frequency system giving slant-range distance (not ground distance — matters most close to a
+      high-altitude station) plus groundspeed and time-to-station, usually paired with a VOR or ILS.</p>
+    </div>
+    <div class="concept-card">
+      <h4><span class="acs-ref">K2a</span> ILS</h4>
+      <p>Precision approach aid combining a <strong>localizer</strong> (course guidance, VHF, shares the
+      108.10–111.95 MHz band with VOR on the odd-tenths frequencies) and a <strong>glideslope</strong> (vertical
+      guidance, UHF, paired automatically with the localizer frequency). Categories I/II/III reflect progressively
+      lower approach minimums with additional aircraft/crew/airport requirements.</p>
+    </div>
+    <div class="concept-card">
+      <h4><span class="acs-ref">K2a</span> Marker Beacons</h4>
+      <p>75 MHz fan-shaped beacons keyed to specific ILS fixes: Outer Marker (blue light, low tone, dash-dash-dash),
+      Middle Marker (amber light, medium tone, alternating dot-dash), Inner Marker (white light, high tone,
+      dot-dot) — largely supplanted by DME/GPS fixes on modern charts but still found on older installations.</p>
+    </div>
+  </div>
+
+  <h4><span class="acs-ref">K2b</span> RNAV, GPS, WAAS, FMS, Autopilot</h4>
+  <div class="concept-grid">
+    <div class="concept-card"><h4>RNAV</h4><p>Area navigation — direct waypoint-to-waypoint flight rather than station-to-station along airways; the broad category that GPS and FMS both fall under.</p></div>
+    <div class="concept-card"><h4>GPS</h4><p>Satellite-based position fixing. A non-WAAS IFR GPS relies on Receiver Autonomous Integrity Monitoring (RAIM) to detect a bad satellite geometry/signal before you trust the position — RAIM can be predicted preflight and can be unavailable at times, which matters for planning a GPS approach.</p></div>
+    <div class="concept-card"><h4>WAAS</h4><p>Wide Area Augmentation System — ground reference stations correct GPS signal errors and broadcast the correction via geostationary satellite, improving both accuracy and integrity enough to support vertically-guided LPV approaches with ILS-like minimums, without any ground equipment at the airport.</p></div>
+    <div class="concept-card"><h4>FMS &amp; Autopilot</h4><p>An FMS (mostly turbine/advanced aircraft) integrates navigation, performance, and flight planning into one system. An autopilot reduces manual workload (heading/nav/approach/altitude modes) but must still be actively monitored — know your specific modes and disconnect method cold, since IMC is the worst time to be figuring it out.</p></div>
+  </div>
+
+  <h3><span class="acs-ref">IR.II.B.K3</span> Electronic Flight Bag (EFB)</h3>
+  <p>If you fly with an EFB (tablet-based charts/weather/flight planning), know its battery endurance and have a
+  charging plan, keep a second, independent source of current charts (a backup tablet/phone app, or paper) in case
+  the primary fails or its subscription lapses, and mount it securely so it can't become a loose hazard in
+  turbulence. Part 91 operations don't require FAA authorization to use an EFB the way air carrier operations do,
+  but the same good practices apply.</p>
+
+  <h3>Risk Management</h3>
+  <div class="concept-grid">
+    <div class="concept-card"><h4><span class="acs-ref risk">IR.II.B.R1</span> Automated Systems</h4><p>Monitoring and managing autopilot/FMS behavior rather than treating it as "set and forget."</p></div>
+    <div class="concept-card"><h4><span class="acs-ref risk">IR.II.B.R2</span> Approved vs. Non-Approved Devices</h4><p>A handheld/portable GPS or tablet app is generally not approved as a sole means of IFR navigation — know what's installed and certified in your aircraft versus what's a convenience backup.</p></div>
+    <div class="concept-card"><h4><span class="acs-ref risk">IR.II.B.R3</span> Failure Conditions</h4><p>Know, for each mode of navigation you rely on, what it looks like when it fails or degrades, and what you'd fly instead.</p></div>
+    <div class="concept-card"><h4><span class="acs-ref risk">IR.II.B.R5</span> Navigation Databases</h4><p>GPS/FMS navigation databases expire (typically every 28 days) — flying an out-of-date database for an instrument approach is a real, common violation, not just a paperwork technicality.</p></div>
+  </div>
+</div>
+</section>
+
+<!-- ── S3: Instrument Flight Deck Check ── -->
+<section id="s3" class="lesson-section">
+<div class="container">
+  <div class="section-label">Area II · Task C</div>
+  <h2>Instrument Flight Deck Check</h2>
+
+  <div class="task-block">
+    <div class="task-refs"><strong>References:</strong> 14 CFR part 91; AC 91.21-1; FAA-H-8083-2, -3, -15, -25; POH/AFM</div>
+    <div class="task-objective">Objective: the applicant exhibits satisfactory knowledge, risk management, and
+    skills associated with conducting a preflight check on the aircraft's instruments necessary for an IFR flight.</div>
+  </div>
+
+  <h3>Purpose and Defect Detection <span class="acs-ref">IR.II.C.K1</span></h3>
+  <table class="data-table">
+    <thead><tr><th>Check</th><th>What a defect looks like</th></tr></thead>
+    <tbody>
+      <tr><td>Altimeter set to field elevation</td><td>Should read within <strong>75 ft</strong> of the known field elevation — bigger error suggests a leaky static system or bad instrument (and is logged per 91.411 if found during the periodic test).</td></tr>
+      <tr><td>Heading indicator vs. magnetic compass / runway heading</td><td>Should align on the ramp and again during taxi/before takeoff — won't match if it's already precessing abnormally or was never set.</td></tr>
+      <tr><td>Attitude indicator erects after power-up</td><td>Should show no flags and be stable within a few minutes — a slow-to-erect or wandering AI on the ground is a maintenance item, not a get-airborne-and-see item.</td></tr>
+      <tr><td>Turn coordinator / ball</td><td>Miniature airplane level, ball centered, with the aircraft stationary and wings level.</td></tr>
+      <tr><td>VSI reads zero on the ground</td><td>A small static offset can be reset with the adjustment screw (and logged); a large offset is a defect.</td></tr>
+      <tr><td>Dual airspeed indicators (if installed)</td><td>Both should come alive together and agree during the takeoff roll — a lagging or disagreeing ASI is a reject-takeoff item.</td></tr>
+      <tr><td>Nav/comm and VOR check</td><td>If you'll use VOR navigation that flight, confirm the 30-day VOR check is current (91.171). <span class="cross-link">→ Module: VOR Navigation, Section 6</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>IFR Airworthiness <span class="acs-ref">IR.II.C.K2</span></h3>
+  <h4>Required Inspections</h4>
+  <div class="reg-list">
+    <div class="reg-item"><div class="reg-letter">1</div><div class="reg-text"><strong>91.411</strong> — pitot-static system, altimeter, and altitude reporting equipment tested and inspected within the preceding <strong>24 calendar months</strong> for IFR flight in controlled airspace.</div></div>
+    <div class="reg-item"><div class="reg-letter">2</div><div class="reg-text"><strong>91.413</strong> — transponder tested and inspected within the preceding <strong>24 calendar months</strong>.</div></div>
+    <div class="reg-item"><div class="reg-letter">3</div><div class="reg-text"><strong>91.171</strong> — VOR equipment checked within the preceding <strong>30 days</strong> if VOR navigation will be used.</div></div>
+    <div class="reg-item"><div class="reg-letter">4</div><div class="reg-text"><strong>91.409</strong> — annual inspection (and 100-hour if operated for hire/instruction), plus any applicable Airworthiness Directives.</div></div>
+    <div class="reg-item"><div class="reg-letter">5</div><div class="reg-text"><strong>91.207</strong> — ELT and its battery within inspection/replacement limits.</div></div>
+  </div>
+
+  <h4>Required Equipment for IFR — 91.205(d)</h4>
+  <p>IFR equipment requirements are cumulative: you need everything in 91.205(b) (day VFR) and (c) (night VFR,
+  if applicable), plus the (d) items below. A common mnemonic is <strong>GRABCARD</strong>:</p>
+  <div class="reg-list">
+    <div class="reg-item"><div class="reg-letter">G</div><div class="reg-text"><strong>Generator/alternator</strong> of adequate capacity.</div></div>
+    <div class="reg-item"><div class="reg-letter">R</div><div class="reg-text"><strong>Radios</strong> — two-way communication and navigation equipment suitable for the route to be flown.</div></div>
+    <div class="reg-item"><div class="reg-letter">A</div><div class="reg-text"><strong>Attitude indicator</strong> (gyroscopic pitch-and-bank).</div></div>
+    <div class="reg-item"><div class="reg-letter">B</div><div class="reg-text"><strong>Ball</strong> — slip-skid indicator.</div></div>
+    <div class="reg-item"><div class="reg-letter">C</div><div class="reg-text"><strong>Clock</strong> displaying hours, minutes, and seconds, with a sweep-second pointer or digital equivalent.</div></div>
+    <div class="reg-item"><div class="reg-letter">A</div><div class="reg-text"><strong>Altimeter</strong> — sensitive, adjustable for barometric pressure.</div></div>
+    <div class="reg-item"><div class="reg-letter">R</div><div class="reg-text"><strong>Rate-of-turn indicator</strong> (gyroscopic), with a limited exception when a suitable third attitude/heading reference system is installed.</div></div>
+    <div class="reg-item"><div class="reg-letter">D</div><div class="reg-text"><strong>Direction indicator</strong> (gyroscopic heading indicator or equivalent).</div></div>
+  </div>
+  <p>Also carry current aeronautical charts/data for the route (91.503/general airmanship expectation,
+  reinforced in Task I.C), and the aircraft's Certificate of Airworthiness, registration, POH/AFM, and
+  weight-and-balance data as applicable to the aircraft.</p>
+
+  <h3>Flying with Inoperative Equipment <span class="acs-ref">IR.II.C.K3</span></h3>
+  <p>14 CFR 91.213 gives you two legal paths when something is inoperative:</p>
+  <div class="reg-list">
+    <div class="reg-item"><div class="reg-letter">1</div><div class="reg-text"><strong>Aircraft has an approved Minimum Equipment List (MEL):</strong> operate strictly within the MEL's conditions, limitations, and time limits for the inoperative item.</div></div>
+    <div class="reg-item"><div class="reg-letter">2</div><div class="reg-text"><strong>No MEL (typical for GA):</strong> the item may fly inoperative only if it is <em>not</em> (i) part of the VFR-day type-certification instrument/equipment list or an Airworthiness Directive requirement, and (ii) not required by 91.205 or otherwise required for the specific kind of operation (e.g., IFR) being conducted. If it clears both tests, it must be <strong>deactivated or removed, placarded "Inoperative,"</strong> and the work and determination logged by a person authorized to perform maintenance (14 CFR part 43) — and the pilot must independently determine it does not constitute a hazard.</div></div>
+  </div>
+  <div class="callout callout-danger">
+    <div class="callout-title">The trap</div>
+    "Inoperative but not required" only applies to equipment that isn't on the 91.205(d) list above and isn't
+    required for IFR. A broken attitude indicator, for instance, can never be legally placarded and flown IFR —
+    it's squarely on the required list.
+  </div>
+
+  <h3>Risk Management</h3>
+  <div class="concept-grid">
+    <div class="concept-card"><h4><span class="acs-ref risk">IR.II.C.R1</span> Operating with Inoperative Equipment</h4><p>Legal under 91.213 is not the same as wise for the specific flight you're about to fly — a placarded backup instrument on a hard IMC day is a different risk picture than the same item on a CAVU currency flight.</p></div>
+    <div class="concept-card"><h4><span class="acs-ref risk">IR.II.C.R2</span> Outdated Navigation Publications/Databases</h4><p>Expired charts or a lapsed GPS database are easy to overlook and directly affect approach legality and accuracy — check currency as part of every preflight, not just occasionally.</p></div>
+  </div>
+
+  <div class="takeaways">
+    <h3>📋 Key Takeaways</h3>
+    <div class="takeaway-item"><div class="takeaway-dot"></div><div>Anti-/de-ice equipment on most training aircraft is for exiting inadvertent icing, not dispatching into known icing — know whether yours is FIKI-certified <span class="acs-ref">IR.II.A.K1</span>.</div></div>
+    <div class="takeaway-item"><div class="takeaway-dot"></div><div>The classic six-pack is only part of "instruments" under the current ACS — glass panels, transponders, and ADS-B are explicitly tested too <span class="acs-ref">IR.II.B.K1c</span>.</div></div>
+    <div class="takeaway-item"><div class="takeaway-dot"></div><div>WAAS doesn't just improve GPS accuracy — it unlocks vertically-guided LPV approach minimums without any ground equipment at the airport <span class="acs-ref">IR.II.B.K2b</span>.</div></div>
+    <div class="takeaway-item"><div class="takeaway-dot"></div><div>IFR airworthiness stacks three separate clocks: pitot-static/altimeter and transponder every 24 months, VOR every 30 days <span class="acs-ref">IR.II.C.K2</span>.</div></div>
+    <div class="takeaway-item"><div class="takeaway-dot"></div><div>GRABCARD is the 91.205(d) IFR equipment list, on top of — not instead of — the day/night VFR lists in (b) and (c) <span class="acs-ref">IR.II.C.K2</span>.</div></div>
+    <div class="takeaway-item"><div class="takeaway-dot"></div><div>A required instrument can never be legally "placarded inoperative" for IFR — the 91.213 removal/placard option only applies to equipment that isn't on the required list <span class="acs-ref">IR.II.C.K3</span>.</div></div>
+  </div>
+</div>
+</section>
+
+<!-- ── Quiz ── -->
+<section id="s4" class="quiz-section">
+<div class="container">
+  <div class="section-label">Area II · Knowledge Check</div>
+  <h2>Knowledge Check</h2>
+  <p style="color: var(--muted); margin-bottom: 32px;">8 questions covering Tasks A, B, and C.</p>
+  <div id="quizContainer"></div>
+  <div class="score-bar" id="scoreBar">
+    <div class="score-number" id="scoreNum"></div>
+    <div class="score-label" id="scoreLabel"></div>
+    <button class="restart-btn" onclick="restartQuiz()">Try Again</button>
+  </div>
+</div>
+</section>
+
+<script>
+const questions = [
+  {
+    q: "Your aircraft has TKS weeping-wing anti-ice. What's the most important operational limitation to know before you need it?",
+    options: [
+      "It only works below 10,000 feet",
+      "It has a finite fluid supply, and whether your installation is FIKI-certified or inadvertent-exit-only",
+      "It only protects the propeller, not the wings",
+      "It requires the engine to be shut down to activate"
+    ],
+    correct: 1,
+    explanation: "TKS systems carry a limited onboard fluid supply (giving a timed endurance), and critically, not every TKS installation is certified for flight into known icing — some are approved only to help you exit an inadvertent encounter. Know which one you have before you need it. (IR.II.A.K1 / IR.II.A.R1, R2)"
+  },
+  {
+    q: "On a glass-panel aircraft, what does a 'reversionary mode' typically refer to?",
+    options: [
+      "Switching the autopilot from heading mode to nav mode",
+      "Reconfiguring the MFD to display primary flight instruments if the PFD fails",
+      "Reverting the GPS database to the previous cycle",
+      "Switching from WAAS to non-WAAS GPS mode"
+    ],
+    correct: 1,
+    explanation: "Reversionary mode lets the multi-function display take over showing attitude, airspeed, altitude, and heading if the primary flight display fails — a key piece of electrical/instrument failure planning on glass panel aircraft. (IR.II.B.K1c)"
+  },
+  {
+    q: "What does WAAS add to a standard GPS that enables LPV approach minimums?",
+    options: [
+      "A faster satellite update rate only",
+      "Ground reference station corrections broadcast via satellite, improving accuracy and integrity enough for vertical approach guidance",
+      "A direct radio link to ATC for approach clearances",
+      "The ability to receive ADS-B traffic"
+    ],
+    correct: 1,
+    explanation: "WAAS ground stations measure GPS errors and broadcast a correction via geostationary satellite. This improves both accuracy and integrity enough to support Localizer Performance with Vertical guidance (LPV) approaches — ILS-like minimums with no ground equipment required at the airport. (IR.II.B.K2b)"
+  },
+  {
+    q: "Which inspection interval is different from the other three?",
+    options: [
+      "Pitot-static/altimeter system (91.411)",
+      "Transponder (91.413)",
+      "VOR receiver check (91.171)",
+      "Annual inspection (91.409)"
+    ],
+    correct: 2,
+    explanation: "The VOR check (91.171) is required every 30 days, not 24 calendar months. Pitot-static/altimeter (91.411), transponder (91.413), and the annual (91.409) all run on longer, roughly year-plus cycles. (IR.II.C.K2)"
+  },
+  {
+    q: "In the GRABCARD mnemonic for 91.205(d) IFR equipment, what does the second 'A' stand for?",
+    options: ["Autopilot", "Altimeter", "ADS-B", "Attitude indicator (that's the first 'A')"],
+    correct: 1,
+    explanation: "GRABCARD: Generator, Radios, Attitude indicator, Ball, Clock, Altimeter, Rate-of-turn indicator, Direction indicator. The second A is the sensitive, barometrically-adjustable altimeter — distinct from the Attitude indicator earlier in the list. (IR.II.C.K2)"
+  },
+  {
+    q: "Your attitude indicator fails before a flight you intend to fly IFR, and your aircraft has no MEL. Can you placard it inoperative and go?",
+    options: [
+      "Yes, as long as an A&P placards it and logs the entry",
+      "Yes, but only for flights under 2 hours",
+      "No — the attitude indicator is required IFR equipment under 91.205(d) and can't be placarded inoperative for that kind of flight",
+      "Yes, if you have a handheld backup attitude display"
+    ],
+    correct: 2,
+    explanation: "91.213's 'remove or placard' option only applies to equipment that is NOT required by the type certificate's day-VFR list, an AD, or 91.205/the kind of operation being flown. The attitude indicator is explicitly on the 91.205(d) IFR list, so it can never be legally placarded inoperative for an IFR flight. (IR.II.C.K3)"
+  },
+  {
+    q: "A DME readout and a GPS distance-to-waypoint readout can differ near a high-altitude station because:",
+    options: [
+      "DME is always inaccurate above 10,000 feet",
+      "DME measures slant-range (line-of-sight) distance, not ground track distance",
+      "GPS cannot measure distance, only position",
+      "DME only works with ILS, not VOR"
+    ],
+    correct: 1,
+    explanation: "DME measures slant-range — the direct line-of-sight distance to the station, which includes your altitude above it. Close to a high station, that altitude component becomes a larger share of the reading, so it reads higher than your actual ground distance. GPS distance-to-waypoint is a pure ground-track calculation. (IR.II.B.K2a)"
+  },
+  {
+    q: "Why does an expired GPS navigation database matter beyond being a paperwork issue?",
+    options: [
+      "It only affects the moving map display, not approach guidance",
+      "Waypoint, procedure, and frequency data can change — flying an outdated database for an approach can mean flying incorrect fixes or minimums",
+      "It has no real operational effect, only a legal one",
+      "It only matters for airports outside the United States"
+    ],
+    correct: 1,
+    explanation: "Navigation databases are updated on a 28-day cycle because real-world procedures, waypoints, and frequencies change. An outdated database can present an approach or waypoint that no longer matches the current, charted procedure — a real navigational hazard, not just a compliance technicality. (IR.II.B.R5 / IR.II.C.R2)"
+  }
+];
+
+let answers = new Array(questions.length).fill(null);
+let answered = 0;
+
+function buildQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  answers = new Array(questions.length).fill(null);
+  answered = 0;
+  document.getElementById('scoreBar').classList.remove('show');
+
+  questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = `q${qi}`;
+
+    const num = document.createElement('div');
+    num.className = 'q-number';
+    num.textContent = `QUESTION ${qi + 1} OF ${questions.length}`;
+    card.appendChild(num);
+
+    const text = document.createElement('div');
+    text.className = 'q-text';
+    text.textContent = q.q;
+    card.appendChild(text);
+
+    const opts = document.createElement('div');
+    opts.className = 'q-options';
+    q.options.forEach((opt, oi) => {
+      const btn = document.createElement('div');
+      btn.className = 'q-option';
+      btn.innerHTML = `<div class="option-letter">${'ABCD'[oi]}</div><div class="option-text">${opt}</div>`;
+      btn.addEventListener('click', () => selectAnswer(qi, oi));
+      opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+
+    const exp = document.createElement('div');
+    exp.className = 'q-explanation';
+    exp.innerHTML = `<strong>Explanation:</strong> ${q.explanation}`;
+    card.appendChild(exp);
+
+    container.appendChild(card);
+  });
+}
+
+function selectAnswer(qi, oi) {
+  if (answers[qi] !== null) return;
+  answers[qi] = oi;
+  answered++;
+
+  const card = document.getElementById(`q${qi}`);
+  const opts = card.querySelectorAll('.q-option');
+  const exp = card.querySelector('.q-explanation');
+  opts.forEach((opt, idx) => {
+    opt.classList.add('disabled');
+    if (idx === questions[qi].correct) opt.classList.add('correct');
+    else if (idx === oi && oi !== questions[qi].correct) opt.classList.add('wrong');
+  });
+  exp.classList.add('show');
+  if (answered === questions.length) showScore();
+  updateProgress();
+}
+
+function showScore() {
+  const correct = answers.filter((a, i) => a === questions[i].correct).length;
+  const pct = Math.round((correct / questions.length) * 100);
+  const scoreBar = document.getElementById('scoreBar');
+  document.getElementById('scoreNum').textContent = `${correct}/${questions.length}`;
+  document.getElementById('scoreLabel').textContent = `${pct}% — ${pct >= 80 ? '✅ Solid grasp of Area II.' : pct >= 60 ? '📚 Review the sections above.' : '🔄 Work through the lesson again before your oral.'}`;
+  scoreBar.classList.add('show');
+}
+
+function restartQuiz() { buildQuiz(); updateProgress(); }
+buildQuiz();
+
+const sectionIds = ['s1','s2','s3','s4'];
+
+function updateProgress() {
+  const scrolled = sectionIds.filter(id => {
+    const el = document.getElementById(id);
+    return el && el.getBoundingClientRect().top < window.innerHeight * 0.6;
+  }).length;
+  const quizPct = answered / questions.length;
+  const total = (scrolled / sectionIds.length) * 0.7 + quizPct * 0.3;
+  document.getElementById('progressFill').style.width = Math.round(total * 100) + '%';
+}
+
+const navItems = document.querySelectorAll('.nav-item');
+navItems.forEach(item => {
+  item.addEventListener('click', () => {
+    const t = document.getElementById(item.dataset.section);
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+window.addEventListener('scroll', () => {
+  let current = sectionIds[0];
+  sectionIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < 120) current = id;
+  });
+  navItems.forEach(item => item.classList.toggle('active', item.dataset.section === current));
+  updateProgress();
+}, { passive: true });
+</script>
+</body>
+</html>
