@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>IFR Ground School — Area V: Navigation Systems</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #22263a;
+    --border: #2e3348;
+    --accent: #34d399;
+    --accent2: #2dd4bf;
+    --green: #34d399;
+    --red: #f87171;
+    --yellow: #fbbf24;
+    --text: #e2e8f0;
+    --muted: #8892aa;
+    --heading: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #0a0e1a 0%, #122420 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 24px 0;
+    text-align: center;
+  }
+  .module-tag {
+    display: inline-block;
+    background: var(--accent);
+    color: #04221a;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+  .header h1 { font-size: 32px; font-weight: 800; color: var(--heading); margin-bottom: 8px; }
+  .header p { color: var(--muted); font-size: 15px; }
+  .progress-bar { width: 200px; height: 4px; background: var(--surface2); border-radius: 2px; margin: 16px auto 0; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.5s; }
+
+  .section-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15,17,23,0.95); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px; display: flex; gap: 0; overflow-x: auto; scrollbar-width: none;
+  }
+  .section-nav::-webkit-scrollbar { display: none; }
+  .nav-item {
+    padding: 14px 16px; font-size: 13px; font-weight: 600; color: var(--muted);
+    white-space: nowrap; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s;
+  }
+  .nav-item:hover { color: var(--text); }
+  .nav-item.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  .lesson-section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .lesson-section h2 { font-size: 26px; font-weight: 800; color: var(--heading); margin-bottom: 10px; }
+  .lesson-section p { margin-bottom: 16px; }
+  .lesson-section p:last-child { margin-bottom: 0; }
+  .lesson-section h3 { font-size: 18px; font-weight: 700; color: var(--heading); margin: 28px 0 12px; }
+  .lesson-section h4 { font-size: 14px; font-weight: 700; color: var(--heading); margin: 20px 0 8px; }
+
+  .task-block { margin: 40px 0 24px; }
+  .task-block:first-of-type { margin-top: 0; }
+  .task-refs { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+  .task-refs strong { color: var(--muted); }
+  .task-objective { font-size: 14px; color: var(--text); font-style: italic; padding-bottom: 18px; margin-bottom: 20px; border-bottom: 1px solid var(--border); }
+
+  .acs-ref {
+    display: inline-block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--accent);
+    background: rgba(52,211,153,0.12);
+    border: 1px solid rgba(52,211,153,0.35);
+    border-radius: 5px;
+    padding: 1px 6px;
+    margin: 0 2px;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  .acs-ref.risk { color: var(--yellow); background: rgba(251,191,36,0.12); border-color: rgba(251,191,36,0.35); }
+
+  .cross-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12.5px; font-weight: 600; color: var(--accent2);
+    background: rgba(45,212,191,0.08); border: 1px solid rgba(45,212,191,0.3);
+    border-radius: 6px; padding: 3px 10px; margin: 4px 6px 4px 0;
+  }
+
+  .callout { border-radius: 10px; padding: 18px 22px; margin: 24px 0; border-left: 4px solid; font-size: 15px; }
+  .callout-warn { background: rgba(251,191,36,0.08); border-color: var(--yellow); }
+  .callout-tip { background: rgba(52,211,153,0.08); border-color: var(--green); }
+  .callout-danger { background: rgba(248,113,113,0.08); border-color: var(--red); }
+  .callout-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+  .callout-warn .callout-title { color: var(--yellow); }
+  .callout-tip .callout-title { color: var(--green); }
+  .callout-danger .callout-title { color: var(--red); }
+
+  .data-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  .data-table th { background: var(--surface2); color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+  .data-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .concept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  .concept-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+  .concept-card h4 { color: var(--heading); font-size: 14px; font-weight: 700; margin: 0 0 6px; }
+  .concept-card p { font-size: 14px; color: var(--muted); margin: 0; }
+
+  .reg-list { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 8px 24px; margin: 20px 0; }
+  .reg-item { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .reg-item:last-child { border-bottom: none; }
+  .reg-letter { background: var(--accent); color: #04221a; width: 26px; height: 26px; min-width: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; margin-top: 2px; }
+  .reg-text { flex: 1; font-size: 15px; }
+  .reg-text strong { color: var(--heading); }
+
+  .scenario {
+    background: linear-gradient(135deg, rgba(52,211,153,0.08), rgba(45,212,191,0.05));
+    border: 1px solid rgba(52,211,153,0.25);
+    border-radius: 14px;
+    padding: 26px 28px;
+    margin: 28px 0;
+  }
+  .scenario-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 14px;
+  }
+  .scenario h4 { color: var(--heading); font-size: 16px; margin: 0 0 10px; }
+  .scenario p { font-size: 15px; }
+  .scenario .payoff { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--border); font-size: 14.5px; }
+  .scenario .payoff strong { color: var(--green); }
+
+  .steps { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; margin: 18px 0; }
+  .step-item { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 14px; }
+  .step-item:last-child { margin-bottom: 0; }
+  .step-num { background: var(--accent); color: #04221a; min-width: 30px; height: 26px; padding: 0 6px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 11.5px; font-weight: 800; margin-top: 2px; }
+  .step-text { flex: 1; font-size: 14.5px; }
+  .step-text strong { color: var(--heading); }
+
+  .calc-grid { display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; font-size: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; margin: 16px 0; }
+  .calc-grid .tok { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-weight: 700; color: var(--accent); white-space: nowrap; }
+
+  .takeaways { background: linear-gradient(135deg, rgba(52,211,153,0.08) 0%, rgba(45,212,191,0.08) 100%); border: 1px solid rgba(52,211,153,0.25); border-radius: 14px; padding: 32px; margin: 48px 0 0; }
+  .takeaways h3 { font-size: 18px; font-weight: 800; color: var(--heading); margin: 0 0 20px; }
+  .takeaway-item { display: flex; gap: 12px; margin-bottom: 14px; font-size: 15px; align-items: flex-start; }
+  .takeaway-dot { width: 8px; height: 8px; min-width: 8px; background: var(--accent); border-radius: 50%; margin-top: 8px; }
+
+  .quiz-section { padding: 56px 0; }
+  .quiz-section h2 { font-size: 26px; font-weight: 800; color: var(--heading); margin-bottom: 6px; }
+  .question-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin-bottom: 20px; }
+  .q-number { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: var(--accent); margin-bottom: 10px; }
+  .q-text { font-size: 16px; font-weight: 600; color: var(--heading); margin-bottom: 20px; line-height: 1.5; }
+  .q-options { display: flex; flex-direction: column; gap: 10px; }
+  .q-option { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: var(--surface2); border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 15px; }
+  .q-option:hover { border-color: var(--accent); background: rgba(52,211,153,0.06); }
+  .q-option.correct { border-color: var(--green); background: rgba(52,211,153,0.08); }
+  .q-option.wrong { border-color: var(--red); background: rgba(248,113,113,0.08); }
+  .q-option.disabled { pointer-events: none; }
+  .option-letter { width: 26px; height: 26px; min-width: 26px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--muted); transition: all 0.2s; }
+  .q-option.correct .option-letter { background: var(--green); color: #000; }
+  .q-option.wrong .option-letter { background: var(--red); color: #fff; }
+  .option-text { flex: 1; line-height: 1.5; }
+  .q-explanation { margin-top: 16px; padding: 14px 16px; background: rgba(52,211,153,0.07); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; font-size: 14px; display: none; line-height: 1.6; }
+  .q-explanation.show { display: block; }
+  .q-explanation strong { color: var(--accent); }
+
+  .score-bar { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-top: 24px; text-align: center; display: none; }
+  .score-bar.show { display: block; }
+  .score-number { font-size: 48px; font-weight: 800; color: var(--accent); }
+  .score-label { font-size: 15px; color: var(--muted); margin-top: 4px; }
+  .restart-btn { margin-top: 16px; padding: 10px 24px; background: var(--accent); color: #04221a; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; }
+  .restart-btn:hover { opacity: 0.85; }
+
+  @media (max-width: 640px) {
+    .concept-grid { grid-template-columns: 1fr; }
+    .header h1 { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="module-tag">ACS Area of Operation V</div>
+  <h1>Navigation Systems</h1>
+  <p>Intercepting &amp; Tracking Navigational Systems and DME Arcs · Departure, En Route, and Arrival Operations</p>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<nav class="section-nav">
+  <div class="nav-item active" data-section="s1">Intercept &amp; Track</div>
+  <div class="nav-item" data-section="s2">Dep/En Route/Arr</div>
+  <div class="nav-item" data-section="s3">Quiz</div>
+</nav>
+
+<section class="lesson-section" style="padding-bottom: 24px;">
+<div class="container">
+  <p style="margin-bottom: 18px;"><a href="acs-index.html" style="color: var(--accent); font-size: 14px; font-weight: 600;">&larr; All ACS Areas of Operation</a></p>
+  <p style="color: var(--muted);">
+    Built from <strong>FAA-S-ACS-8C</strong>, Instrument Rating — Airplane ACS (effective May 2024). Every item is
+    tagged with its exact ACS code. The ground-based (VOR) half of Task A is covered in depth elsewhere in this
+    course — you'll see a <span class="cross-link">→ cross-link</span> instead of a repeat, and this page focuses
+    new material on DME arcs, satellite-based navigation, and the departure/en route/arrival procedures Task B adds.
+  </p>
+</div>
+</section>
+
+<!-- ── S1: Intercepting and Tracking Navigational Systems and DME Arcs ── -->
+<section id="s1" class="lesson-section">
+<div class="container">
+  <div class="section-label">Area V · Task A</div>
+  <h2>Intercepting and Tracking Navigational Systems and DME Arcs</h2>
+
+  <div class="task-block">
+    <div class="task-refs"><strong>References:</strong> 14 CFR part 91; AIM; FAA-H-8083-2, -3, -15, -16, -25; POH/AFM</div>
+    <div class="task-objective">Objective: the applicant exhibits satisfactory knowledge, risk management, and
+    skills associated with intercepting and tracking navigation aids and arcs solely by reference to instruments.</div>
+  </div>
+
+  <h3>📡 Ground-Based Navigation <span class="acs-ref">IR.V.A.K1</span></h3>
+  <div class="concept-grid">
+    <div class="concept-card">
+      <h4>VOR — Orientation, CDI, Radials, Tracking</h4>
+      <p>How VORs work, reading the CDI, radials, intercepting and tracking a radial, service volumes, and the
+      30-day receiver accuracy check.
+      <span class="cross-link">→ Module: VOR Navigation (all sections)</span></p>
+    </div>
+    <div class="concept-card">
+      <h4>DME Arc Flying</h4>
+      <p>New material — a DME arc is flown by bracketing: small heading corrections (roughly 5°–10°) toward the
+      station if the DME reading creeps outside the arc distance, and away from the station if it creeps inside.
+      The lead radial or lead distance to roll out onto the next course is charted — anticipate it rather than
+      waiting until you're past it.</p>
+    </div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-label">🌀 Real-World Scenario — Flying a 10 DME Arc</div>
+    <h4>Established on the arc, inbound to a VOR/DME</h4>
+    <div class="steps">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">Turn to intercept the arc, then roll out on a heading roughly 90° to the radial you're crossing to establish on the arc.</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">Every 2–3 miles, cross-check the DME: if it reads more than the arc distance (e.g., 10.3 on a 10 DME arc), turn 10°–20° toward the station; if it reads less (9.7), turn 10°–20° away.</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">As you approach the published lead radial for the next course, start your turn early rather than waiting for the CDI to center — by the time it centers on the new course, you're already past it.</div></div>
+    </div>
+    <div class="payoff">Arcs are flown by small, frequent corrections rather than one big course-intercept turn —
+    treat the arc distance the same way you'd hold an altitude: catch the drift early, with small inputs.</div>
+  </div>
+
+  <h3>🛰️ Satellite-Based Navigation <span class="acs-ref">IR.V.A.K2</span></h3>
+  <p>Covers GPS orientation, course determination, equipment, tests, regulations, interference, appropriate use of
+  databases, RAIM, and WAAS — the core concepts are introduced in <span class="cross-link">→ Area II, Task B</span>
+  (GPS, WAAS, navigation databases). The piece specific to this Task is intercepting and tracking courses and arcs
+  using GPS/RNAV rather than ground-based signals.</p>
+
+  <div class="scenario">
+    <div class="scenario-label">🧮 Real-World Scenario — Checking RAIM Before a GPS Approach</div>
+    <h4>Filing a GPS approach to an airport with no ground-based backup approach</h4>
+    <p>Your aircraft has a non-WAAS IFR GPS. Before you depart, you check RAIM availability (through Flight Service
+    or your avionics' own prediction function) for your estimated arrival time at the destination.</p>
+    <div class="payoff">If RAIM is predicted unavailable at your ETA, you cannot legally or safely rely on that GPS
+    approach as planned — you need either a different approach at that airport, a different airport, or to adjust
+    your timing. This is a preflight planning step, not something to discover in the terminal area. WAAS-equipped
+    GPS units use a different integrity-monitoring scheme and generally aren't subject to this same RAIM-outage
+    planning step.</div>
+  </div>
+
+  <h3>⚠️ Risk Management</h3>
+  <div class="concept-grid">
+    <div class="concept-card"><h4><span class="acs-ref risk">IR.V.A.R1</span> Automated Navigation</h4><p>Monitor what the autopilot/GPS is actually doing against what you expect it to do — course reversals and procedure turns are a common place for an autopilot to do something surprising.</p></div>
+    <div class="concept-card"><h4><span class="acs-ref risk">IR.V.A.R2</span> Situational Awareness</h4><p>A DME arc or a complex RNAV procedure is exactly the kind of task that can absorb your attention at the expense of the bigger picture — altitude, other traffic, fuel.</p></div>
+    <div class="concept-card"><h4><span class="acs-ref risk">IR.V.A.R3</span> Navigation System Limitations</h4><p>Know the specific limitation of whatever you're using that moment — VOR service volume and station passage cone-of-confusion, or GPS RAIM/database currency.</p></div>
+  </div>
+</div>
+</section>
+
+<!-- ── S2: Departure, En Route, and Arrival Operations ── -->
+<section id="s2" class="lesson-section">
+<div class="container">
+  <div class="section-label">Area V · Task B</div>
+  <h2>Departure, En Route, and Arrival Operations</h2>
+
+  <div class="task-block">
+    <div class="task-refs"><strong>References:</strong> 14 CFR parts 91, 97; AC 90-100, 90-105, 91-74; AIM; FAA-H-8083-2, -3, -15, -16, -25; POH/AFM</div>
+    <div class="task-objective">Objective: the applicant exhibits satisfactory knowledge, risk management, and
+    skills associated with IFR departure, en route, and arrival operations solely by reference to instruments.</div>
+  </div>
+
+  <h3>🛫 ATC Routes, DPs, and STARs <span class="acs-ref">IR.V.B.K1</span></h3>
+  <p>A Departure Procedure (DP) — Obstacle Departure Procedure (ODP) or Standard Instrument Departure (SID) — exists
+  to get you clear of terrain and obstacles with known, charted guidance. Some specify a minimum
+  <strong>climb gradient</strong> in feet per nautical mile that's steeper than the standard 200 ft/NM — you need
+  to know, before you take the runway, whether your aircraft's performance that day can meet it.</p>
+
+  <div class="scenario">
+    <div class="scenario-label">📐 Real-World Scenario — Can You Make the Climb Gradient?</div>
+    <h4>The DP requires 290 ft/NM minimum to 4,000 ft. Can your aircraft comply?</h4>
+    <div class="calc-grid">
+      <div class="tok">Formula</div><div>Required climb rate (ft/min) = climb gradient (ft/NM) × groundspeed (kt) ÷ 60</div>
+      <div class="tok">Given</div><div>290 ft/NM required, groundspeed 90 kt on climbout</div>
+      <div class="tok">Calculation</div><div>290 × 90 ÷ 60 = 435 ft/min required</div>
+      <div class="tok">Check</div><div>Your POH shows a best-rate climb of 700+ fpm at this weight/density altitude — you comply with margin to spare</div>
+    </div>
+    <div class="payoff"><strong>The catch:</strong> climb gradient requirements are built on groundspeed, not
+    airspeed — a strong tailwind on climbout increases the fpm you need to hit the same gradient, and a density
+    altitude that erodes your climb performance works against you at the same time. Both deserve a second look on
+    a hot day or a gusty tailwind departure.</div>
+  </div>
+
+  <p>A Standard Terminal Arrival (STAR) similarly carries charted altitude and/or speed constraints at specific
+  fixes — "cross ABCDE at or above 8,000, at or below 10,000, 250 knots or less" is a window, not a suggestion, and
+  you're expected to plan your descent and speed reduction to meet it without a last-second scramble.</p>
+
+  <h3>📞 Pilot/Controller Responsibilities <span class="acs-ref">IR.V.B.K2</span></h3>
+  <p>ATC provides separation, traffic advisories (workload permitting), and navigation assistance; you retain
+  responsibility for terrain/obstacle clearance on any segment where you're not being radar vectored, for
+  complying with charted procedures, and for telling ATC when you can't meet an instruction — silence is read as
+  compliance.</p>
+
+  <h3>⚠️ Risk Management</h3>
+  <div class="concept-grid">
+    <div class="concept-card"><h4><span class="acs-ref risk">IR.V.B.R1</span> ATC Communications &amp; Procedure Compliance</h4><p>A missed radio call or a procedure flown slightly wrong is far easier to fix by speaking up immediately than by hoping it goes unnoticed.</p></div>
+    <div class="concept-card"><h4><span class="acs-ref risk">IR.V.B.R2</span> Traffic Avoidance Equipment Limitations</h4><p>TCAS/TIS-B/ADS-B traffic displays have real gaps (non-equipped aircraft, coverage holes) — they supplement, not replace, a visual scan when conditions allow.</p></div>
+    <div class="concept-card"><h4><span class="acs-ref risk">IR.V.B.R3</span> See and Avoid</h4><p>Even under IFR and in a radar environment, the responsibility to see and avoid other traffic when visual conditions permit never fully goes away.</p></div>
+  </div>
+
+  <div class="takeaways">
+    <h3>📋 Key Takeaways</h3>
+    <div class="takeaway-item"><div class="takeaway-dot"></div><div>Fly a DME arc with small, frequent heading corrections (5°–10°) rather than one big turn, and lead the next course before the CDI centers <span class="acs-ref">IR.V.A.K1</span>.</div></div>
+    <div class="takeaway-item"><div class="takeaway-dot"></div><div>Check RAIM availability at your ETA before relying on a non-WAAS GPS approach — this is a preflight step, not an in-flight discovery <span class="acs-ref">IR.V.A.K2</span>.</div></div>
+    <div class="takeaway-item"><div class="takeaway-dot"></div><div>Climb gradient (ft/NM) converts to a required climb rate (fpm) via groundspeed — a tailwind on climbout raises the fpm you actually need <span class="acs-ref">IR.V.B.K1</span>.</div></div>
+    <div class="takeaway-item"><div class="takeaway-dot"></div><div>STAR altitude/speed constraints are a window you plan for in advance, not a last-minute scramble <span class="acs-ref">IR.V.B.K1</span>.</div></div>
+  </div>
+</div>
+</section>
+
+<!-- ── Quiz ── -->
+<section id="s3" class="quiz-section">
+<div class="container">
+  <div class="section-label">Area V · Knowledge Check</div>
+  <h2>Knowledge Check</h2>
+  <p style="color: var(--muted); margin-bottom: 32px;">6 questions covering Tasks A and B.</p>
+  <div id="quizContainer"></div>
+  <div class="score-bar" id="scoreBar">
+    <div class="score-number" id="scoreNum"></div>
+    <div class="score-label" id="scoreLabel"></div>
+    <button class="restart-btn" onclick="restartQuiz()">Try Again</button>
+  </div>
+</div>
+</section>
+
+<script>
+const questions = [
+  {
+    q: "You're flying a 10 DME arc and the DME reads 10.4 nm. What's the correct correction?",
+    options: [
+      "Turn 10°–20° away from the station",
+      "Turn 10°–20° toward the station",
+      "Make no correction — this is within tolerance",
+      "Reverse course immediately"
+    ],
+    correct: 1,
+    explanation: "A reading higher than the arc distance (10.4 on a 10 DME arc) means you're outside the arc — turn toward the station to bring the distance back down. A reading lower than the arc distance would mean turning away from the station instead. (IR.V.A.K1)"
+  },
+  {
+    q: "Why should you check RAIM availability before relying on a non-WAAS GPS approach?",
+    options: [
+      "RAIM only matters for VOR approaches, not GPS",
+      "If RAIM is predicted unavailable at your ETA, you can't legally rely on that GPS approach as planned",
+      "RAIM affects only the autopilot, not manual flying",
+      "RAIM is only a concern for multiengine aircraft"
+    ],
+    correct: 1,
+    explanation: "RAIM (Receiver Autonomous Integrity Monitoring) is how a non-WAAS GPS detects a bad satellite geometry or signal. If it's predicted unavailable at your ETA, you need a different approach, airport, or timing — this should be checked during preflight planning, not discovered in the terminal area. (IR.V.A.K2)"
+  },
+  {
+    q: "A departure procedure requires a minimum climb gradient of 290 ft/NM. At a groundspeed of 90 knots, what climb rate (in fpm) is required to comply?",
+    options: ["290 fpm", "435 fpm", "90 fpm", "600 fpm"],
+    correct: 1,
+    explanation: "Required climb rate (fpm) = climb gradient (ft/NM) × groundspeed (kt) ÷ 60. Here: 290 × 90 ÷ 60 = 435 fpm. Because the formula uses groundspeed, a tailwind on climbout raises the required fpm for the same published gradient. (IR.V.B.K1)"
+  },
+  {
+    q: "A STAR instructs you to cross a fix 'at or above 8,000, at or below 10,000, 250 knots or less.' How should this be treated?",
+    options: [
+      "As a rough suggestion — any reasonably close altitude and speed is fine",
+      "As a hard window that should be planned for in advance, not addressed at the last moment",
+      "As advisory only, since STARs are not enforceable like SIDs",
+      "As applying only if ATC repeats the restriction verbally"
+    ],
+    correct: 1,
+    explanation: "Charted STAR altitude/speed constraints are real restrictions, not suggestions. Meeting a crossing restriction cleanly means planning the descent and speed reduction well before the fix, not scrambling at the last minute. (IR.V.B.K1)"
+  },
+  {
+    q: "Under IFR in a radar environment, does the pilot's responsibility to 'see and avoid' other traffic go away?",
+    options: [
+      "Yes, completely — ATC separation replaces it entirely",
+      "No — the responsibility to see and avoid when visual conditions permit remains, alongside ATC separation and any traffic display equipment",
+      "Only for aircraft above 18,000 feet",
+      "Only when flying a published instrument approach"
+    ],
+    correct: 1,
+    explanation: "IR.V.B.R3 specifically calls out that the responsibility to see and avoid other traffic when conditions permit doesn't disappear under IFR or in a radar environment — ATC separation and onboard traffic equipment both have real limitations and gaps."
+  },
+  {
+    q: "What is the main new skill this Area's Task A adds beyond VOR navigation (already covered elsewhere in this course)?",
+    options: [
+      "Reading a magnetic compass",
+      "DME arc flying and satellite-based (GPS/WAAS) navigation procedures",
+      "Reading a METAR",
+      "Pitot-static system failures"
+    ],
+    correct: 1,
+    explanation: "The VOR-specific knowledge (how it works, the CDI, radials, tracking, service volumes, receiver checks) is covered in depth in the standalone VOR Navigation module. This Area's Task A also requires DME arc flying technique and satellite-based (GPS/WAAS/RAIM) navigation, which is genuinely separate material. (IR.V.A.K1 / K2)"
+  }
+];
+
+let answers = new Array(questions.length).fill(null);
+let answered = 0;
+
+function buildQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  answers = new Array(questions.length).fill(null);
+  answered = 0;
+  document.getElementById('scoreBar').classList.remove('show');
+
+  questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = `q${qi}`;
+
+    const num = document.createElement('div');
+    num.className = 'q-number';
+    num.textContent = `QUESTION ${qi + 1} OF ${questions.length}`;
+    card.appendChild(num);
+
+    const text = document.createElement('div');
+    text.className = 'q-text';
+    text.textContent = q.q;
+    card.appendChild(text);
+
+    const opts = document.createElement('div');
+    opts.className = 'q-options';
+    q.options.forEach((opt, oi) => {
+      const btn = document.createElement('div');
+      btn.className = 'q-option';
+      btn.innerHTML = `<div class="option-letter">${'ABCD'[oi]}</div><div class="option-text">${opt}</div>`;
+      btn.addEventListener('click', () => selectAnswer(qi, oi));
+      opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+
+    const exp = document.createElement('div');
+    exp.className = 'q-explanation';
+    exp.innerHTML = `<strong>Explanation:</strong> ${q.explanation}`;
+    card.appendChild(exp);
+
+    container.appendChild(card);
+  });
+}
+
+function selectAnswer(qi, oi) {
+  if (answers[qi] !== null) return;
+  answers[qi] = oi;
+  answered++;
+
+  const card = document.getElementById(`q${qi}`);
+  const opts = card.querySelectorAll('.q-option');
+  const exp = card.querySelector('.q-explanation');
+  opts.forEach((opt, idx) => {
+    opt.classList.add('disabled');
+    if (idx === questions[qi].correct) opt.classList.add('correct');
+    else if (idx === oi && oi !== questions[qi].correct) opt.classList.add('wrong');
+  });
+  exp.classList.add('show');
+  if (answered === questions.length) showScore();
+  updateProgress();
+}
+
+function showScore() {
+  const correct = answers.filter((a, i) => a === questions[i].correct).length;
+  const pct = Math.round((correct / questions.length) * 100);
+  const scoreBar = document.getElementById('scoreBar');
+  document.getElementById('scoreNum').textContent = `${correct}/${questions.length}`;
+  document.getElementById('scoreLabel').textContent = `${pct}% — ${pct >= 80 ? '✅ Solid grasp of Area V.' : pct >= 60 ? '📚 Review the sections above.' : '🔄 Work through the lesson again before your oral.'}`;
+  scoreBar.classList.add('show');
+}
+
+function restartQuiz() { buildQuiz(); updateProgress(); }
+buildQuiz();
+
+const sectionIds = ['s1','s2','s3'];
+
+function updateProgress() {
+  const scrolled = sectionIds.filter(id => {
+    const el = document.getElementById(id);
+    return el && el.getBoundingClientRect().top < window.innerHeight * 0.6;
+  }).length;
+  const quizPct = answered / questions.length;
+  const total = (scrolled / sectionIds.length) * 0.7 + quizPct * 0.3;
+  document.getElementById('progressFill').style.width = Math.round(total * 100) + '%';
+}
+
+const navItems = document.querySelectorAll('.nav-item');
+navItems.forEach(item => {
+  item.addEventListener('click', () => {
+    const t = document.getElementById(item.dataset.section);
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+window.addEventListener('scroll', () => {
+  let current = sectionIds[0];
+  sectionIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < 120) current = id;
+  });
+  navItems.forEach(item => item.classList.toggle('active', item.dataset.section === current));
+  updateProgress();
+}, { passive: true });
+</script>
+</body>
+</html>

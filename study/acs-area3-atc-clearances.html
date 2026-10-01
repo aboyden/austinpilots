@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>IFR Ground School — Area III: ATC Clearances and Procedures</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #22263a;
+    --border: #2e3348;
+    --accent: #2dd4bf;
+    --accent2: #4f8ef7;
+    --green: #34d399;
+    --red: #f87171;
+    --yellow: #fbbf24;
+    --orange: #fb923c;
+    --text: #e2e8f0;
+    --muted: #8892aa;
+    --heading: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #0a0e1a 0%, #142024 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 24px 0;
+    text-align: center;
+  }
+  .module-tag {
+    display: inline-block;
+    background: var(--accent);
+    color: #04231f;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+  .header h1 { font-size: 32px; font-weight: 800; color: var(--heading); margin-bottom: 8px; }
+  .header p { color: var(--muted); font-size: 15px; }
+  .progress-bar { width: 200px; height: 4px; background: var(--surface2); border-radius: 2px; margin: 16px auto 0; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.5s; }
+
+  .section-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15,17,23,0.95); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px; display: flex; gap: 0; overflow-x: auto; scrollbar-width: none;
+  }
+  .section-nav::-webkit-scrollbar { display: none; }
+  .nav-item {
+    padding: 14px 16px; font-size: 13px; font-weight: 600; color: var(--muted);
+    white-space: nowrap; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s;
+  }
+  .nav-item:hover { color: var(--text); }
+  .nav-item.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  .lesson-section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .lesson-section h2 { font-size: 26px; font-weight: 800; color: var(--heading); margin-bottom: 10px; }
+  .lesson-section p { margin-bottom: 16px; }
+  .lesson-section p:last-child { margin-bottom: 0; }
+  .lesson-section h3 { font-size: 18px; font-weight: 700; color: var(--heading); margin: 28px 0 12px; }
+  .lesson-section h4 { font-size: 14px; font-weight: 700; color: var(--heading); margin: 20px 0 8px; }
+
+  .task-block { margin: 40px 0 24px; }
+  .task-block:first-of-type { margin-top: 0; }
+  .task-refs { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+  .task-refs strong { color: var(--muted); }
+  .task-objective { font-size: 14px; color: var(--text); font-style: italic; padding-bottom: 18px; margin-bottom: 20px; border-bottom: 1px solid var(--border); }
+
+  .acs-ref {
+    display: inline-block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--accent);
+    background: rgba(45,212,191,0.12);
+    border: 1px solid rgba(45,212,191,0.35);
+    border-radius: 5px;
+    padding: 1px 6px;
+    margin: 0 2px;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  .acs-ref.risk { color: var(--yellow); background: rgba(251,191,36,0.12); border-color: rgba(251,191,36,0.35); }
+
+  .cross-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12.5px; font-weight: 600; color: var(--green);
+    background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.3);
+    border-radius: 6px; padding: 3px 10px; margin: 4px 6px 4px 0;
+  }
+
+  .callout { border-radius: 10px; padding: 18px 22px; margin: 24px 0; border-left: 4px solid; font-size: 15px; }
+  .callout-key { background: rgba(79,142,247,0.08); border-color: var(--accent2); }
+  .callout-warn { background: rgba(251,191,36,0.08); border-color: var(--yellow); }
+  .callout-tip { background: rgba(52,211,153,0.08); border-color: var(--green); }
+  .callout-danger { background: rgba(248,113,113,0.08); border-color: var(--red); }
+  .callout-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+  .callout-key .callout-title { color: var(--accent2); }
+  .callout-warn .callout-title { color: var(--yellow); }
+  .callout-tip .callout-title { color: var(--green); }
+  .callout-danger .callout-title { color: var(--red); }
+
+  .data-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  .data-table th { background: var(--surface2); color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+  .data-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .concept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  .concept-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+  .concept-card h4 { color: var(--heading); font-size: 14px; font-weight: 700; margin: 0 0 6px; }
+  .concept-card p { font-size: 14px; color: var(--muted); margin: 0; }
+
+  .reg-list { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 8px 24px; margin: 20px 0; }
+  .reg-item { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .reg-item:last-child { border-bottom: none; }
+  .reg-letter { background: var(--accent); color: #04231f; width: 26px; height: 26px; min-width: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; margin-top: 2px; }
+  .reg-text { flex: 1; font-size: 15px; }
+  .reg-text strong { color: var(--heading); }
+
+  /* Real-world scenario box */
+  .scenario {
+    background: linear-gradient(135deg, rgba(45,212,191,0.07), rgba(79,142,247,0.05));
+    border: 1px solid rgba(45,212,191,0.25);
+    border-radius: 14px;
+    padding: 26px 28px;
+    margin: 28px 0;
+  }
+  .scenario-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 14px;
+  }
+  .scenario h4 { color: var(--heading); font-size: 16px; margin: 0 0 10px; }
+  .scenario p { font-size: 15px; }
+  .scenario .payoff { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--border); font-size: 14.5px; }
+  .scenario .payoff strong { color: var(--green); }
+
+  .steps { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; margin: 18px 0; }
+  .step-item { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 14px; }
+  .step-item:last-child { margin-bottom: 0; }
+  .step-num { background: var(--accent); color: #04231f; min-width: 30px; height: 26px; padding: 0 6px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 11.5px; font-weight: 800; margin-top: 2px; }
+  .step-text { flex: 1; font-size: 14.5px; }
+  .step-text strong { color: var(--heading); }
+
+  .raw-code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: var(--surface2); border: 1px solid var(--border); padding: 14px 18px; border-radius: 8px; font-size: 13.5px; letter-spacing: 0.3px; margin-bottom: 16px; overflow-x: auto; white-space: pre-wrap; word-break: break-word; }
+  .decode-grid { display: grid; grid-template-columns: auto 1fr; gap: 9px 16px; font-size: 14px; }
+  .decode-grid .tok { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-weight: 700; color: var(--accent); white-space: nowrap; }
+
+  .takeaways { background: linear-gradient(135deg, rgba(45,212,191,0.08) 0%, rgba(79,142,247,0.08) 100%); border: 1px solid rgba(45,212,191,0.25); border-radius: 14px; padding: 32px; margin: 48px 0 0; }
+  .takeaways h3 { font-size: 18px; font-weight: 800; color: var(--heading); margin: 0 0 20px; }
+  .takeaway-item { display: flex; gap: 12px; margin-bottom: 14px; font-size: 15px; align-items: flex-start; }
+  .takeaway-dot { width: 8px; height: 8px; min-width: 8px; background: var(--accent); border-radius: 50%; margin-top: 8px; }
+
+  .quiz-section { padding: 56px 0; }
+  .quiz-section h2 { font-size: 26px; font-weight: 800; color: var(--heading); margin-bottom: 6px; }
+  .question-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin-bottom: 20px; }
+  .q-number { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: var(--accent); margin-bottom: 10px; }
+  .q-text { font-size: 16px; font-weight: 600; color: var(--heading); margin-bottom: 20px; line-height: 1.5; }
+  .q-options { display: flex; flex-direction: column; gap: 10px; }
+  .q-option { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: var(--surface2); border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 15px; }
+  .q-option:hover { border-color: var(--accent); background: rgba(45,212,191,0.06); }
+  .q-option.correct { border-color: var(--green); background: rgba(52,211,153,0.08); }
+  .q-option.wrong { border-color: var(--red); background: rgba(248,113,113,0.08); }
+  .q-option.disabled { pointer-events: none; }
+  .option-letter { width: 26px; height: 26px; min-width: 26px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--muted); transition: all 0.2s; }
+  .q-option.correct .option-letter { background: var(--green); color: #000; }
+  .q-option.wrong .option-letter { background: var(--red); color: #fff; }
+  .option-text { flex: 1; line-height: 1.5; }
+  .q-explanation { margin-top: 16px; padding: 14px 16px; background: rgba(45,212,191,0.07); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; font-size: 14px; display: none; line-height: 1.6; }
+  .q-explanation.show { display: block; }
+  .q-explanation strong { color: var(--accent); }
+
+  .score-bar { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-top: 24px; text-align: center; display: none; }
+  .score-bar.show { display: block; }
+  .score-number { font-size: 48px; font-weight: 800; color: var(--accent); }
+  .score-label { font-size: 15px; color: var(--muted); margin-top: 4px; }
+  .restart-btn { margin-top: 16px; padding: 10px 24px; background: var(--accent); color: #04231f; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; }
+  .restart-btn:hover { opacity: 0.85; }
+
+  @media (max-width: 640px) {
+    .concept-grid { grid-template-columns: 1fr; }
+    .header h1 { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="module-tag">ACS Area of Operation III</div>
+  <h1>ATC Clearances and Procedures</h1>
+  <p>Compliance with ATC Clearances · Holding Procedures</p>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<nav class="section-nav">
+  <div class="nav-item active" data-section="s1">ATC Clearances</div>
+  <div class="nav-item" data-section="s2">Holding</div>
+  <div class="nav-item" data-section="s3">Quiz</div>
+</nav>
+
+<section class="lesson-section" style="padding-bottom: 24px;">
+<div class="container">
+  <p style="margin-bottom: 18px;"><a href="acs-index.html" style="color: var(--accent); font-size: 14px; font-weight: 600;">&larr; All ACS Areas of Operation</a></p>
+  <p style="color: var(--muted);">
+    Built from <strong>FAA-S-ACS-8C</strong>, Instrument Rating — Airplane ACS (effective May 2024). Every item is
+    tagged with its exact ACS code — <span class="acs-ref">IR.III.A.K1</span> for Knowledge,
+    <span class="acs-ref risk">IR.III.A.R1</span> for Risk Management — so you can trace each fact back to the
+    standard it's testing.
+  </p>
+</div>
+</section>
+
+<!-- ── S1: Compliance with ATC Clearances ── -->
+<section id="s1" class="lesson-section">
+<div class="container">
+  <div class="section-label">Area III · Task A</div>
+  <h2>Compliance with Air Traffic Control Clearances</h2>
+
+  <div class="task-block">
+    <div class="task-refs"><strong>References:</strong> 14 CFR part 91; AIM; FAA-H-8083-2, -3, -15, -16, -25</div>
+    <div class="task-objective">Objective: the applicant exhibits satisfactory knowledge, risk management, and
+    skills associated with ATC clearances and procedures while operating solely by reference to instruments.</div>
+  </div>
+
+  <h3>🎙️ Clearances, Responsibilities, and Void Times <span class="acs-ref">IR.III.A.K1</span></h3>
+  <p>An ATC clearance authorizes you to proceed under specified conditions — it's not a weather briefing, a
+  performance guarantee, or a substitute for your own obstacle/terrain judgment. A clearance with a <strong>void
+  time</strong> means the clearance is cancelled if you haven't departed by that time, and you must notify ATC
+  by a set deadline if you don't go — otherwise ATC starts treating you as an overdue aircraft that may be off
+  somewhere uncontrolled.</p>
+
+  <div class="scenario">
+    <div class="scenario-label">🎙️ Real-World Scenario — Copying a Full Clearance with CRAFT</div>
+    <h4>"Cessna 12345, cleared to Longview airport..."</h4>
+    <div class="raw-code">"Cessna 12345 is cleared to the Longview airport via radar vectors Lufkin, then as filed. Maintain 3,000, expect 7,000 ten minutes after departure. Departure frequency 125.3, squawk 4521."</div>
+    <div class="decode-grid">
+      <div class="tok">C — Clearance limit</div><div>Longview airport (where this clearance's authorization ends)</div>
+      <div class="tok">R — Route</div><div>Radar vectors to Lufkin, then as filed from there</div>
+      <div class="tok">A — Altitude</div><div>Maintain 3,000 initially; expect 7,000 ten minutes after departure</div>
+      <div class="tok">F — Frequency</div><div>Departure control on 125.3</div>
+      <div class="tok">T — Transponder</div><div>Squawk 4521</div>
+    </div>
+    <div class="payoff"><strong>CRAFT</strong> is the standard read-back checklist — working through it in order
+    is how you catch a missing piece (a clearance with no altitude, or a route that doesn't match what you filed)
+    before you're airborne and committed to it.</div>
+  </div>
+
+  <h3>🚨 PIC Emergency Authority <span class="acs-ref">IR.III.A.K2</span></h3>
+  <p>14 CFR 91.3(b): in an in-flight emergency requiring immediate action, the PIC may deviate from any rule in
+  Part 91 to the extent required to meet that emergency — including departing from an ATC clearance. ATC expects
+  to be told what you did and why (a report may be requested in writing per 91.3(c)), but the authority to act
+  doesn't wait for their permission first.</p>
+
+  <h3>📻 Lost Communications <span class="acs-ref">IR.III.A.K3</span></h3>
+  <p>14 CFR 91.185 governs IFR flight after a two-way radio failure. If you're in VMC, continue in VMC and land as
+  soon as practicable. If you're in IMC (or VMC becomes IMC), fly the route and altitude below:</p>
+  <div class="reg-list">
+    <div class="reg-item"><div class="reg-letter">R</div><div class="reg-text"><strong>Route — "AVEF," in priority order:</strong> the last <u>A</u>ssigned route; if being radar <u>V</u>ectored, direct from the vector termination point to the fix/route/airway specified; the route ATC has told you to <u>E</u>xpect in a further clearance; or, lacking any of those, the route <u>F</u>iled in your flight plan.</div></div>
+    <div class="reg-item"><div class="reg-letter">A</div><div class="reg-text"><strong>Altitude — fly the HIGHEST of:</strong> the altitude in your last ATC clearance; the minimum altitude for IFR operations (MEA, MOCA, etc.) on that route segment; or the altitude ATC has told you to expect in a further clearance.</div></div>
+  </div>
+  <p>For timing: if your clearance included an expect-further-clearance (EFC) time, leave your clearance limit at
+  that time. If it's a fix where an approach begins, commence the approach as close as possible to your filed or
+  amended ETA. Squawk 7600 throughout.</p>
+
+  <h3>⚠️ Risk Management</h3>
+  <div class="concept-grid">
+    <div class="concept-card"><h4><span class="acs-ref risk">IR.III.A.R1</span> Partial Understanding</h4><p>Read back anything you're not 100% sure of rather than guessing — "say again" costs five seconds; flying a wrong clearance costs much more.</p></div>
+    <div class="concept-card"><h4><span class="acs-ref risk">IR.III.A.R2</span> Bad Clearances</h4><p>ATC is human — an incomplete or inappropriate clearance (an altitude below the MEA, a route through terrain) is something you're expected to catch, not blindly comply with.</p></div>
+    <div class="concept-card"><h4><span class="acs-ref risk">IR.III.A.R3</span> Clearance vs. Capability</h4><p>A clearance that assumes performance or equipment you don't have (a climb gradient you can't make, a nav system not installed) needs to be challenged before you accept it.</p></div>
+    <div class="concept-card"><h4><span class="acs-ref risk">IR.III.A.R4</span> Similar Call Signs</h4><p>"November One Two Three Alpha Bravo" and "November One Two Three Bravo Alpha" on frequency together is a real, documented hazard — always include your full call sign and listen for yours specifically, even mid-transmission.</p></div>
+  </div>
+</div>
+</section>
+
+<!-- ── S2: Holding Procedures ── -->
+<section id="s2" class="lesson-section">
+<div class="container">
+  <div class="section-label">Area III · Task B</div>
+  <h2>Holding Procedures</h2>
+
+  <div class="task-block">
+    <div class="task-refs"><strong>References:</strong> 14 CFR part 91; AIM; FAA-H-8083-2, -3, -15, -16, -25</div>
+    <div class="task-objective">Objective: the applicant exhibits satisfactory knowledge, risk management, and
+    skills associated with holding procedures solely by reference to instruments.</div>
+  </div>
+
+  <h3>🔄 Holding Elements <span class="acs-ref">IR.III.B.K1</span></h3>
+  <p>A holding clearance specifies the fix, the direction to hold from it, the leg length or time, the inbound
+  course, the turn direction (right/standard unless otherwise stated), and an expect-further-clearance (EFC) time.
+  Standard holding pattern legs are 1 minute inbound below 14,000 ft MSL and 1.5 minutes above; published holding
+  patterns may specify a leg length in nautical miles (DME holding) instead.</p>
+
+  <div class="concept-grid">
+    <div class="concept-card">
+      <h4>Direct Entry</h4>
+      <p>You're approaching from roughly the same direction as the inbound holding course. Fly to the fix, then
+      turn immediately outbound in the holding direction (standard/right unless stated) and fly the pattern.</p>
+    </div>
+    <div class="concept-card">
+      <h4>Teardrop Entry</h4>
+      <p>You're approaching from nearly the opposite direction, on the holding side. Fly to the fix, continue
+      outbound about 30° offset from the reciprocal of the inbound course (on the holding side) for about a
+      minute, then turn to intercept the inbound course.</p>
+    </div>
+    <div class="concept-card">
+      <h4>Parallel Entry</h4>
+      <p>You're approaching from nearly the opposite direction, on the non-holding side. Fly to the fix, turn to
+      parallel the inbound course outbound on the non-holding side for about a minute, then turn (in the holding
+      direction) back toward the fix to intercept the inbound course.</p>
+    </div>
+    <div class="concept-card">
+      <h4>The One Case You Can Always Recognize</h4>
+      <p>If your track to the fix already matches the published inbound holding course exactly, that's always a
+      direct entry — no sector judgment needed, just fly to the fix and turn outbound.</p>
+    </div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-label">⛽ Real-World Scenario — The EFC Just Changed</div>
+    <h4>"Expect further clearance at 1715" becomes "1735"</h4>
+    <p>You entered the hold with 90 minutes of fuel on board and a planned 10-minute hold. Twenty minutes in, ATC
+    extends your EFC by another 20 minutes.</p>
+    <div class="steps">
+      <div class="step-item"><div class="step-num">1</div><div class="step-text">Recalculate your fuel reserve against the new total hold time, not the original one — this is exactly <span class="acs-ref risk">IR.III.B.R1</span>.</div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-text">If the new numbers eat into your required 45-minute IFR reserve, that's the trigger to advise ATC now — not after you're already below it.</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text">Know the difference between "minimum fuel" (no emergency yet, but no room for further delay) and "emergency fuel" (declare now) — and say the word ATC needs to hear, not a vague description.</div></div>
+    </div>
+    <div class="payoff">Holding is the single most common place a routine IFR flight turns into a fuel problem —
+    <span class="acs-ref risk">IR.III.B.R2</span> and <span class="acs-ref risk">R3</span> exist because deteriorating
+    destination weather often shows up as exactly this scenario.</div>
+  </div>
+
+  <h3>⚠️ Risk Management</h3>
+  <div class="concept-grid">
+    <div class="concept-card"><h4><span class="acs-ref risk">IR.III.B.R1</span> Recalculating Fuel for an EFC</h4><p>Every EFC change is a fuel-math checkpoint, not just a new number to read back.</p></div>
+    <div class="concept-card"><h4><span class="acs-ref risk">IR.III.B.R2</span> Minimum Fuel / Emergency</h4><p>Know the specific phrases ATC needs ("minimum fuel" vs. declaring an emergency) and use them before the situation forces your hand.</p></div>
+    <div class="concept-card"><h4><span class="acs-ref risk">IR.III.B.R3</span> What Leads to Holding</h4><p>Deteriorating destination weather is the classic cause — build the possibility of a hold into your fuel plan before you ever get the clearance.</p></div>
+    <div class="concept-card"><h4><span class="acs-ref risk">IR.III.B.R4</span> Entry and Wind Correction</h4><p>Pick your entry before you reach the fix, and correct for wind drift on both legs so your inbound leg actually lines up on the holding course, not just "close."</p></div>
+  </div>
+
+  <div class="takeaways">
+    <h3>📋 Key Takeaways</h3>
+    <div class="takeaway-item"><div class="takeaway-dot"></div><div>CRAFT — Clearance limit, Route, Altitude, Frequency, Transponder — is the read-back order worth having automatic <span class="acs-ref">IR.III.A.K1</span>.</div></div>
+    <div class="takeaway-item"><div class="takeaway-dot"></div><div>Lost comms: fly route AVEF (Assigned, Vectored, Expected, Filed) and the HIGHEST of assigned/MEA/expected altitude <span class="acs-ref">IR.III.A.K3</span>.</div></div>
+    <div class="takeaway-item"><div class="takeaway-dot"></div><div>PIC emergency authority under 91.3(b) lets you deviate from a clearance first and explain it after, when the emergency genuinely requires it <span class="acs-ref">IR.III.A.K2</span>.</div></div>
+    <div class="takeaway-item"><div class="takeaway-dot"></div><div>A changed EFC time is a fuel-recalculation trigger, not just a new number to read back <span class="acs-ref risk">IR.III.B.R1</span>.</div></div>
+  </div>
+</div>
+</section>
+
+<!-- ── Quiz ── -->
+<section id="s3" class="quiz-section">
+<div class="container">
+  <div class="section-label">Area III · Knowledge Check</div>
+  <h2>Knowledge Check</h2>
+  <p style="color: var(--muted); margin-bottom: 32px;">6 questions covering Tasks A and B.</p>
+  <div id="quizContainer"></div>
+  <div class="score-bar" id="scoreBar">
+    <div class="score-number" id="scoreNum"></div>
+    <div class="score-label" id="scoreLabel"></div>
+    <button class="restart-btn" onclick="restartQuiz()">Try Again</button>
+  </div>
+</div>
+</section>
+
+<script>
+const questions = [
+  {
+    q: "In the CRAFT clearance mnemonic, what does the 'F' stand for?",
+    options: ["Final approach fix", "Frequency", "Flight plan", "Fuel on board"],
+    correct: 1,
+    explanation: "CRAFT: Clearance limit, Route, Altitude, Frequency, Transponder. The 'F' is the frequency to contact after departure (usually departure control), not anything related to fuel or the approach. (IR.III.A.K1)"
+  },
+  {
+    q: "You lose two-way radio communication in IMC. ATC's last clearance assigned 5,000 ft, but you were earlier told to expect 7,000 ft ten minutes after departure, and the MEA on your route is 6,000 ft. What altitude do you fly?",
+    options: ["5,000 ft — the last assigned altitude always wins", "6,000 ft — the MEA always wins", "7,000 ft — the highest of assigned, MEA, and expected", "Whatever altitude keeps you in VMC"],
+    correct: 2,
+    explanation: "91.185 requires flying the HIGHEST of: the last assigned altitude, the minimum IFR altitude (MEA/MOCA), or the altitude ATC said to expect. Here that's 7,000 ft. This errs toward terrain/obstacle safety and traffic separation when no one can tell you otherwise. (IR.III.A.K3)"
+  },
+  {
+    q: "Under 91.3(b), when can a pilot-in-command deviate from an ATC clearance without first obtaining ATC's approval?",
+    options: [
+      "Never — all deviations require prior ATC approval",
+      "Only during a loss of communications",
+      "In an in-flight emergency requiring immediate action, to the extent required to meet that emergency",
+      "Only if a company dispatcher authorizes it"
+    ],
+    correct: 2,
+    explanation: "91.3(b) gives the PIC emergency authority to deviate from any Part 91 rule, including a clearance, to the extent required by an in-flight emergency. ATC may request a written report afterward (91.3(c)), but the authority to act doesn't require their permission first. (IR.III.A.K2)"
+  },
+  {
+    q: "Your inbound track to a holding fix is the exact reciprocal of the published holding course, and you're on the non-holding side of the pattern. Which entry do you use?",
+    options: ["Direct entry", "Teardrop entry", "Parallel entry", "No entry is needed in this case"],
+    correct: 2,
+    explanation: "Approaching from nearly the opposite direction on the non-holding side calls for a parallel entry: fly to the fix, parallel the inbound course outbound on the non-holding side, then turn back (in the holding direction) to intercept the inbound course. The same reciprocal approach on the holding side instead would call for a teardrop entry. (IR.III.B.K1)"
+  },
+  {
+    q: "ATC extends your expect-further-clearance (EFC) time by 20 minutes while you're already holding. What should you do first?",
+    options: [
+      "Nothing — EFC changes don't affect your fuel planning",
+      "Recalculate your fuel reserve against the new total hold time",
+      "Immediately declare a fuel emergency",
+      "Exit the hold and proceed direct to the alternate without clearance"
+    ],
+    correct: 1,
+    explanation: "Every EFC change is a fuel-math checkpoint. Recalculate against the new total expected hold time, and if that erodes your required reserve, advise ATC with 'minimum fuel' or declare an emergency as appropriate — before you're actually below reserve, not after. (IR.III.B.R1 / R2)"
+  },
+  {
+    q: "Two aircraft with similar call signs are on the same frequency: 'November 123 Alpha Bravo' and 'November 123 Bravo Alpha.' What's the best defense against responding to the wrong clearance?",
+    options: [
+      "Request a frequency change immediately",
+      "Always include your full call sign in readbacks and listen specifically for yours, even mid-transmission",
+      "Ignore all clearances until ATC clarifies which aircraft they mean",
+      "Assume ATC will always use phonetic spelling to distinguish you"
+    ],
+    correct: 1,
+    explanation: "Similar call sign confusion is a well-documented ATC hazard (IR.III.A.R4). The practical defense is discipline: full call signs on every transmission and readback, and staying alert for yours specifically rather than assuming a transmission wasn't for you."
+  }
+];
+
+let answers = new Array(questions.length).fill(null);
+let answered = 0;
+
+function buildQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  answers = new Array(questions.length).fill(null);
+  answered = 0;
+  document.getElementById('scoreBar').classList.remove('show');
+
+  questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = `q${qi}`;
+
+    const num = document.createElement('div');
+    num.className = 'q-number';
+    num.textContent = `QUESTION ${qi + 1} OF ${questions.length}`;
+    card.appendChild(num);
+
+    const text = document.createElement('div');
+    text.className = 'q-text';
+    text.textContent = q.q;
+    card.appendChild(text);
+
+    const opts = document.createElement('div');
+    opts.className = 'q-options';
+    q.options.forEach((opt, oi) => {
+      const btn = document.createElement('div');
+      btn.className = 'q-option';
+      btn.innerHTML = `<div class="option-letter">${'ABCD'[oi]}</div><div class="option-text">${opt}</div>`;
+      btn.addEventListener('click', () => selectAnswer(qi, oi));
+      opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+
+    const exp = document.createElement('div');
+    exp.className = 'q-explanation';
+    exp.innerHTML = `<strong>Explanation:</strong> ${q.explanation}`;
+    card.appendChild(exp);
+
+    container.appendChild(card);
+  });
+}
+
+function selectAnswer(qi, oi) {
+  if (answers[qi] !== null) return;
+  answers[qi] = oi;
+  answered++;
+
+  const card = document.getElementById(`q${qi}`);
+  const opts = card.querySelectorAll('.q-option');
+  const exp = card.querySelector('.q-explanation');
+  opts.forEach((opt, idx) => {
+    opt.classList.add('disabled');
+    if (idx === questions[qi].correct) opt.classList.add('correct');
+    else if (idx === oi && oi !== questions[qi].correct) opt.classList.add('wrong');
+  });
+  exp.classList.add('show');
+  if (answered === questions.length) showScore();
+  updateProgress();
+}
+
+function showScore() {
+  const correct = answers.filter((a, i) => a === questions[i].correct).length;
+  const pct = Math.round((correct / questions.length) * 100);
+  const scoreBar = document.getElementById('scoreBar');
+  document.getElementById('scoreNum').textContent = `${correct}/${questions.length}`;
+  document.getElementById('scoreLabel').textContent = `${pct}% — ${pct >= 80 ? '✅ Solid grasp of Area III.' : pct >= 60 ? '📚 Review the sections above.' : '🔄 Work through the lesson again before your oral.'}`;
+  scoreBar.classList.add('show');
+}
+
+function restartQuiz() { buildQuiz(); updateProgress(); }
+buildQuiz();
+
+const sectionIds = ['s1','s2','s3'];
+
+function updateProgress() {
+  const scrolled = sectionIds.filter(id => {
+    const el = document.getElementById(id);
+    return el && el.getBoundingClientRect().top < window.innerHeight * 0.6;
+  }).length;
+  const quizPct = answered / questions.length;
+  const total = (scrolled / sectionIds.length) * 0.7 + quizPct * 0.3;
+  document.getElementById('progressFill').style.width = Math.round(total * 100) + '%';
+}
+
+const navItems = document.querySelectorAll('.nav-item');
+navItems.forEach(item => {
+  item.addEventListener('click', () => {
+    const t = document.getElementById(item.dataset.section);
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+window.addEventListener('scroll', () => {
+  let current = sectionIds[0];
+  sectionIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < 120) current = id;
+  });
+  navItems.forEach(item => item.classList.toggle('active', item.dataset.section === current));
+  updateProgress();
+}, { passive: true });
+</script>
+</body>
+</html>
