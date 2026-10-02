@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>IFR Ground School — Week 1: Orientation and Regulatory Foundation</title>
+<style>
+  :root {
+    --bg: #0f1117; --surface: #1a1d27; --surface2: #22263a; --border: #2e3348;
+    --accent: #4f8ef7; --accent-rgb: 79,142,247; --accent2: #7c6af7; --ink: #ffffff;
+    --green: #34d399; --red: #f87171; --yellow: #fbbf24;
+    --text: #e2e8f0; --muted: #8892aa; --heading: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 16px; }
+  a { color: var(--accent); }
+  .header { background: linear-gradient(135deg, #0a0e1a 0%, #1a2040 100%); border-bottom: 1px solid var(--border); padding: 24px 0; text-align: center; }
+  .module-tag { display: inline-block; background: var(--accent); color: var(--ink); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
+  .header h1 { font-size: 32px; font-weight: 800; color: var(--heading); margin-bottom: 8px; padding: 0 16px; }
+  .header p { color: var(--muted); font-size: 15px; padding: 0 16px; }
+  .progress-bar { width: 200px; height: 4px; background: var(--surface2); border-radius: 2px; margin: 16px auto 0; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.5s; }
+  .section-nav { position: sticky; top: 0; z-index: 100; background: rgba(15,17,23,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .section-nav::-webkit-scrollbar { display: none; }
+  .nav-item { padding: 14px 16px; font-size: 13px; font-weight: 600; color: var(--muted); white-space: nowrap; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; }
+  .nav-item:hover { color: var(--text); }
+  .nav-item.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  .lesson-section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .lesson-section h2 { font-size: 26px; font-weight: 800; color: var(--heading); margin-bottom: 6px; }
+  .day-meta { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+  .lesson-section p { margin-bottom: 16px; }
+  .lesson-section p:last-child { margin-bottom: 0; }
+  .lesson-section h3 { font-size: 18px; font-weight: 700; color: var(--heading); margin: 28px 0 12px; }
+  .lesson-section h4 { font-size: 14px; font-weight: 700; color: var(--heading); margin: 20px 0 8px; }
+  .lesson-section ul, .lesson-section ol { margin: 0 0 16px 22px; }
+  .lesson-section li { margin-bottom: 6px; }
+  .lesson-section strong { color: var(--heading); }
+  .acs-ref { display: inline-block; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10.5px; font-weight: 700; color: var(--accent); background: rgba(var(--accent-rgb),0.12); border: 1px solid rgba(var(--accent-rgb),0.35); border-radius: 5px; padding: 1px 6px; margin: 0 2px; vertical-align: middle; white-space: nowrap; }
+  .acs-ref.risk { color: var(--yellow); background: rgba(251,191,36,0.12); border-color: rgba(251,191,36,0.35); }
+  .objectives { background: rgba(var(--accent-rgb),0.06); border: 1px solid rgba(var(--accent-rgb),0.25); border-radius: 12px; padding: 16px 20px 6px; margin-bottom: 24px; }
+  .obj-title, .sc-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .objectives ul { margin-bottom: 10px; }
+  .callout { border-radius: 10px; padding: 18px 22px; margin: 24px 0; border-left: 4px solid; font-size: 15px; }
+  .callout-key { background: rgba(var(--accent-rgb),0.08); border-color: var(--accent); }
+  .callout-warn { background: rgba(251,191,36,0.08); border-color: var(--yellow); }
+  .callout-tip { background: rgba(52,211,153,0.08); border-color: var(--green); }
+  .callout-danger { background: rgba(248,113,113,0.08); border-color: var(--red); }
+  .callout-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+  .callout-key .callout-title { color: var(--accent); } .callout-warn .callout-title { color: var(--yellow); }
+  .callout-tip .callout-title { color: var(--green); } .callout-danger .callout-title { color: var(--red); }
+  .data-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  .data-table th { background: var(--surface2); color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+  .data-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .table-wrap { overflow-x: auto; }
+  .concept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  .concept-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+  .concept-card h4 { margin: 0 0 6px !important; }
+  .concept-card p { font-size: 14px; color: var(--muted); margin: 0 !important; }
+  .reg-list { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 8px 24px; margin: 20px 0; }
+  .reg-item { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .reg-item:last-child { border-bottom: none; }
+  .reg-letter { background: var(--accent); color: var(--ink); min-width: 26px; height: 26px; padding: 0 6px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; margin-top: 2px; }
+  .reg-text { flex: 1; font-size: 15px; }
+  .scenario { background: linear-gradient(135deg, rgba(var(--accent-rgb),0.08), rgba(124,106,247,0.05)); border: 1px solid rgba(var(--accent-rgb),0.25); border-radius: 14px; padding: 26px 28px; margin: 28px 0; }
+  .scenario-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  .scenario h4 { font-size: 16px !important; margin: 0 0 10px !important; }
+  .scenario p { font-size: 15px; }
+  .scenario .payoff { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--border); font-size: 14.5px; }
+  .steps { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; margin: 18px 0; }
+  .step-item { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 14px; }
+  .step-item:last-child { margin-bottom: 0; }
+  .step-num { background: var(--accent); color: var(--ink); min-width: 30px; height: 26px; padding: 0 8px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 11.5px; font-weight: 800; margin-top: 2px; white-space: nowrap; }
+  .step-text { flex: 1; font-size: 14.5px; }
+  .selfcheck, .tasks-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px 16px; margin: 28px 0 0; }
+  .tasks-box { margin-top: 16px; }
+  .selfcheck ol { margin: 0 0 14px 20px; }
+  details { margin-top: 4px; }
+  summary { cursor: pointer; font-weight: 700; font-size: 14px; color: var(--accent); padding: 6px 0; }
+  details ol { margin: 10px 0 4px 20px; color: var(--muted); font-size: 14.5px; }
+  ul.tasks { list-style: none; margin: 0 !important; }
+  ul.tasks li { margin-bottom: 8px; font-size: 14.5px; }
+  ul.tasks label { cursor: pointer; display: flex; gap: 10px; align-items: flex-start; }
+  ul.tasks input { margin-top: 6px; accent-color: var(--accent); }
+  ul.tasks input:checked + span { color: var(--muted); text-decoration: line-through; }
+  .takeaways { background: linear-gradient(135deg, rgba(var(--accent-rgb),0.08) 0%, rgba(124,106,247,0.08) 100%); border: 1px solid rgba(var(--accent-rgb),0.25); border-radius: 14px; padding: 32px; margin: 40px 0 0; }
+  .takeaways h3 { margin: 0 0 20px !important; }
+  .takeaway-item { display: flex; gap: 12px; margin-bottom: 14px; font-size: 15px; align-items: flex-start; }
+  .takeaway-dot { width: 8px; height: 8px; min-width: 8px; background: var(--accent); border-radius: 50%; margin-top: 9px; }
+  .quiz-section { padding: 56px 0; }
+  .quiz-section h2 { font-size: 26px; font-weight: 800; color: var(--heading); margin-bottom: 6px; }
+  .question-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin-bottom: 20px; }
+  .q-number { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: var(--accent); margin-bottom: 10px; }
+  .q-text { font-size: 16px; font-weight: 600; color: var(--heading); margin-bottom: 20px; line-height: 1.5; }
+  .q-options { display: flex; flex-direction: column; gap: 10px; }
+  .q-option { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: var(--surface2); border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 15px; }
+  .q-option:hover { border-color: var(--accent); background: rgba(var(--accent-rgb),0.06); }
+  .q-option.correct { border-color: var(--green); background: rgba(52,211,153,0.08); }
+  .q-option.wrong { border-color: var(--red); background: rgba(248,113,113,0.08); }
+  .q-option.disabled { pointer-events: none; }
+  .option-letter { width: 26px; height: 26px; min-width: 26px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--muted); }
+  .q-option.correct .option-letter { background: var(--green); color: #000; }
+  .q-option.wrong .option-letter { background: var(--red); color: #fff; }
+  .option-text { flex: 1; line-height: 1.5; }
+  .q-explanation { margin-top: 16px; padding: 14px 16px; background: rgba(var(--accent-rgb),0.07); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; font-size: 14px; display: none; line-height: 1.6; }
+  .q-explanation.show { display: block; }
+  .q-explanation strong { color: var(--accent); }
+  .score-bar { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-top: 24px; text-align: center; display: none; }
+  .score-bar.show { display: block; }
+  .score-number { font-size: 48px; font-weight: 800; color: var(--accent); }
+  .score-label { font-size: 15px; color: var(--muted); margin-top: 4px; }
+  .restart-btn { margin-top: 16px; padding: 10px 24px; background: var(--accent); color: var(--ink); border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; }
+  .pager { display: flex; justify-content: space-between; gap: 16px; padding: 28px 0 64px; flex-wrap: wrap; }
+  .pager a { flex: 1; min-width: 220px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; text-decoration: none; color: var(--text); }
+  .pager a:hover { border-color: var(--accent); }
+  .pager small { display: block; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+  .pager .next { text-align: right; }
+  .topbar { padding-top: 16px; }
+  .topbar a { font-size: 14px; font-weight: 600; text-decoration: none; }
+  @media (max-width: 640px) { .concept-grid { grid-template-columns: 1fr; } .header h1 { font-size: 24px; } .scenario { padding: 20px; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="module-tag">Week 1 · Month 1</div>
+  <h1>Orientation and Regulatory Foundation</h1>
+  <p>61.65 · The ACS Roadmap · Illusions · Getting Set Up</p>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+<div class="container topbar"><a href="ifr.html">&larr; Course index</a></div>
+<nav class="section-nav"><div class="nav-item active" data-section="d1">Day 1: 61.65 & ACS</div><div class="nav-item" data-section="d2">Day 2: Illusions</div><div class="nav-item" data-section="d3">Day 3: Setup</div><div class="nav-item" data-section="quiz">Quiz</div></nav>
+<section class="lesson-section" style="padding-bottom: 8px; border-bottom: none;"><div class="container">
+  <p style="color: var(--muted); font-size: 14px;"><strong>Month 1: Regulations, the IFR System, and Human Factors.</strong> Part of the 17-week IRA knowledge test study plan.
+  Regulatory and procedural content was checked against eCFR, AIM, and FAA handbook text when this plan was written —
+  cross-check against the editions current when you sit the test.</p>
+</div></section>
+<section id="d1" class="lesson-section"><div class="container"><div class="section-label">Day 1</div><h2>61.65 Requirements and the ACS Roadmap</h2><div class="day-meta">Topics: 14 CFR 61.65, Instrument Rating ACS · About 60 min</div><div class="objectives"><div class="obj-title">Learning objectives</div><ul><li>State the aeronautical knowledge and experience requirements for the instrument-airplane rating</li><li>Explain how the ACS defines what is tested and how to use it as a study map</li></ul></div><h3>📜 61.65: what the rating actually requires <span class="acs-ref">IR.I.A.K1</span></h3><p>To hold an instrument-airplane rating you need all of the following:</p><div class="reg-list"><div class="reg-item"><div class="reg-letter">1</div><div class="reg-text">A <strong>current private pilot certificate</strong> (or concurrent application) with an appropriate category rating.</div></div><div class="reg-item"><div class="reg-letter">2</div><div class="reg-text"><strong>English language proficiency.</strong></div></div><div class="reg-item"><div class="reg-letter">3</div><div class="reg-text">Logged <strong>ground training or a home-study course</strong> on the 61.65(b) knowledge areas.</div></div><div class="reg-item"><div class="reg-letter">4</div><div class="reg-text">An <strong>instructor endorsement</strong> certifying you are prepared for the knowledge test (61.65(a)(4)).</div></div><div class="reg-item"><div class="reg-letter">5</div><div class="reg-text">Logged training on the <strong>areas of operation</strong> in 61.65(c).</div></div><div class="reg-item"><div class="reg-letter">6</div><div class="reg-text">A <strong>separate instructor endorsement</strong> certifying you are prepared for the practical test.</div></div><div class="reg-item"><div class="reg-letter">7</div><div class="reg-text">A <strong>passing score on the knowledge test.</strong></div></div></div><p>For the instrument-airplane rating specifically, 61.65(d) requires <strong>50 hours of cross-country time as pilot in command</strong>, at least 10 of which must be in airplanes, plus <strong>40 hours of actual or simulated instrument time</strong> on the areas of operation in 61.65(c). That experience matters more once flight training starts; for the knowledge test itself, the endorsement in 61.65(a)(4) is the gate that actually matters right now.</p><h3>🗺️ The ACS as your syllabus</h3><p>The Instrument Rating ACS lists Areas of Operation, each broken into Tasks with specific Knowledge, Risk Management, and Skill elements. The knowledge test draws from the Knowledge elements across these areas. Reading the ACS front to back will not give you exact questions, but it tells you exactly what is in scope, so nothing about the breadth of the test is a surprise later. Throughout this course, items are tagged with their ACS element codes (<span class="acs-ref">IR.I.A.K1</span> for Knowledge, <span class="acs-ref risk">IR.I.A.R1</span> for Risk Management) so you can trace each fact back to the standard.</p><table class="data-table"><thead><tr><th>Area of Operation</th><th>Tasks</th></tr></thead><tbody><tr><td><strong>I.</strong> Preflight Preparation</td><td>Pilot Qualifications · Weather Information · Cross-Country Flight Planning</td></tr><tr><td><strong>II.</strong> Preflight Procedures</td><td>Aircraft Systems Related to IFR Operations · Flight Instruments and Navigation Equipment · Instrument Flight Deck Check</td></tr><tr><td><strong>III.</strong> ATC Clearances and Procedures</td><td>Compliance with ATC Clearances · Holding Procedures</td></tr><tr><td><strong>IV.</strong> Flight by Reference to Instruments</td><td>Instrument Flight · Recovery from Unusual Flight Attitudes</td></tr><tr><td><strong>V.</strong> Navigation Systems</td><td>Intercepting and Tracking Navigational Systems and DME Arcs · Departure, En Route, and Arrival Operations</td></tr><tr><td><strong>VI.</strong> Instrument Approach Procedures</td><td>Non-precision · Precision · Missed Approach · Circling</td></tr><tr><td><strong>VII.</strong> Emergency Operations</td><td>Loss of Communications · (multiengine engine-out tasks) · Approach with Loss of Primary Flight Instrument Indicators</td></tr><tr><td><strong>VIII.</strong> Postflight Procedures</td><td>Checking Instruments and Equipment</td></tr></tbody></table><div class="scenario"><div class="scenario-label">🧭 Worked example</div><h4>Mapping this 17-week plan onto the ACS</h4><p>Skim the ACS table of contents and lay this plan over it. Nothing in the plan is arbitrary; it follows the ACS structure:</p><table class="data-table"><thead><tr><th>Plan weeks</th><th>Where they land in the ACS</th></tr></thead><tbody><tr><td>Weeks 2–4</td><td>Preflight Preparation (Area I) and ATC Clearances and Procedures (Area III)</td></tr><tr><td>Weeks 5–8</td><td>The weather Knowledge elements under Preflight Preparation (Area I, Task B)</td></tr><tr><td>Weeks 9–12</td><td>Navigation Systems (Area V) and Instrument Flight (Area IV), plus instruments in Area II</td></tr><tr><td>Weeks 13–17</td><td>Instrument Approach Procedures (Area VI) and Emergency Operations (Area VII)</td></tr></tbody></table></div><h3>🔄 Beyond the test: keeping the rating current (61.57)</h3><p>Earning the rating and staying current are different things. The knowledge test will not ask you to fly the approaches, but you will meet the currency rules in the regs and in checkride orals, so it is worth knowing the shape of them now.</p><div class="concept-grid"><div class="concept-card"><h4>Instrument currency: 6 approaches in 6 months</h4><p>To act as PIC under IFR, within the preceding 6 calendar months you need <strong>6 instrument approaches</strong>, holding procedures and tasks, and intercepting/tracking courses using navigation systems (61.57(c)). These can be flown in the aircraft, a flight simulator, or an approved training device.</p></div><div class="concept-card"><h4>Lapsed: the 6/6/12 window</h4><p>Miss the 6 months and you have <strong>6 more months</strong> to regain currency with a safety pilot where one is required. Past <strong>12 months</strong> total, you need an <strong>Instrument Proficiency Check</strong> with a CFII, examiner, or other authorized person (61.57(d)).</p></div></div><div class="scenario"><div class="scenario-label">🧭 Real-World Scenario — The Lapsed Pilot</div><h4>Maria's currency clock</h4><p>Maria flew her 6th approach of the cycle on <strong>March 1</strong>, then got busy and flew no more approaches.</p><div class="steps"><div class="step-item"><div class="step-num">Thru Sep 1</div><div class="step-text"><strong>Month 6:</strong> fully current. Any IFR flight is legal.</div></div><div class="step-item"><div class="step-num">Sep–Mar</div><div class="step-text"><strong>Months 7–12:</strong> lapsed but inside the 6/6/12 window. She can fly 6 approaches, holding, and tracking with a safety pilot and be legal again the moment she finishes.</div></div><div class="step-item"><div class="step-num">After Mar 1</div><div class="step-text"><strong>Past month 12:</strong> the safety-pilot option is gone. She needs an Instrument Proficiency Check, however close she was to finishing on her own.</div></div></div><div class="payoff"><strong>The lesson:</strong> the 6-month and 12-month marks are two different sets of rules, not one deadline with rising urgency. <span class="acs-ref risk">IR.I.A.R1</span> (proficiency versus currency) is the judgment side of the same topic.</div></div><div class="selfcheck"><div class="sc-title">Self-check</div><ol><li>How many hours of cross-country PIC time does 61.65(d) require for the instrument-airplane rating, and how many must be in airplanes?</li><li>How many hours of actual or simulated instrument time are required?</li><li>What must an instructor endorse before you can schedule the knowledge test?</li><li>What document effectively serves as the FAA's syllabus for what is tested on the knowledge test?</li></ol><details><summary>Show answers</summary><ol><li>50 hours total, at least 10 of which must be in airplanes.</li><li>40 hours, on the areas of operation listed in 61.65(c).</li><li>A logbook or training record endorsement certifying you are prepared for the knowledge test, based on ground training in the 61.65(b) knowledge areas.</li><li>The Instrument Rating Airman Certification Standards (ACS).</li></ol></details></div><div class="tasks-box"><div class="sc-title">Tasks</div><ul class="tasks"><li><label><input type="checkbox" data-task="d1-t0"> <span>Read 14 CFR 61.65 in full</span></label></li><li><label><input type="checkbox" data-task="d1-t1"> <span>Read the Instrument Rating ACS introduction and the list of Areas of Operation</span></label></li><li><label><input type="checkbox" data-task="d1-t2"> <span>Map this week-by-week plan against the ACS areas as in the example above</span></label></li></ul></div></div></section><section id="d2" class="lesson-section"><div class="container"><div class="section-label">Day 2</div><h2>Sensory Systems and Illusions</h2><div class="day-meta">Topics: IFH Chapter 1 (first half) · About 60 min</div><div class="objectives"><div class="obj-title">Learning objectives</div><ul><li>Explain why the vestibular and visual systems can mislead a pilot with no outside visual reference</li><li>Name at least five specific spatial-disorientation illusions and their triggers</li></ul></div><h3>🧠 Why your body lies to you in the clouds <span class="acs-ref risk">IR.IV.A.R2</span></h3><p>The inner ear's semicircular canals sense rotation and the otolith organs sense linear acceleration and gravity, but neither can tell the difference between gravity and other forms of acceleration, and the canals stop signaling a turn once it becomes constant-rate. With no outside horizon to check against, the brain fills the gap with a confident but wrong sensation. Vision is the dominant sense for orientation; take it away (or give it a false horizon) and the vestibular and proprioceptive systems take over, and they are not built for this job.</p><div class="callout callout-key"><div class="callout-title">In practice</div>The inner ear is convincing in IMC. A sustained turn can feel like straight flight, and rolling level afterward can feel like a turn the other way. Fatigue, illness, and even a stuffy nose degrade your scan before you necessarily feel impaired <span class="acs-ref risk">IR.IV.A.R1</span>.</div><h3>🌀 The illusions worth memorizing</h3><table class="data-table"><thead><tr><th>Illusion</th><th>Trigger</th><th>What it does to you</th></tr></thead><tbody><tr><td><strong>The leans</strong></td><td>A slow, subtle roll into a bank goes unnoticed</td><td>A sudden correction back to level feels like banking the other way.</td></tr><tr><td><strong>Coriolis illusion</strong></td><td>An abrupt head movement during a prolonged turn</td><td>Stimulates a different canal pair: a false sense of rotation or tumbling on a different axis. Considered one of the most dangerous.</td></tr><tr><td><strong>Graveyard spiral</strong></td><td>A prolonged, constant-rate turn</td><td>The turn feels like it has stopped; leveling feels like a turn the other way, so the pilot re-enters the turn (often pulling back), tightening the spiral.</td></tr><tr><td><strong>Somatogravic illusion</strong></td><td>Rapid acceleration (takeoff, go-around)</td><td>Feels like a nose-up pitch, prompting an unwarranted nose-down correction. Rapid deceleration gives the opposite sensation.</td></tr><tr><td><strong>Inversion illusion</strong></td><td>Abrupt change from climb to straight-and-level</td><td>A tumbling-backward sensation.</td></tr><tr><td><strong>Elevator illusion</strong></td><td>Abrupt vertical acceleration (updraft or downdraft)</td><td>An updraft feels like nose-up pitch; a downdraft feels like nose-down.</td></tr><tr><td><strong>False horizon</strong></td><td>Sloping cloud decks, dark scenes with ground lights, stars mistaken for lights</td><td>Misreading something else as the horizon.</td></tr><tr><td><strong>Autokinesis</strong></td><td>Staring at one stationary light in the dark for several seconds</td><td>The light appears to move on its own.</td></tr></tbody></table><div class="scenario"><div class="scenario-label">🌀 Worked example</div><h4>Coriolis in the cockpit</h4><p>In IMC, established in a shallow turn, you turn your head to check a chart on the side console. You suddenly feel like the aircraft is tumbling on an axis that does not match anything you are actually doing.</p><div class="payoff">That is the Coriolis illusion, triggered by the head movement during the turn. The fix is the same for nearly all of these: <strong>trust the instruments</strong>, keep head movements smooth and minimal during maneuvering, and do not try to out-feel the panel.</div></div><div class="selfcheck"><div class="sc-title">Self-check</div><ol><li>Which illusion is triggered specifically by an abrupt head movement during a prolonged turn?</li><li>A pilot in a prolonged, constant-rate turn feels like the turn has stopped, levels the wings, and unknowingly re-enters the original turn while pulling back on the yoke. What is this, and why is it dangerous?</li><li>Which illusion is caused by a rapid acceleration on takeoff or go-around, and what false correction does it tend to provoke?</li><li>What is autokinesis, and in what condition does it occur?</li></ol><details><summary>Show answers</summary><ol><li>The Coriolis illusion.</li><li>The graveyard spiral; pulling back tightens the turn and can lead to a steepening spiral dive without the pilot realizing it.</li><li>The somatogravic illusion; it feels like an excessive nose-up pitch, prompting an unwarranted nose-down correction.</li><li>A stationary light in the dark appears to move after being stared at for several seconds; it occurs at night with a single point-source light and no other visual reference.</li></ol></details></div><div class="tasks-box"><div class="sc-title">Tasks</div><ul class="tasks"><li><label><input type="checkbox" data-task="d2-t0"> <span>Read IFH Chapter 1, first half (Sensory Systems for Orientation, Illusions Leading to Spatial Disorientation)</span></label></li><li><label><input type="checkbox" data-task="d2-t1"> <span>Make a flashcard for each illusion above with its trigger and effect (you will finish this set in Week 4)</span></label></li></ul></div></div></section><section id="d3" class="lesson-section"><div class="container"><div class="section-label">Day 3</div><h2>Getting Set Up</h2><div class="day-meta">Topics: administrative setup · About 60 min</div><div class="objectives"><div class="obj-title">Learning objectives</div><ul><li>Complete the administrative steps that everything else in this plan depends on</li></ul></div><h3>🧰 Why each of these matters</h3><div class="concept-grid"><div class="concept-card"><h4>IACRA account and FTN</h4><p>PSI (the FAA's testing vendor) will not let you schedule the knowledge test without an FAA Tracking Number, and getting one requires an IACRA account. Do this now so it is not a surprise when you are ready to test in Month 4.</p></div><div class="concept-card"><h4>CFII contact</h4><p>You need an instructor endorsement before you can sit the knowledge test (61.65(a)(4)), so line one up now for periodic ground briefings, even though most of this plan is self-directed study.</p></div><div class="concept-card"><h4>FAR/AIM and ACS</h4><p>Both are free PDFs from faa.gov and are the source documents this whole plan reads from.</p></div><div class="concept-card"><h4>Missed-question log</h4><p>One running note or spreadsheet for every practice question you get wrong across all 17 weeks. This is the single highest-leverage habit in the plan; you will revisit it at every checkpoint.</p></div><div class="concept-card"><h4>Question bank</h4><p>Sheppard Air or Gleim, roughly $50–70, is the paid piece of this frugal stack. Buy and activate it now so Week 2's daily question sets are not blocked.</p></div></div><div class="selfcheck"><div class="sc-title">Self-check</div><ol><li>What does PSI require before it will let you schedule the knowledge test?</li><li>Why do you need a CFII lined up now, even if most of your study is self-directed?</li><li>What is the single habit this plan asks you to maintain across all 17 weeks, starting now?</li></ol><details><summary>Show answers</summary><ol><li>An FAA Tracking Number (FTN), obtained through an IACRA account.</li><li>You need an instructor endorsement (61.65(a)(4)) certifying you are prepared for the knowledge test before you can sit it.</li><li>A running missed-question log, reviewed at every checkpoint.</li></ol></details></div><div class="tasks-box"><div class="sc-title">Tasks</div><ul class="tasks"><li><label><input type="checkbox" data-task="d3-t0"> <span>Create an IACRA account and obtain your FTN</span></label></li><li><label><input type="checkbox" data-task="d3-t1"> <span>Contact a CFII and set up periodic ground briefings</span></label></li><li><label><input type="checkbox" data-task="d3-t2"> <span>Download the current FAR/AIM and the Instrument Rating ACS</span></label></li><li><label><input type="checkbox" data-task="d3-t3"> <span>Set up your missed-question log (spreadsheet or Obsidian note)</span></label></li><li><label><input type="checkbox" data-task="d3-t4"> <span>Buy and activate your question bank (Sheppard Air or Gleim)</span></label></li></ul></div></div></section>
+<section id="quiz" class="quiz-section"><div class="container">
+  <div class="section-label">Week 1 · Knowledge check</div>
+  <h2>Knowledge Check</h2>
+  <p style="color: var(--muted); margin-bottom: 32px;">6 questions covering this week.</p>
+  <div id="quizContainer"></div>
+  <div class="score-bar" id="scoreBar"><div class="score-number" id="scoreNum"></div><div class="score-label" id="scoreLabel"></div>
+  <button class="restart-btn" onclick="restartQuiz()">Try Again</button></div>
+  <div class="pager"><a class="next" href="week-02-part-91-operating-rules.html"><small>Next &rarr;</small>Week 2: Part 91 IFR Operating Rules</a></div>
+</div></section>
+<script>
+const questions = [{"q": "How much cross-country PIC time does 61.65(d) require for the instrument-airplane rating?", "options": ["25 hours, all in airplanes", "50 hours, at least 10 of which in airplanes", "40 hours, none required in airplanes", "100 hours total"], "correct": 1, "explanation": "61.65(d) requires 50 hours of cross-country time as PIC, at least 10 of which must be in airplanes, plus 40 hours of actual or simulated instrument time."}, {"q": "What is the gate that actually matters before you can schedule the knowledge test?", "options": ["A medical certificate upgrade", "An instructor endorsement certifying ground training on the 61.65(b) knowledge areas (and an FTN from IACRA)", "Completing 40 hours of instrument flight time", "A letter from the FAA district office"], "correct": 1, "explanation": "The instructor endorsement (61.65(a)(4)) is required to sit the test, and PSI also needs your FAA Tracking Number from IACRA before it will let you schedule."}, {"q": "An abrupt head movement during a prolonged turn produces a false tumbling sensation on a different axis. Which illusion is this?", "options": ["The leans", "Somatogravic illusion", "Coriolis illusion", "Autokinesis"], "correct": 2, "explanation": "Coriolis. The head movement stimulates a different canal pair while the fluid in the turning canals is still moving, and the brain reports rotation that is not happening."}, {"q": "In a graveyard spiral, why does the pilot tend to make things worse?", "options": ["The altimeter fails during the turn", "Leveling the wings feels like a turn the other way, so the pilot re-enters the original turn and often pulls back", "The pilot over-corrects with rudder only", "Autopilot disengages unexpectedly"], "correct": 1, "explanation": "A constant-rate turn stops being felt. Rolling level then feels like turning the opposite way, so the pilot rolls back into the original turn and pulls, which tightens the spiral."}, {"q": "Rapid acceleration on a go-around feels like a nose-up pitch and provokes a nose-down correction. What is this illusion?", "options": ["Somatogravic illusion", "Inversion illusion", "Elevator illusion", "False horizon"], "correct": 0, "explanation": "The somatogravic illusion: linear acceleration is interpreted as pitch-up. The danger is the unwarranted nose-down response, especially close to the ground."}, {"q": "You last logged your 6 instrument approaches 13 months ago. What do you need before acting as PIC under IFR?", "options": ["6 approaches with a safety pilot within 6 months", "An Instrument Proficiency Check with an authorized instructor or examiner", "Nothing, currency only matters in actual IMC", "Retake the knowledge test"], "correct": 1, "explanation": "Past 12 months, the safety-pilot refresh is no longer available; 61.57(d) requires an Instrument Proficiency Check."}];
+let answers = new Array(questions.length).fill(null);
+let answered = 0;
+function buildQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  answers = new Array(questions.length).fill(null);
+  answered = 0;
+  document.getElementById('scoreBar').classList.remove('show');
+  questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card'; card.id = 'q' + qi;
+    const num = document.createElement('div'); num.className = 'q-number';
+    num.textContent = 'QUESTION ' + (qi + 1) + ' OF ' + questions.length; card.appendChild(num);
+    const text = document.createElement('div'); text.className = 'q-text'; text.textContent = q.q; card.appendChild(text);
+    const opts = document.createElement('div'); opts.className = 'q-options';
+    q.options.forEach((opt, oi) => {
+      const btn = document.createElement('div'); btn.className = 'q-option';
+      btn.innerHTML = '<div class="option-letter">' + 'ABCD'[oi] + '</div><div class="option-text">' + opt + '</div>';
+      btn.addEventListener('click', () => selectAnswer(qi, oi)); opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+    const exp = document.createElement('div'); exp.className = 'q-explanation';
+    exp.innerHTML = '<strong>Explanation:</strong> ' + q.explanation; card.appendChild(exp);
+    container.appendChild(card);
+  });
+}
+function selectAnswer(qi, oi) {
+  if (answers[qi] !== null) return;
+  answers[qi] = oi; answered++;
+  const card = document.getElementById('q' + qi);
+  card.querySelectorAll('.q-option').forEach((opt, idx) => {
+    opt.classList.add('disabled');
+    if (idx === questions[qi].correct) opt.classList.add('correct');
+    else if (idx === oi) opt.classList.add('wrong');
+  });
+  card.querySelector('.q-explanation').classList.add('show');
+  if (answered === questions.length) showScore();
+  updateProgress();
+}
+function showScore() {
+  const correct = answers.filter((a, i) => a === questions[i].correct).length;
+  const pct = Math.round((correct / questions.length) * 100);
+  document.getElementById('scoreNum').textContent = correct + '/' + questions.length;
+  document.getElementById('scoreLabel').textContent = pct + '% — ' + (pct >= 80 ? 'Solid grasp of this week.' : pct >= 60 ? 'Review the days above, then retry.' : 'Work back through the week before moving on.');
+  document.getElementById('scoreBar').classList.add('show');
+}
+function restartQuiz() { buildQuiz(); updateProgress(); }
+buildQuiz();
+
+const sectionIds = [...document.querySelectorAll('.lesson-section[id], .quiz-section[id]')].map(e => e.id);
+function updateProgress() {
+  const scrolled = sectionIds.filter(id => { const el = document.getElementById(id); return el && el.getBoundingClientRect().top < window.innerHeight * 0.6; }).length;
+  const total = (scrolled / sectionIds.length) * 0.7 + (answered / questions.length) * 0.3;
+  document.getElementById('progressFill').style.width = Math.round(total * 100) + '%';
+}
+const navItems = document.querySelectorAll('.nav-item');
+navItems.forEach(item => item.addEventListener('click', () => {
+  const t = document.getElementById(item.dataset.section); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}));
+window.addEventListener('scroll', () => {
+  let current = sectionIds[0];
+  sectionIds.forEach(id => { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top < 120) current = id; });
+  navItems.forEach(item => item.classList.toggle('active', item.dataset.section === current));
+  updateProgress();
+}, { passive: true });
+
+(function () {
+  const key = 'ifr-tasks-w1';
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(key) || '{}'); } catch (e) {}
+  document.querySelectorAll('input[data-task]').forEach(cb => {
+    cb.checked = !!saved[cb.dataset.task];
+    cb.addEventListener('change', () => {
+      saved[cb.dataset.task] = cb.checked;
+      try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+    });
+  });
+})();
+</script>
+</body>
+</html>

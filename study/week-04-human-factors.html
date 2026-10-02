@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>IFR Ground School — Week 4: Human Factors Deep Dive, Month 1 Checkpoint</title>
+<style>
+  :root {
+    --bg: #0f1117; --surface: #1a1d27; --surface2: #22263a; --border: #2e3348;
+    --accent: #4f8ef7; --accent-rgb: 79,142,247; --accent2: #7c6af7; --ink: #ffffff;
+    --green: #34d399; --red: #f87171; --yellow: #fbbf24;
+    --text: #e2e8f0; --muted: #8892aa; --heading: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 16px; }
+  a { color: var(--accent); }
+  .header { background: linear-gradient(135deg, #0a0e1a 0%, #1a2040 100%); border-bottom: 1px solid var(--border); padding: 24px 0; text-align: center; }
+  .module-tag { display: inline-block; background: var(--accent); color: var(--ink); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
+  .header h1 { font-size: 32px; font-weight: 800; color: var(--heading); margin-bottom: 8px; padding: 0 16px; }
+  .header p { color: var(--muted); font-size: 15px; padding: 0 16px; }
+  .progress-bar { width: 200px; height: 4px; background: var(--surface2); border-radius: 2px; margin: 16px auto 0; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.5s; }
+  .section-nav { position: sticky; top: 0; z-index: 100; background: rgba(15,17,23,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .section-nav::-webkit-scrollbar { display: none; }
+  .nav-item { padding: 14px 16px; font-size: 13px; font-weight: 600; color: var(--muted); white-space: nowrap; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; }
+  .nav-item:hover { color: var(--text); }
+  .nav-item.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  .lesson-section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .lesson-section h2 { font-size: 26px; font-weight: 800; color: var(--heading); margin-bottom: 6px; }
+  .day-meta { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+  .lesson-section p { margin-bottom: 16px; }
+  .lesson-section p:last-child { margin-bottom: 0; }
+  .lesson-section h3 { font-size: 18px; font-weight: 700; color: var(--heading); margin: 28px 0 12px; }
+  .lesson-section h4 { font-size: 14px; font-weight: 700; color: var(--heading); margin: 20px 0 8px; }
+  .lesson-section ul, .lesson-section ol { margin: 0 0 16px 22px; }
+  .lesson-section li { margin-bottom: 6px; }
+  .lesson-section strong { color: var(--heading); }
+  .acs-ref { display: inline-block; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10.5px; font-weight: 700; color: var(--accent); background: rgba(var(--accent-rgb),0.12); border: 1px solid rgba(var(--accent-rgb),0.35); border-radius: 5px; padding: 1px 6px; margin: 0 2px; vertical-align: middle; white-space: nowrap; }
+  .acs-ref.risk { color: var(--yellow); background: rgba(251,191,36,0.12); border-color: rgba(251,191,36,0.35); }
+  .objectives { background: rgba(var(--accent-rgb),0.06); border: 1px solid rgba(var(--accent-rgb),0.25); border-radius: 12px; padding: 16px 20px 6px; margin-bottom: 24px; }
+  .obj-title, .sc-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .objectives ul { margin-bottom: 10px; }
+  .callout { border-radius: 10px; padding: 18px 22px; margin: 24px 0; border-left: 4px solid; font-size: 15px; }
+  .callout-key { background: rgba(var(--accent-rgb),0.08); border-color: var(--accent); }
+  .callout-warn { background: rgba(251,191,36,0.08); border-color: var(--yellow); }
+  .callout-tip { background: rgba(52,211,153,0.08); border-color: var(--green); }
+  .callout-danger { background: rgba(248,113,113,0.08); border-color: var(--red); }
+  .callout-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+  .callout-key .callout-title { color: var(--accent); } .callout-warn .callout-title { color: var(--yellow); }
+  .callout-tip .callout-title { color: var(--green); } .callout-danger .callout-title { color: var(--red); }
+  .data-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  .data-table th { background: var(--surface2); color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+  .data-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .table-wrap { overflow-x: auto; }
+  .concept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  .concept-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+  .concept-card h4 { margin: 0 0 6px !important; }
+  .concept-card p { font-size: 14px; color: var(--muted); margin: 0 !important; }
+  .reg-list { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 8px 24px; margin: 20px 0; }
+  .reg-item { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .reg-item:last-child { border-bottom: none; }
+  .reg-letter { background: var(--accent); color: var(--ink); min-width: 26px; height: 26px; padding: 0 6px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; margin-top: 2px; }
+  .reg-text { flex: 1; font-size: 15px; }
+  .scenario { background: linear-gradient(135deg, rgba(var(--accent-rgb),0.08), rgba(124,106,247,0.05)); border: 1px solid rgba(var(--accent-rgb),0.25); border-radius: 14px; padding: 26px 28px; margin: 28px 0; }
+  .scenario-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  .scenario h4 { font-size: 16px !important; margin: 0 0 10px !important; }
+  .scenario p { font-size: 15px; }
+  .scenario .payoff { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--border); font-size: 14.5px; }
+  .steps { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; margin: 18px 0; }
+  .step-item { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 14px; }
+  .step-item:last-child { margin-bottom: 0; }
+  .step-num { background: var(--accent); color: var(--ink); min-width: 30px; height: 26px; padding: 0 8px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 11.5px; font-weight: 800; margin-top: 2px; white-space: nowrap; }
+  .step-text { flex: 1; font-size: 14.5px; }
+  .selfcheck, .tasks-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px 16px; margin: 28px 0 0; }
+  .tasks-box { margin-top: 16px; }
+  .selfcheck ol { margin: 0 0 14px 20px; }
+  details { margin-top: 4px; }
+  summary { cursor: pointer; font-weight: 700; font-size: 14px; color: var(--accent); padding: 6px 0; }
+  details ol { margin: 10px 0 4px 20px; color: var(--muted); font-size: 14.5px; }
+  ul.tasks { list-style: none; margin: 0 !important; }
+  ul.tasks li { margin-bottom: 8px; font-size: 14.5px; }
+  ul.tasks label { cursor: pointer; display: flex; gap: 10px; align-items: flex-start; }
+  ul.tasks input { margin-top: 6px; accent-color: var(--accent); }
+  ul.tasks input:checked + span { color: var(--muted); text-decoration: line-through; }
+  .takeaways { background: linear-gradient(135deg, rgba(var(--accent-rgb),0.08) 0%, rgba(124,106,247,0.08) 100%); border: 1px solid rgba(var(--accent-rgb),0.25); border-radius: 14px; padding: 32px; margin: 40px 0 0; }
+  .takeaways h3 { margin: 0 0 20px !important; }
+  .takeaway-item { display: flex; gap: 12px; margin-bottom: 14px; font-size: 15px; align-items: flex-start; }
+  .takeaway-dot { width: 8px; height: 8px; min-width: 8px; background: var(--accent); border-radius: 50%; margin-top: 9px; }
+  .quiz-section { padding: 56px 0; }
+  .quiz-section h2 { font-size: 26px; font-weight: 800; color: var(--heading); margin-bottom: 6px; }
+  .question-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin-bottom: 20px; }
+  .q-number { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: var(--accent); margin-bottom: 10px; }
+  .q-text { font-size: 16px; font-weight: 600; color: var(--heading); margin-bottom: 20px; line-height: 1.5; }
+  .q-options { display: flex; flex-direction: column; gap: 10px; }
+  .q-option { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: var(--surface2); border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 15px; }
+  .q-option:hover { border-color: var(--accent); background: rgba(var(--accent-rgb),0.06); }
+  .q-option.correct { border-color: var(--green); background: rgba(52,211,153,0.08); }
+  .q-option.wrong { border-color: var(--red); background: rgba(248,113,113,0.08); }
+  .q-option.disabled { pointer-events: none; }
+  .option-letter { width: 26px; height: 26px; min-width: 26px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--muted); }
+  .q-option.correct .option-letter { background: var(--green); color: #000; }
+  .q-option.wrong .option-letter { background: var(--red); color: #fff; }
+  .option-text { flex: 1; line-height: 1.5; }
+  .q-explanation { margin-top: 16px; padding: 14px 16px; background: rgba(var(--accent-rgb),0.07); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; font-size: 14px; display: none; line-height: 1.6; }
+  .q-explanation.show { display: block; }
+  .q-explanation strong { color: var(--accent); }
+  .score-bar { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-top: 24px; text-align: center; display: none; }
+  .score-bar.show { display: block; }
+  .score-number { font-size: 48px; font-weight: 800; color: var(--accent); }
+  .score-label { font-size: 15px; color: var(--muted); margin-top: 4px; }
+  .restart-btn { margin-top: 16px; padding: 10px 24px; background: var(--accent); color: var(--ink); border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; }
+  .pager { display: flex; justify-content: space-between; gap: 16px; padding: 28px 0 64px; flex-wrap: wrap; }
+  .pager a { flex: 1; min-width: 220px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; text-decoration: none; color: var(--text); }
+  .pager a:hover { border-color: var(--accent); }
+  .pager small { display: block; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+  .pager .next { text-align: right; }
+  .topbar { padding-top: 16px; }
+  .topbar a { font-size: 14px; font-weight: 600; text-decoration: none; }
+  @media (max-width: 640px) { .concept-grid { grid-template-columns: 1fr; } .header h1 { font-size: 24px; } .scenario { padding: 20px; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="module-tag">Week 4 · Month 1</div>
+  <h1>Human Factors Deep Dive, Month 1 Checkpoint</h1>
+  <p>Physiology · 91.17 · Hazardous attitudes · Month 1 checkpoint</p>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+<div class="container topbar"><a href="ifr.html">&larr; Course index</a></div>
+<nav class="section-nav"><div class="nav-item active" data-section="d1">Day 1: Physiology</div><div class="nav-item" data-section="d2">Day 2: ADM</div><div class="nav-item" data-section="d3">Day 3: Checkpoint</div><div class="nav-item" data-section="quiz">Quiz</div></nav>
+<section class="lesson-section" style="padding-bottom: 8px; border-bottom: none;"><div class="container">
+  <p style="color: var(--muted); font-size: 14px;"><strong>Month 1: Regulations, the IFR System, and Human Factors.</strong> Part of the 17-week IRA knowledge test study plan.
+  Regulatory and procedural content was checked against eCFR, AIM, and FAA handbook text when this plan was written —
+  cross-check against the editions current when you sit the test.</p>
+</div></section>
+<section id="d1" class="lesson-section"><div class="container"><div class="section-label">Day 1</div><h2>Physiological and Medical Factors</h2><div class="day-meta">Topics: IFH Chapter 1 (remainder), 14 CFR 91.17 · About 70 min</div><div class="objectives"><div class="obj-title">Learning objectives</div><ul><li>Describe hypoxia, hyperventilation, and other physiological threats specific to instrument flight</li><li>State the 91.17 alcohol and drug rules from memory</li></ul></div><h3>🫁 Physiological factors <span class="acs-ref risk">IR.I.A.R3</span></h3><div class="concept-grid"><div class="concept-card"><h4>Hypoxia</h4><p>Insufficient oxygen to the brain and tissues. The big one at altitude, and dangerous because early symptoms (euphoria, poor judgment, tunnel vision, cyanosis) rarely feel alarming to the person experiencing them. Supplemental oxygen and a pulse oximeter are cheap insurance above the altitudes where you would notice the effects.</p></div><div class="concept-card"><h4>Hyperventilation</h4><p>Ironically produces very similar symptoms (dizziness, tingling, visual disturbance) from over-breathing, usually from stress. The fix is slow, controlled breathing, or talking, the opposite instinct from what hypoxia calls for, so correctly telling the two apart matters.</p></div></div><div class="callout callout-key"><div class="callout-title">Before every flight: IMSAFE</div><strong>I</strong>llness, <strong>M</strong>edication, <strong>S</strong>tress, <strong>A</strong>lcohol, <strong>F</strong>atigue, <strong>E</strong>motion. 14 CFR 61.53 prohibits acting as PIC with a known medical deficiency or while using medication that affects your faculties in a way contrary to safety, and that applies under BasicMed too <span class="acs-ref risk">IR.IV.A.R1</span>.</div><h3>🍺 91.17: alcohol and drugs</h3><div class="reg-list"><div class="reg-item"><div class="reg-letter">8 hr</div><div class="reg-text">No person may act as a crewmember within <strong>8 hours</strong> of consuming alcohol.</div></div><div class="reg-item"><div class="reg-letter">BAC</div><div class="reg-text">…or with a blood alcohol concentration of <strong>0.04 or greater</strong>.</div></div><div class="reg-item"><div class="reg-letter">Imp.</div><div class="reg-text">…or while under the influence, or while using a drug that affects safety.</div></div></div><p>Many operators and personal minimums use a stricter 12- or 24-hour rule. &ldquo;8 hours bottle to throttle&rdquo; is the regulatory floor, not a target.</p><div class="scenario"><div class="scenario-label">🫁 Worked example</div><h4>The pleasant kind of problem</h4><p>At 9,000 ft cabin altitude with no supplemental oxygen after several hours, a pilot feels unusually good and slightly euphoric, and starts making small navigation errors without noticing.</p><div class="payoff">That euphoric, false sense of competence is a classic early hypoxia presentation, <strong>not a sign that things are going well.</strong></div></div><div class="selfcheck"><div class="sc-title">Self-check</div><ol><li>Why is hypoxia particularly dangerous compared to other physiological threats?</li><li>What blood alcohol concentration makes it illegal to act as a crewmember under 91.17?</li><li>What is the minimum time after consuming alcohol before acting as a crewmember under 91.17?</li></ol><details><summary>Show answers</summary><ol><li>Early symptoms (euphoria, impaired judgment) often feel pleasant or unremarkable to the person experiencing them, so self-recognition is unreliable.</li><li>0.04 or greater.</li><li>8 hours.</li></ol></details></div><div class="tasks-box"><div class="sc-title">Tasks</div><ul class="tasks"><li><label><input type="checkbox" data-task="d1-t0"> <span>Read IFH Chapter 1, Physiological and Medical Factors sections</span></label></li><li><label><input type="checkbox" data-task="d1-t1"> <span>Read 14 CFR 91.17</span></label></li></ul></div></div></section><section id="d2" class="lesson-section"><div class="container"><div class="section-label">Day 2</div><h2>Aeronautical Decision Making and Hazardous Attitudes</h2><div class="day-meta">Topics: IFH Chapter 1 (ADM, CRM) · About 60 min</div><div class="objectives"><div class="obj-title">Learning objectives</div><ul><li>Name the five classic hazardous attitudes and their antidotes</li><li>Describe how single-pilot resource management applies without a crew</li></ul></div><h3>⚠️ The five hazardous attitudes</h3><table class="data-table"><thead><tr><th>Attitude</th><th>The thinking</th><th>Antidote</th></tr></thead><tbody><tr><td><strong>Anti-authority</strong></td><td>&ldquo;Don't tell me.&rdquo;</td><td>Follow the rules; they are usually right.</td></tr><tr><td><strong>Impulsivity</strong></td><td>&ldquo;Do something now.&rdquo;</td><td>Not so fast. Think first.</td></tr><tr><td><strong>Invulnerability</strong></td><td>&ldquo;It won't happen to me.&rdquo;</td><td>It could happen to me.</td></tr><tr><td><strong>Macho</strong></td><td>&ldquo;I can do it.&rdquo;</td><td>Taking chances is foolish.</td></tr><tr><td><strong>Resignation</strong></td><td>&ldquo;What's the use?&rdquo;</td><td>I'm not helpless. I can make a difference.</td></tr></tbody></table><h3>🧑‍✈️ CRM without a crew</h3><p>Single-Pilot Resource Management means using every resource available: ATC, the autopilot, checklists, passengers who can hold a chart, and, critically, your own workload management. The goal is to recognize when task saturation is building and offload something (engage the autopilot, ask ATC for a delay vector, defer a nonessential task) before it costs you situational awareness. Stress, task saturation, and an inadequate scan are exactly the precursors the ACS names for loss of control in flight <span class="acs-ref risk">IR.IV.B.R1</span>.</p><div class="callout callout-tip"><div class="callout-title">A simple frame: PAVE</div><strong>P</strong>ilot, <strong>A</strong>ircraft, en<strong>V</strong>ironment, <strong>E</strong>xternal pressures. It organizes the risk categories that show up across nearly every ACS task.</div><div class="callout callout-key"><div class="callout-title">Where human factors live in the ACS</div>The current ACS has no separate human-factors task. Instead the topics appear as Risk Management elements spread through the tasks, for example personal minimums <span class="acs-ref risk">IR.I.A.R2</span>, fitness for flight <span class="acs-ref risk">IR.I.A.R3</span>, and spatial disorientation <span class="acs-ref risk">IR.IV.A.R2</span>.</div><div class="scenario"><div class="scenario-label">😤 Worked example</div><h4>Pressing on</h4><p>A pilot behind schedule, in deteriorating weather, presses on toward the original destination rather than diverting to a closer airport with better conditions, reasoning &ldquo;I've flown in worse.&rdquo;</p><div class="payoff">That is the <strong>macho</strong> attitude talking. The antidote is recognizing that taking the chance buys nothing but risk.</div></div><div class="selfcheck"><div class="sc-title">Self-check</div><ol><li>What is the antidote to the &ldquo;invulnerability&rdquo; hazardous attitude?</li><li>A pilot reacts to a minor abnormal indication by immediately pulling circuit breakers without diagnosing the problem first. Which hazardous attitude does this resemble, and what is the antidote?</li><li>In single-pilot IFR, what is the core idea behind resource management when workload is climbing?</li></ol><details><summary>Show answers</summary><ol><li>&ldquo;It could happen to me.&rdquo;</li><li>Impulsivity; the antidote is &ldquo;not so fast, think first.&rdquo;</li><li>Recognize task saturation building and offload something (autopilot, ATC assistance, deferring a nonessential task) before situational awareness suffers.</li></ol></details></div><div class="tasks-box"><div class="sc-title">Tasks</div><ul class="tasks"><li><label><input type="checkbox" data-task="d2-t0"> <span>Read IFH Chapter 1, ADM, Hazardous Attitudes, and CRM sections</span></label></li><li><label><input type="checkbox" data-task="d2-t1"> <span>Finish the illusion flashcard set started in Week 1</span></label></li></ul></div></div></section><section id="d3" class="lesson-section"><div class="container"><div class="section-label">Day 3</div><h2>Month 1 Checkpoint</h2><div class="day-meta">Topics: full review, practice exam · About 90 min</div><div class="objectives"><div class="obj-title">Learning objectives</div><ul><li>Consolidate Weeks 1–4 (regulations, IFR system, human factors) before moving to weather</li></ul></div><h3>📑 Month 1 reference sheet</h3><table class="data-table"><thead><tr><th>Topic</th><th>Remember</th></tr></thead><tbody><tr><td>91.167 / 91.169</td><td>45-min IFR fuel reserve; 1-2-3 rule for alternates; alternate minimums 600-2 (precision) / 800-2 (non-precision).</td></tr><tr><td>91.171 / 91.205</td><td>VOR check every 30 days (±4° ground, ±6° airborne, ±4° dual-compare); GRABCARD for IFR equipment.</td></tr><tr><td>91.173 / 91.179 / 91.181</td><td>Filed flight plan + ATC clearance required in controlled airspace; fly the ATC-assigned altitude in controlled airspace (odd/even thousands, no +500, only uncontrolled); track the airway centerline or direct course between fixes.</td></tr><tr><td>91.175 / 91.177</td><td>Three-part test to go below DA/MDA (position, visibility, visual reference); 1,000/2,000-ft minimum IFR altitude off-structure, MOCA exception within 22 NM.</td></tr><tr><td>91.183 / 91.185 / 91.187</td><td>Routine position/weather/safety reports; malfunction reports (aircraft ID, equipment, impairment, assistance wanted); lost comm is AVEF for route, highest-of-three for altitude.</td></tr><tr><td>MEA vs. MOCA</td><td>MEA guarantees signal and obstacle clearance; MOCA guarantees obstacle clearance only, and only within 22 NM of the VOR.</td></tr><tr><td>Hazardous attitudes</td><td>Anti-authority, impulsivity, invulnerability, macho, resignation, each with its antidote.</td></tr></tbody></table><div class="selfcheck"><div class="sc-title">Self-check</div><ol><li>Weighted toward regulations, the IFR system, and human factors: what is the 1-2-3 rule?</li><li>What altitude do you fly in controlled airspace under an IFR clearance, regardless of magnetic course?</li><li>Which illusion is triggered by an abrupt head movement during a prolonged turn?</li><li>What is the antidote to the macho hazardous attitude?</li><li>What must be true before you can go below DA/MDA on an approach?</li></ol><details><summary>Show answers</summary><ol><li>An alternate is required unless the destination forecast, 1 hour before to 1 hour after ETA, shows a ceiling at or above 2,000 ft and visibility at or above 3 SM for the whole window.</li><li>Whatever altitude or flight level ATC assigned.</li><li>The Coriolis illusion.</li><li>&ldquo;Taking chances is foolish.&rdquo;</li><li>You are continuously positioned for a normal landing, flight visibility meets the published minimum, and at least one qualifying visual reference for the runway is distinctly visible and identifiable.</li></ol></details></div><div class="tasks-box"><div class="sc-title">Tasks</div><ul class="tasks"><li><label><input type="checkbox" data-task="d3-t0"> <span>CHECKPOINT: take a full 60-question practice exam weighted toward regulations, the IFR system, and human factors</span></label></li><li><label><input type="checkbox" data-task="d3-t1"> <span>Review your Month 1 missed-question log before starting Month 2 (weather)</span></label></li></ul></div></div></section>
+<section id="quiz" class="quiz-section"><div class="container">
+  <div class="section-label">Week 4 · Knowledge check</div>
+  <h2>Knowledge Check</h2>
+  <p style="color: var(--muted); margin-bottom: 32px;">6 questions covering this week.</p>
+  <div id="quizContainer"></div>
+  <div class="score-bar" id="scoreBar"><div class="score-number" id="scoreNum"></div><div class="score-label" id="scoreLabel"></div>
+  <button class="restart-btn" onclick="restartQuiz()">Try Again</button></div>
+  <div class="pager"><a href="week-03-ifr-system-airspace.html"><small>&larr; Previous</small>Week 3: The IFR System and Airspace</a><a class="next" href="week-05-atmosphere-altimetry.html"><small>Next &rarr;</small>Week 5: Atmosphere and Altimetry</a></div>
+</div></section>
+<script>
+const questions = [{"q": "Why is hypoxia especially dangerous?", "options": ["It always causes immediate unconsciousness", "Early symptoms like euphoria and poor judgment feel pleasant or unremarkable, so self-recognition is unreliable", "It only occurs above 25,000 ft", "It cannot be treated in flight"], "correct": 1, "explanation": "The early symptoms (euphoria, impaired judgment, tunnel vision) rarely feel alarming, which is why supplemental oxygen and a pulse oximeter are cheap insurance."}, {"q": "Under 91.17, at what blood alcohol concentration is it illegal to act as a crewmember?", "options": ["0.02", "0.04", "0.08", "0.10"], "correct": 1, "explanation": "0.04 or greater. The separate time rule is 8 hours after consuming alcohol."}, {"q": "Hyperventilation and hypoxia can feel alike. What is the right response to hyperventilation?", "options": ["Add supplemental oxygen and descend", "Slow, controlled breathing (or talking)", "Hold your breath", "Increase your breathing rate"], "correct": 1, "explanation": "Hyperventilation comes from over-breathing, so the fix is to slow your breathing. Hypoxia calls for oxygen or descent, so telling them apart matters."}, {"q": "Which hazardous attitude has the antidote &ldquo;It could happen to me&rdquo;?", "options": ["Macho", "Anti-authority", "Invulnerability", "Resignation"], "correct": 2, "explanation": "Invulnerability (&ldquo;it won't happen to me&rdquo;) is countered by &ldquo;it could happen to me.&rdquo;"}, {"q": "Pulling circuit breakers at the first abnormal indication, without diagnosing, most resembles which attitude?", "options": ["Impulsivity", "Resignation", "Anti-authority", "Macho"], "correct": 0, "explanation": "Impulsivity (&ldquo;do something now&rdquo;); the antidote is &ldquo;not so fast, think first.&rdquo;"}, {"q": "Single-pilot workload is climbing fast during an approach. What is the core resource-management idea?", "options": ["Concentrate harder on everything at once", "Recognize task saturation and offload something (autopilot, ATC help, defer a nonessential task) before you lose situational awareness", "Turn off the avionics to reduce distractions", "Ignore the checklist to save time"], "correct": 1, "explanation": "Single-pilot resource management means using every available resource and offloading tasks early rather than waiting until situational awareness is already gone."}];
+let answers = new Array(questions.length).fill(null);
+let answered = 0;
+function buildQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  answers = new Array(questions.length).fill(null);
+  answered = 0;
+  document.getElementById('scoreBar').classList.remove('show');
+  questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card'; card.id = 'q' + qi;
+    const num = document.createElement('div'); num.className = 'q-number';
+    num.textContent = 'QUESTION ' + (qi + 1) + ' OF ' + questions.length; card.appendChild(num);
+    const text = document.createElement('div'); text.className = 'q-text'; text.textContent = q.q; card.appendChild(text);
+    const opts = document.createElement('div'); opts.className = 'q-options';
+    q.options.forEach((opt, oi) => {
+      const btn = document.createElement('div'); btn.className = 'q-option';
+      btn.innerHTML = '<div class="option-letter">' + 'ABCD'[oi] + '</div><div class="option-text">' + opt + '</div>';
+      btn.addEventListener('click', () => selectAnswer(qi, oi)); opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+    const exp = document.createElement('div'); exp.className = 'q-explanation';
+    exp.innerHTML = '<strong>Explanation:</strong> ' + q.explanation; card.appendChild(exp);
+    container.appendChild(card);
+  });
+}
+function selectAnswer(qi, oi) {
+  if (answers[qi] !== null) return;
+  answers[qi] = oi; answered++;
+  const card = document.getElementById('q' + qi);
+  card.querySelectorAll('.q-option').forEach((opt, idx) => {
+    opt.classList.add('disabled');
+    if (idx === questions[qi].correct) opt.classList.add('correct');
+    else if (idx === oi) opt.classList.add('wrong');
+  });
+  card.querySelector('.q-explanation').classList.add('show');
+  if (answered === questions.length) showScore();
+  updateProgress();
+}
+function showScore() {
+  const correct = answers.filter((a, i) => a === questions[i].correct).length;
+  const pct = Math.round((correct / questions.length) * 100);
+  document.getElementById('scoreNum').textContent = correct + '/' + questions.length;
+  document.getElementById('scoreLabel').textContent = pct + '% — ' + (pct >= 80 ? 'Solid grasp of this week.' : pct >= 60 ? 'Review the days above, then retry.' : 'Work back through the week before moving on.');
+  document.getElementById('scoreBar').classList.add('show');
+}
+function restartQuiz() { buildQuiz(); updateProgress(); }
+buildQuiz();
+
+const sectionIds = [...document.querySelectorAll('.lesson-section[id], .quiz-section[id]')].map(e => e.id);
+function updateProgress() {
+  const scrolled = sectionIds.filter(id => { const el = document.getElementById(id); return el && el.getBoundingClientRect().top < window.innerHeight * 0.6; }).length;
+  const total = (scrolled / sectionIds.length) * 0.7 + (answered / questions.length) * 0.3;
+  document.getElementById('progressFill').style.width = Math.round(total * 100) + '%';
+}
+const navItems = document.querySelectorAll('.nav-item');
+navItems.forEach(item => item.addEventListener('click', () => {
+  const t = document.getElementById(item.dataset.section); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}));
+window.addEventListener('scroll', () => {
+  let current = sectionIds[0];
+  sectionIds.forEach(id => { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top < 120) current = id; });
+  navItems.forEach(item => item.classList.toggle('active', item.dataset.section === current));
+  updateProgress();
+}, { passive: true });
+
+(function () {
+  const key = 'ifr-tasks-w4';
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(key) || '{}'); } catch (e) {}
+  document.querySelectorAll('input[data-task]').forEach(cb => {
+    cb.checked = !!saved[cb.dataset.task];
+    cb.addEventListener('change', () => {
+      saved[cb.dataset.task] = cb.checked;
+      try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+    });
+  });
+})();
+</script>
+</body>
+</html>

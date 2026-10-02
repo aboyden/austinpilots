@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>IFR Ground School — Week 6: Fronts, Air Masses, Stability, Clouds</title>
+<style>
+  :root {
+    --bg: #0f1117; --surface: #1a1d27; --surface2: #22263a; --border: #2e3348;
+    --accent: #38bdf8; --accent-rgb: 56,189,248; --accent2: #818cf8; --ink: #04202b;
+    --green: #34d399; --red: #f87171; --yellow: #fbbf24;
+    --text: #e2e8f0; --muted: #8892aa; --heading: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 16px; }
+  a { color: var(--accent); }
+  .header { background: linear-gradient(135deg, #0a0e1a 0%, #1a2040 100%); border-bottom: 1px solid var(--border); padding: 24px 0; text-align: center; }
+  .module-tag { display: inline-block; background: var(--accent); color: var(--ink); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
+  .header h1 { font-size: 32px; font-weight: 800; color: var(--heading); margin-bottom: 8px; padding: 0 16px; }
+  .header p { color: var(--muted); font-size: 15px; padding: 0 16px; }
+  .progress-bar { width: 200px; height: 4px; background: var(--surface2); border-radius: 2px; margin: 16px auto 0; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.5s; }
+  .section-nav { position: sticky; top: 0; z-index: 100; background: rgba(15,17,23,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .section-nav::-webkit-scrollbar { display: none; }
+  .nav-item { padding: 14px 16px; font-size: 13px; font-weight: 600; color: var(--muted); white-space: nowrap; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; }
+  .nav-item:hover { color: var(--text); }
+  .nav-item.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  .lesson-section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .lesson-section h2 { font-size: 26px; font-weight: 800; color: var(--heading); margin-bottom: 6px; }
+  .day-meta { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+  .lesson-section p { margin-bottom: 16px; }
+  .lesson-section p:last-child { margin-bottom: 0; }
+  .lesson-section h3 { font-size: 18px; font-weight: 700; color: var(--heading); margin: 28px 0 12px; }
+  .lesson-section h4 { font-size: 14px; font-weight: 700; color: var(--heading); margin: 20px 0 8px; }
+  .lesson-section ul, .lesson-section ol { margin: 0 0 16px 22px; }
+  .lesson-section li { margin-bottom: 6px; }
+  .lesson-section strong { color: var(--heading); }
+  .acs-ref { display: inline-block; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10.5px; font-weight: 700; color: var(--accent); background: rgba(var(--accent-rgb),0.12); border: 1px solid rgba(var(--accent-rgb),0.35); border-radius: 5px; padding: 1px 6px; margin: 0 2px; vertical-align: middle; white-space: nowrap; }
+  .acs-ref.risk { color: var(--yellow); background: rgba(251,191,36,0.12); border-color: rgba(251,191,36,0.35); }
+  .objectives { background: rgba(var(--accent-rgb),0.06); border: 1px solid rgba(var(--accent-rgb),0.25); border-radius: 12px; padding: 16px 20px 6px; margin-bottom: 24px; }
+  .obj-title, .sc-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .objectives ul { margin-bottom: 10px; }
+  .callout { border-radius: 10px; padding: 18px 22px; margin: 24px 0; border-left: 4px solid; font-size: 15px; }
+  .callout-key { background: rgba(var(--accent-rgb),0.08); border-color: var(--accent); }
+  .callout-warn { background: rgba(251,191,36,0.08); border-color: var(--yellow); }
+  .callout-tip { background: rgba(52,211,153,0.08); border-color: var(--green); }
+  .callout-danger { background: rgba(248,113,113,0.08); border-color: var(--red); }
+  .callout-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+  .callout-key .callout-title { color: var(--accent); } .callout-warn .callout-title { color: var(--yellow); }
+  .callout-tip .callout-title { color: var(--green); } .callout-danger .callout-title { color: var(--red); }
+  .data-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  .data-table th { background: var(--surface2); color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+  .data-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .table-wrap { overflow-x: auto; }
+  .concept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  .concept-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+  .concept-card h4 { margin: 0 0 6px !important; }
+  .concept-card p { font-size: 14px; color: var(--muted); margin: 0 !important; }
+  .reg-list { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 8px 24px; margin: 20px 0; }
+  .reg-item { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .reg-item:last-child { border-bottom: none; }
+  .reg-letter { background: var(--accent); color: var(--ink); min-width: 26px; height: 26px; padding: 0 6px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; margin-top: 2px; }
+  .reg-text { flex: 1; font-size: 15px; }
+  .scenario { background: linear-gradient(135deg, rgba(var(--accent-rgb),0.08), rgba(124,106,247,0.05)); border: 1px solid rgba(var(--accent-rgb),0.25); border-radius: 14px; padding: 26px 28px; margin: 28px 0; }
+  .scenario-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  .scenario h4 { font-size: 16px !important; margin: 0 0 10px !important; }
+  .scenario p { font-size: 15px; }
+  .scenario .payoff { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--border); font-size: 14.5px; }
+  .steps { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; margin: 18px 0; }
+  .step-item { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 14px; }
+  .step-item:last-child { margin-bottom: 0; }
+  .step-num { background: var(--accent); color: var(--ink); min-width: 30px; height: 26px; padding: 0 8px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 11.5px; font-weight: 800; margin-top: 2px; white-space: nowrap; }
+  .step-text { flex: 1; font-size: 14.5px; }
+  .selfcheck, .tasks-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px 16px; margin: 28px 0 0; }
+  .tasks-box { margin-top: 16px; }
+  .selfcheck ol { margin: 0 0 14px 20px; }
+  details { margin-top: 4px; }
+  summary { cursor: pointer; font-weight: 700; font-size: 14px; color: var(--accent); padding: 6px 0; }
+  details ol { margin: 10px 0 4px 20px; color: var(--muted); font-size: 14.5px; }
+  ul.tasks { list-style: none; margin: 0 !important; }
+  ul.tasks li { margin-bottom: 8px; font-size: 14.5px; }
+  ul.tasks label { cursor: pointer; display: flex; gap: 10px; align-items: flex-start; }
+  ul.tasks input { margin-top: 6px; accent-color: var(--accent); }
+  ul.tasks input:checked + span { color: var(--muted); text-decoration: line-through; }
+  .takeaways { background: linear-gradient(135deg, rgba(var(--accent-rgb),0.08) 0%, rgba(124,106,247,0.08) 100%); border: 1px solid rgba(var(--accent-rgb),0.25); border-radius: 14px; padding: 32px; margin: 40px 0 0; }
+  .takeaways h3 { margin: 0 0 20px !important; }
+  .takeaway-item { display: flex; gap: 12px; margin-bottom: 14px; font-size: 15px; align-items: flex-start; }
+  .takeaway-dot { width: 8px; height: 8px; min-width: 8px; background: var(--accent); border-radius: 50%; margin-top: 9px; }
+  .quiz-section { padding: 56px 0; }
+  .quiz-section h2 { font-size: 26px; font-weight: 800; color: var(--heading); margin-bottom: 6px; }
+  .question-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin-bottom: 20px; }
+  .q-number { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: var(--accent); margin-bottom: 10px; }
+  .q-text { font-size: 16px; font-weight: 600; color: var(--heading); margin-bottom: 20px; line-height: 1.5; }
+  .q-options { display: flex; flex-direction: column; gap: 10px; }
+  .q-option { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: var(--surface2); border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 15px; }
+  .q-option:hover { border-color: var(--accent); background: rgba(var(--accent-rgb),0.06); }
+  .q-option.correct { border-color: var(--green); background: rgba(52,211,153,0.08); }
+  .q-option.wrong { border-color: var(--red); background: rgba(248,113,113,0.08); }
+  .q-option.disabled { pointer-events: none; }
+  .option-letter { width: 26px; height: 26px; min-width: 26px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--muted); }
+  .q-option.correct .option-letter { background: var(--green); color: #000; }
+  .q-option.wrong .option-letter { background: var(--red); color: #fff; }
+  .option-text { flex: 1; line-height: 1.5; }
+  .q-explanation { margin-top: 16px; padding: 14px 16px; background: rgba(var(--accent-rgb),0.07); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; font-size: 14px; display: none; line-height: 1.6; }
+  .q-explanation.show { display: block; }
+  .q-explanation strong { color: var(--accent); }
+  .score-bar { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-top: 24px; text-align: center; display: none; }
+  .score-bar.show { display: block; }
+  .score-number { font-size: 48px; font-weight: 800; color: var(--accent); }
+  .score-label { font-size: 15px; color: var(--muted); margin-top: 4px; }
+  .restart-btn { margin-top: 16px; padding: 10px 24px; background: var(--accent); color: var(--ink); border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; }
+  .pager { display: flex; justify-content: space-between; gap: 16px; padding: 28px 0 64px; flex-wrap: wrap; }
+  .pager a { flex: 1; min-width: 220px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; text-decoration: none; color: var(--text); }
+  .pager a:hover { border-color: var(--accent); }
+  .pager small { display: block; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+  .pager .next { text-align: right; }
+  .topbar { padding-top: 16px; }
+  .topbar a { font-size: 14px; font-weight: 600; text-decoration: none; }
+  @media (max-width: 640px) { .concept-grid { grid-template-columns: 1fr; } .header h1 { font-size: 24px; } .scenario { padding: 20px; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="module-tag">Week 6 · Month 2</div>
+  <h1>Fronts, Air Masses, Stability, Clouds</h1>
+  <p>Fronts · Wave cyclone model · Stability · Clouds · Precipitation</p>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+<div class="container topbar"><a href="ifr.html">&larr; Course index</a></div>
+<nav class="section-nav"><div class="nav-item active" data-section="d1">Day 1: Fronts</div><div class="nav-item" data-section="d2">Day 2: Stability & Clouds</div><div class="nav-item" data-section="quiz">Quiz</div></nav>
+<section class="lesson-section" style="padding-bottom: 8px; border-bottom: none;"><div class="container">
+  <p style="color: var(--muted); font-size: 14px;"><strong>Month 2: Weather.</strong> Part of the 17-week IRA knowledge test study plan.
+  Regulatory and procedural content was checked against eCFR, AIM, and FAA handbook text when this plan was written —
+  cross-check against the editions current when you sit the test.</p>
+</div></section>
+<section id="d1" class="lesson-section"><div class="container"><div class="section-label">Day 1</div><h2>Air Masses and Fronts</h2><div class="day-meta">Topics: AWH Chapter 11 · About 70 min</div><div class="objectives"><div class="obj-title">Learning objectives</div><ul><li>Describe the four front types and their typical weather</li><li>Explain the wave cyclone model in broad strokes</li></ul></div><h3>🌀 The four front types <span class="acs-ref">IR.I.B.K3e</span></h3><table class="data-table"><thead><tr><th>Front</th><th>What is happening</th><th>Typical weather</th></tr></thead><tbody><tr><td><strong>Cold</strong></td><td>Cold air displacing warm air; steep frontal slope</td><td>A narrow band of often intense weather (thunderstorms, gusty winds) that passes relatively quickly.</td></tr><tr><td><strong>Warm</strong></td><td>Warm air overrunning retreating cold air; shallow frontal slope</td><td>A wide band of stratiform clouds and steady precipitation well ahead of the surface position; slower to pass.</td></tr><tr><td><strong>Stationary</strong></td><td>Little to no movement</td><td>Weather similar to a warm front's leading edge, but it can persist for days.</td></tr><tr><td><strong>Occluded</strong></td><td>A fast cold front catches a slower warm front and lifts it off the surface</td><td>A cold-type occlusion behaves like a cold front, a warm-type like a warm front; either can mix both fronts' weather.</td></tr></tbody></table><h3>🔄 The wave cyclone model</h3><p>A mid-latitude low pressure system typically forms along a stationary front where a wave develops. Then a cold front rotates around and eventually catches the warm front, occluding it and gradually dissipating the system. This model is the backbone for reading a surface analysis chart: find the low, trace the cold and warm fronts coming off it, and you can predict roughly what weather sits where relative to your route.</p><div class="scenario"><div class="scenario-label">🧭 Worked example</div><h4>Crossing a front two hours after departure</h4><p>Expect different things depending on the front type.</p><div class="steps"><div class="step-item"><div class="step-num">Cold</div><div class="step-text">A relatively <strong>narrow band</strong> of more intense weather (possible thunderstorms, turbulence, a wind shift) right at the crossing, with better conditions on both sides.</div></div><div class="step-item"><div class="step-num">Warm</div><div class="step-text">A much <strong>wider band</strong> of lower ceilings and steady precipitation well before you actually reach the surface frontal position.</div></div></div></div><div class="selfcheck"><div class="sc-title">Self-check</div><ol><li>Which front type typically produces a narrow band of more intense weather that passes quickly?</li><li>Which front type produces a wide band of stratiform clouds and steady precipitation well ahead of its surface position?</li><li>What happens to a warm front when a faster-moving cold front catches it?</li></ol><details><summary>Show answers</summary><ol><li>The cold front.</li><li>The warm front.</li><li>It occludes: the cold front lifts the warm front off the surface, forming an occluded front.</li></ol></details></div><div class="tasks-box"><div class="sc-title">Tasks</div><ul class="tasks"><li><label><input type="checkbox" data-task="d1-t0"> <span>Read AWH Chapter 11: Air Masses, Fronts, and the Wave Cyclone Model</span></label></li><li><label><input type="checkbox" data-task="d1-t1"> <span>Build a one-page reference: each front type with its typical weather and hazards</span></label></li></ul></div></div></section><section id="d2" class="lesson-section"><div class="container"><div class="section-label">Day 2</div><h2>Stability, Clouds, and Precipitation</h2><div class="day-meta">Topics: AWH Chapters 12–14 · About 70 min</div><div class="objectives"><div class="obj-title">Learning objectives</div><ul><li>Explain what makes an air mass stable or unstable</li><li>Match cloud families to the weather and turbulence they usually signal</li></ul></div><h3>⚖️ Stability in a sentence <span class="acs-ref">IR.I.B.K3a</span></h3><p>An air mass is <strong>unstable</strong> when a parcel of air, once lifted, continues to rise on its own (it is warmer, and therefore less dense, than the surrounding air at that altitude). It is <strong>stable</strong> when a lifted parcel resists rising and sinks back.</p><table class="data-table"><thead><tr><th></th><th>Unstable air</th><th>Stable air</th></tr></thead><tbody><tr><td>Clouds</td><td>Towering, cumuliform</td><td>Layered, stratiform</td></tr><tr><td>Precipitation</td><td>Showery</td><td>Steady</td></tr><tr><td>Ride</td><td>Turbulent</td><td>Smoother</td></tr><tr><td>Visibility</td><td>Good between showers</td><td>Poorer: fog, haze, and smoke stay trapped near the surface</td></tr></tbody></table><h3>☁️ Reading cloud families <span class="acs-ref">IR.I.B.K3f</span> <span class="acs-ref">IR.I.B.K3d</span></h3><div class="concept-grid"><div class="concept-card"><h4>Cumulus family (cumulus, cumulonimbus)</h4><p>Signals instability, vertical development, and turbulence; potentially icing and thunderstorms in cumulonimbus.</p></div><div class="concept-card"><h4>Stratus family (stratus, nimbostratus)</h4><p>Signals stability, layered structure, and steady precipitation with generally smoother air, though icing is still possible in the cloud layer.</p></div><div class="concept-card"><h4>Cirrus family</h4><p>High, thin, ice-crystal clouds that are not usually a hazard by themselves, but can signal an approaching front or jet stream activity.</p></div><div class="concept-card"><h4>What lifts the air?</h4><p>Convection (surface heating), orographic lift (terrain), frontal lifting, and convergence. Whichever lifts it, stability decides whether the lifted air keeps rising.</p></div></div><div class="scenario"><div class="scenario-label">🌥️ Worked example</div><h4>Building cumulus and a bumpy report</h4><p>You see towering cumulus building rapidly along your route, and another aircraft nearby reports a bumpy ride.</p><div class="payoff">Cumuliform clouds plus reported turbulence is a classic <strong>unstable air-mass signature</strong>. Expect the bumps to continue and watch for further vertical development toward thunderstorms, which is next week's topic.</div></div><div class="selfcheck"><div class="sc-title">Self-check</div><ol><li>What makes an air mass unstable, in terms of a lifted parcel's temperature?</li><li>Which cloud family signals instability and vertical development?</li><li>Which cloud family is associated with steady precipitation and generally smoother air?</li></ol><details><summary>Show answers</summary><ol><li>The lifted parcel stays warmer (less dense) than the surrounding air, so it keeps rising on its own.</li><li>The cumulus family (cumulus, cumulonimbus).</li><li>The stratus family (stratus, nimbostratus).</li></ol></details></div><div class="tasks-box"><div class="sc-title">Tasks</div><ul class="tasks"><li><label><input type="checkbox" data-task="d2-t0"> <span>Read AWH Chapters 12-14: Vertical Motion and Clouds, Atmospheric Stability, Precipitation</span></label></li><li><label><input type="checkbox" data-task="d2-t1"> <span>Daily question sets: 15-20 questions from your bank, fronts and stability category</span></label></li></ul></div></div></section>
+<section id="quiz" class="quiz-section"><div class="container">
+  <div class="section-label">Week 6 · Knowledge check</div>
+  <h2>Knowledge Check</h2>
+  <p style="color: var(--muted); margin-bottom: 32px;">5 questions covering this week.</p>
+  <div id="quizContainer"></div>
+  <div class="score-bar" id="scoreBar"><div class="score-number" id="scoreNum"></div><div class="score-label" id="scoreLabel"></div>
+  <button class="restart-btn" onclick="restartQuiz()">Try Again</button></div>
+  <div class="pager"><a href="week-05-atmosphere-altimetry.html"><small>&larr; Previous</small>Week 5: Atmosphere and Altimetry</a><a class="next" href="week-07-weather-hazards.html"><small>Next &rarr;</small>Week 7: Aviation Weather Hazards</a></div>
+</div></section>
+<script>
+const questions = [{"q": "Which front typically produces a narrow band of intense weather that passes quickly?", "options": ["Warm front", "Stationary front", "Cold front", "Occluded front only"], "correct": 2, "explanation": "Steep slope and fast motion give the cold front a narrow, intense band: thunderstorms, gusty winds, a wind shift."}, {"q": "Which front brings a wide band of stratiform cloud and steady precipitation ahead of its surface position?", "options": ["Cold front", "Warm front", "Dry line", "Squall line"], "correct": 1, "explanation": "The shallow slope of a warm front lifts air gradually over a wide area well ahead of the surface front."}, {"q": "What is an occluded front?", "options": ["A front that has stopped moving", "A cold front catching a warm front and lifting it off the surface", "A front with no precipitation", "A front between two cold air masses only"], "correct": 1, "explanation": "The faster cold front overtakes the warm front and lifts it aloft, forming an occlusion."}, {"q": "What makes an air mass unstable?", "options": ["A lifted parcel cools below its surroundings and sinks", "A lifted parcel stays warmer and less dense than its surroundings and keeps rising", "Low surface pressure only", "Clear skies"], "correct": 1, "explanation": "If the lifted parcel remains warmer than the surrounding air it keeps rising on its own: that is instability."}, {"q": "Towering cumulus and reported turbulence most likely indicate:", "options": ["A stable air mass", "An unstable air mass with potential for thunderstorms", "An approaching warm front only", "Radiation fog forming"], "correct": 1, "explanation": "Cumuliform clouds with turbulence are a classic unstable air-mass signature."}];
+let answers = new Array(questions.length).fill(null);
+let answered = 0;
+function buildQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  answers = new Array(questions.length).fill(null);
+  answered = 0;
+  document.getElementById('scoreBar').classList.remove('show');
+  questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card'; card.id = 'q' + qi;
+    const num = document.createElement('div'); num.className = 'q-number';
+    num.textContent = 'QUESTION ' + (qi + 1) + ' OF ' + questions.length; card.appendChild(num);
+    const text = document.createElement('div'); text.className = 'q-text'; text.textContent = q.q; card.appendChild(text);
+    const opts = document.createElement('div'); opts.className = 'q-options';
+    q.options.forEach((opt, oi) => {
+      const btn = document.createElement('div'); btn.className = 'q-option';
+      btn.innerHTML = '<div class="option-letter">' + 'ABCD'[oi] + '</div><div class="option-text">' + opt + '</div>';
+      btn.addEventListener('click', () => selectAnswer(qi, oi)); opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+    const exp = document.createElement('div'); exp.className = 'q-explanation';
+    exp.innerHTML = '<strong>Explanation:</strong> ' + q.explanation; card.appendChild(exp);
+    container.appendChild(card);
+  });
+}
+function selectAnswer(qi, oi) {
+  if (answers[qi] !== null) return;
+  answers[qi] = oi; answered++;
+  const card = document.getElementById('q' + qi);
+  card.querySelectorAll('.q-option').forEach((opt, idx) => {
+    opt.classList.add('disabled');
+    if (idx === questions[qi].correct) opt.classList.add('correct');
+    else if (idx === oi) opt.classList.add('wrong');
+  });
+  card.querySelector('.q-explanation').classList.add('show');
+  if (answered === questions.length) showScore();
+  updateProgress();
+}
+function showScore() {
+  const correct = answers.filter((a, i) => a === questions[i].correct).length;
+  const pct = Math.round((correct / questions.length) * 100);
+  document.getElementById('scoreNum').textContent = correct + '/' + questions.length;
+  document.getElementById('scoreLabel').textContent = pct + '% — ' + (pct >= 80 ? 'Solid grasp of this week.' : pct >= 60 ? 'Review the days above, then retry.' : 'Work back through the week before moving on.');
+  document.getElementById('scoreBar').classList.add('show');
+}
+function restartQuiz() { buildQuiz(); updateProgress(); }
+buildQuiz();
+
+const sectionIds = [...document.querySelectorAll('.lesson-section[id], .quiz-section[id]')].map(e => e.id);
+function updateProgress() {
+  const scrolled = sectionIds.filter(id => { const el = document.getElementById(id); return el && el.getBoundingClientRect().top < window.innerHeight * 0.6; }).length;
+  const total = (scrolled / sectionIds.length) * 0.7 + (answered / questions.length) * 0.3;
+  document.getElementById('progressFill').style.width = Math.round(total * 100) + '%';
+}
+const navItems = document.querySelectorAll('.nav-item');
+navItems.forEach(item => item.addEventListener('click', () => {
+  const t = document.getElementById(item.dataset.section); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}));
+window.addEventListener('scroll', () => {
+  let current = sectionIds[0];
+  sectionIds.forEach(id => { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top < 120) current = id; });
+  navItems.forEach(item => item.classList.toggle('active', item.dataset.section === current));
+  updateProgress();
+}, { passive: true });
+
+(function () {
+  const key = 'ifr-tasks-w6';
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(key) || '{}'); } catch (e) {}
+  document.querySelectorAll('input[data-task]').forEach(cb => {
+    cb.checked = !!saved[cb.dataset.task];
+    cb.addEventListener('change', () => {
+      saved[cb.dataset.task] = cb.checked;
+      try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>IFR Ground School — Week 5: Atmosphere and Altimetry</title>
+<style>
+  :root {
+    --bg: #0f1117; --surface: #1a1d27; --surface2: #22263a; --border: #2e3348;
+    --accent: #38bdf8; --accent-rgb: 56,189,248; --accent2: #818cf8; --ink: #04202b;
+    --green: #34d399; --red: #f87171; --yellow: #fbbf24;
+    --text: #e2e8f0; --muted: #8892aa; --heading: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 16px; }
+  a { color: var(--accent); }
+  .header { background: linear-gradient(135deg, #0a0e1a 0%, #1a2040 100%); border-bottom: 1px solid var(--border); padding: 24px 0; text-align: center; }
+  .module-tag { display: inline-block; background: var(--accent); color: var(--ink); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
+  .header h1 { font-size: 32px; font-weight: 800; color: var(--heading); margin-bottom: 8px; padding: 0 16px; }
+  .header p { color: var(--muted); font-size: 15px; padding: 0 16px; }
+  .progress-bar { width: 200px; height: 4px; background: var(--surface2); border-radius: 2px; margin: 16px auto 0; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.5s; }
+  .section-nav { position: sticky; top: 0; z-index: 100; background: rgba(15,17,23,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .section-nav::-webkit-scrollbar { display: none; }
+  .nav-item { padding: 14px 16px; font-size: 13px; font-weight: 600; color: var(--muted); white-space: nowrap; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; }
+  .nav-item:hover { color: var(--text); }
+  .nav-item.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  .lesson-section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .lesson-section h2 { font-size: 26px; font-weight: 800; color: var(--heading); margin-bottom: 6px; }
+  .day-meta { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+  .lesson-section p { margin-bottom: 16px; }
+  .lesson-section p:last-child { margin-bottom: 0; }
+  .lesson-section h3 { font-size: 18px; font-weight: 700; color: var(--heading); margin: 28px 0 12px; }
+  .lesson-section h4 { font-size: 14px; font-weight: 700; color: var(--heading); margin: 20px 0 8px; }
+  .lesson-section ul, .lesson-section ol { margin: 0 0 16px 22px; }
+  .lesson-section li { margin-bottom: 6px; }
+  .lesson-section strong { color: var(--heading); }
+  .acs-ref { display: inline-block; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10.5px; font-weight: 700; color: var(--accent); background: rgba(var(--accent-rgb),0.12); border: 1px solid rgba(var(--accent-rgb),0.35); border-radius: 5px; padding: 1px 6px; margin: 0 2px; vertical-align: middle; white-space: nowrap; }
+  .acs-ref.risk { color: var(--yellow); background: rgba(251,191,36,0.12); border-color: rgba(251,191,36,0.35); }
+  .objectives { background: rgba(var(--accent-rgb),0.06); border: 1px solid rgba(var(--accent-rgb),0.25); border-radius: 12px; padding: 16px 20px 6px; margin-bottom: 24px; }
+  .obj-title, .sc-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .objectives ul { margin-bottom: 10px; }
+  .callout { border-radius: 10px; padding: 18px 22px; margin: 24px 0; border-left: 4px solid; font-size: 15px; }
+  .callout-key { background: rgba(var(--accent-rgb),0.08); border-color: var(--accent); }
+  .callout-warn { background: rgba(251,191,36,0.08); border-color: var(--yellow); }
+  .callout-tip { background: rgba(52,211,153,0.08); border-color: var(--green); }
+  .callout-danger { background: rgba(248,113,113,0.08); border-color: var(--red); }
+  .callout-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+  .callout-key .callout-title { color: var(--accent); } .callout-warn .callout-title { color: var(--yellow); }
+  .callout-tip .callout-title { color: var(--green); } .callout-danger .callout-title { color: var(--red); }
+  .data-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  .data-table th { background: var(--surface2); color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+  .data-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .table-wrap { overflow-x: auto; }
+  .concept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  .concept-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+  .concept-card h4 { margin: 0 0 6px !important; }
+  .concept-card p { font-size: 14px; color: var(--muted); margin: 0 !important; }
+  .reg-list { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 8px 24px; margin: 20px 0; }
+  .reg-item { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .reg-item:last-child { border-bottom: none; }
+  .reg-letter { background: var(--accent); color: var(--ink); min-width: 26px; height: 26px; padding: 0 6px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; margin-top: 2px; }
+  .reg-text { flex: 1; font-size: 15px; }
+  .scenario { background: linear-gradient(135deg, rgba(var(--accent-rgb),0.08), rgba(124,106,247,0.05)); border: 1px solid rgba(var(--accent-rgb),0.25); border-radius: 14px; padding: 26px 28px; margin: 28px 0; }
+  .scenario-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  .scenario h4 { font-size: 16px !important; margin: 0 0 10px !important; }
+  .scenario p { font-size: 15px; }
+  .scenario .payoff { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--border); font-size: 14.5px; }
+  .steps { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; margin: 18px 0; }
+  .step-item { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 14px; }
+  .step-item:last-child { margin-bottom: 0; }
+  .step-num { background: var(--accent); color: var(--ink); min-width: 30px; height: 26px; padding: 0 8px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 11.5px; font-weight: 800; margin-top: 2px; white-space: nowrap; }
+  .step-text { flex: 1; font-size: 14.5px; }
+  .selfcheck, .tasks-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px 16px; margin: 28px 0 0; }
+  .tasks-box { margin-top: 16px; }
+  .selfcheck ol { margin: 0 0 14px 20px; }
+  details { margin-top: 4px; }
+  summary { cursor: pointer; font-weight: 700; font-size: 14px; color: var(--accent); padding: 6px 0; }
+  details ol { margin: 10px 0 4px 20px; color: var(--muted); font-size: 14.5px; }
+  ul.tasks { list-style: none; margin: 0 !important; }
+  ul.tasks li { margin-bottom: 8px; font-size: 14.5px; }
+  ul.tasks label { cursor: pointer; display: flex; gap: 10px; align-items: flex-start; }
+  ul.tasks input { margin-top: 6px; accent-color: var(--accent); }
+  ul.tasks input:checked + span { color: var(--muted); text-decoration: line-through; }
+  .takeaways { background: linear-gradient(135deg, rgba(var(--accent-rgb),0.08) 0%, rgba(124,106,247,0.08) 100%); border: 1px solid rgba(var(--accent-rgb),0.25); border-radius: 14px; padding: 32px; margin: 40px 0 0; }
+  .takeaways h3 { margin: 0 0 20px !important; }
+  .takeaway-item { display: flex; gap: 12px; margin-bottom: 14px; font-size: 15px; align-items: flex-start; }
+  .takeaway-dot { width: 8px; height: 8px; min-width: 8px; background: var(--accent); border-radius: 50%; margin-top: 9px; }
+  .quiz-section { padding: 56px 0; }
+  .quiz-section h2 { font-size: 26px; font-weight: 800; color: var(--heading); margin-bottom: 6px; }
+  .question-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin-bottom: 20px; }
+  .q-number { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: var(--accent); margin-bottom: 10px; }
+  .q-text { font-size: 16px; font-weight: 600; color: var(--heading); margin-bottom: 20px; line-height: 1.5; }
+  .q-options { display: flex; flex-direction: column; gap: 10px; }
+  .q-option { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: var(--surface2); border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 15px; }
+  .q-option:hover { border-color: var(--accent); background: rgba(var(--accent-rgb),0.06); }
+  .q-option.correct { border-color: var(--green); background: rgba(52,211,153,0.08); }
+  .q-option.wrong { border-color: var(--red); background: rgba(248,113,113,0.08); }
+  .q-option.disabled { pointer-events: none; }
+  .option-letter { width: 26px; height: 26px; min-width: 26px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--muted); }
+  .q-option.correct .option-letter { background: var(--green); color: #000; }
+  .q-option.wrong .option-letter { background: var(--red); color: #fff; }
+  .option-text { flex: 1; line-height: 1.5; }
+  .q-explanation { margin-top: 16px; padding: 14px 16px; background: rgba(var(--accent-rgb),0.07); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; font-size: 14px; display: none; line-height: 1.6; }
+  .q-explanation.show { display: block; }
+  .q-explanation strong { color: var(--accent); }
+  .score-bar { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-top: 24px; text-align: center; display: none; }
+  .score-bar.show { display: block; }
+  .score-number { font-size: 48px; font-weight: 800; color: var(--accent); }
+  .score-label { font-size: 15px; color: var(--muted); margin-top: 4px; }
+  .restart-btn { margin-top: 16px; padding: 10px 24px; background: var(--accent); color: var(--ink); border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; }
+  .pager { display: flex; justify-content: space-between; gap: 16px; padding: 28px 0 64px; flex-wrap: wrap; }
+  .pager a { flex: 1; min-width: 220px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; text-decoration: none; color: var(--text); }
+  .pager a:hover { border-color: var(--accent); }
+  .pager small { display: block; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+  .pager .next { text-align: right; }
+  .topbar { padding-top: 16px; }
+  .topbar a { font-size: 14px; font-weight: 600; text-decoration: none; }
+  @media (max-width: 640px) { .concept-grid { grid-template-columns: 1fr; } .header h1 { font-size: 24px; } .scenario { padding: 20px; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="module-tag">Week 5 · Month 2</div>
+  <h1>Atmosphere and Altimetry</h1>
+  <p>The atmosphere · Standard values · Pressure and density altitude</p>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+<div class="container topbar"><a href="ifr.html">&larr; Course index</a></div>
+<nav class="section-nav"><div class="nav-item active" data-section="d1">Day 1: Atmosphere</div><div class="nav-item" data-section="d2">Day 2: Altimetry</div><div class="nav-item" data-section="quiz">Quiz</div></nav>
+<section class="lesson-section" style="padding-bottom: 8px; border-bottom: none;"><div class="container">
+  <p style="color: var(--muted); font-size: 14px;"><strong>Month 2: Weather.</strong> Part of the 17-week IRA knowledge test study plan.
+  Regulatory and procedural content was checked against eCFR, AIM, and FAA handbook text when this plan was written —
+  cross-check against the editions current when you sit the test.</p>
+</div></section>
+<section id="d1" class="lesson-section"><div class="container"><div class="section-label">Day 1</div><h2>The Atmosphere, Heat, and Pressure</h2><div class="day-meta">Topics: AWH Chapters 4–6 · About 60 min</div><div class="objectives"><div class="obj-title">Learning objectives</div><ul><li>Describe the layers of the atmosphere relevant to flight</li><li>Explain how heat imbalances between the equator and poles drive circulation</li></ul></div><h3>🌍 The atmosphere in layers <span class="acs-ref">IR.I.B.K3a</span></h3><p>Dry air is about 78% nitrogen and 21% oxygen. Water vapor is a small and highly variable share, but it drives most of the weather you will plan around.</p><table class="data-table"><thead><tr><th>Layer</th><th>What to know</th></tr></thead><tbody><tr><td><strong>Troposphere</strong></td><td>Surface to roughly 36,000 ft at mid-latitudes (lower at the poles, higher at the equator). Nearly all flying, and all weather, happens here.</td></tr><tr><td><strong>Tropopause</strong></td><td>The boundary where temperature stops dropping with altitude. Its altitude, and the jet stream that rides near it, shift with latitude and season.</td></tr><tr><td><strong>Stratosphere</strong></td><td>Above the tropopause; temperature is stable or even increases with height.</td></tr></tbody></table><h3>📏 Standard atmosphere values worth memorizing</h3><table class="data-table"><thead><tr><th>Quantity</th><th>Standard value</th></tr></thead><tbody><tr><td>Sea-level pressure</td><td>29.92 in. Hg / 1013.25 mb</td></tr><tr><td>Sea-level temperature</td><td>15°C / 59°F</td></tr><tr><td>Lapse rate</td><td>2°C (3.5°F) per 1,000 ft, up to the tropopause</td></tr><tr><td>Pressure change</td><td>Roughly 1 in. Hg per 1,000 ft in the lower atmosphere (the approximation breaks down as air thins)</td></tr></tbody></table><h3>🔥 Why heat imbalance matters <span class="acs-ref">IR.I.B.K3c</span></h3><p>The equator receives far more direct solar heating than the poles, and that imbalance is the engine behind global circulation, jet streams, and most of the pressure systems you will read about in Week 6. Air does not simply flow from hot to cold; the Coriolis effect deflects it (right in the Northern Hemisphere, left in the Southern), producing the semi-permanent pressure belts and prevailing wind patterns that show up on prog charts.</p><div class="scenario"><div class="scenario-label">🌡️ Worked example</div><h4>Climbing through 34,000 ft</h4><p>The outside air temperature stops dropping and levels off even though you keep climbing.</p><div class="payoff">You have likely just reached the <strong>tropopause</strong> for that latitude and day. Above it, in the stratosphere, temperature behaves very differently from the steady lapse rate you were taught to expect below.</div></div><div class="selfcheck"><div class="sc-title">Self-check</div><ol><li>What is the standard lapse rate, and up to what layer does it generally apply?</li><li>What are the standard sea-level pressure and temperature values?</li><li>What ultimately drives global atmospheric circulation?</li></ol><details><summary>Show answers</summary><ol><li>2°C (3.5°F) per 1,000 ft, up to the tropopause.</li><li>29.92 in. Hg (1013.25 mb) and 15°C (59°F).</li><li>The heat imbalance between the equator (more direct solar heating) and the poles (less), deflected by the Coriolis effect.</li></ol></details></div><div class="tasks-box"><div class="sc-title">Tasks</div><ul class="tasks"><li><label><input type="checkbox" data-task="d1-t0"> <span>Read AWH Chapters 4-6: The Earth's Atmosphere, Heat and Temperature, Water Vapor</span></label></li><li><label><input type="checkbox" data-task="d1-t1"> <span>Memorize the standard-atmosphere values above cold</span></label></li></ul></div></div></section><section id="d2" class="lesson-section"><div class="container"><div class="section-label">Day 2</div><h2>Altimetry: Pressure and Density Altitude</h2><div class="day-meta">Topics: AWH Chapters 7–9 · About 60 min</div><div class="objectives"><div class="obj-title">Learning objectives</div><ul><li>Calculate pressure altitude and density altitude from given conditions</li><li>Explain why high, hot, and humid conditions degrade aircraft performance</li></ul></div><h3>📐 Pressure altitude and density altitude <span class="acs-ref">IR.II.B.K1a</span></h3><p><strong>Pressure altitude</strong> is your indicated altitude corrected to what it would read with the altimeter set to 29.92. For every 1 in. Hg the current altimeter setting is <em>below</em> 29.92, add 1,000 ft to field elevation (or indicated altitude); for every 1 in. Hg <em>above</em> 29.92, subtract 1,000 ft.</p><p><strong>Density altitude</strong> is pressure altitude further corrected for non-standard temperature: it goes <em>up</em> when it is hotter than standard for that pressure altitude and <em>down</em> when colder. Higher density altitude means thinner air, which means less lift, less propeller and engine efficiency, and longer takeoff and landing rolls.</p><p>Humidity has a smaller but real effect in the same direction as heat: moist air is slightly less dense than dry air at the same temperature and pressure, because water vapor molecules are lighter than the nitrogen and oxygen they displace.</p><div class="callout callout-key"><div class="callout-title">Rule of thumb</div>Density altitude ≈ pressure altitude + 120 ft for every °C the temperature is above standard for that pressure altitude. Your flight computer or an online calculator gives a more precise number.</div><div class="scenario"><div class="scenario-label">🌡️ Worked example</div><h4>High, hot, and humid</h4><p>Field elevation 5,000 ft, altimeter setting 29.42, temperature 30°C.</p><table class="data-table"><thead><tr><th>Step</th><th>Work</th><th>Result</th></tr></thead><tbody><tr><td>Pressure altitude</td><td>29.92 − 29.42 = 0.50 in. Hg low, so add 500 ft</td><td><strong>5,500 ft</strong></td></tr><tr><td>Standard temperature there</td><td>15 − (2 × 5.5)</td><td><strong>4°C</strong></td></tr><tr><td>Deviation</td><td>30 − 4</td><td><strong>ISA +26°C</strong></td></tr><tr><td>Density altitude</td><td>5,500 + (120 × 26) ≈ 8,600 ft</td><td><strong>about 8,000–9,000 ft</strong>, depending on the exact chart or formula</td></tr></tbody></table><div class="payoff">This is the classic hot-high-humid performance trap: a 5,000-ft airport performing like one at nearly 9,000 ft.</div></div><div class="callout callout-warn"><div class="callout-title">Two classic altimeter traps</div><strong>Pressure:</strong> flying from high pressure toward low pressure without resetting the altimeter, the altimeter reads <em>higher</em> than your true altitude (&ldquo;high to low, look out below&rdquo;). <strong>Temperature:</strong> in air colder than standard, the altimeter also reads higher than true altitude, which matters for terrain and obstacle clearance on cold days.</div><div class="selfcheck"><div class="sc-title">Self-check</div><ol><li>Altimeter setting is 30.42. Is pressure altitude higher or lower than indicated altitude, and by how much?</li><li>Does density altitude increase or decrease as temperature rises above standard for a given pressure altitude?</li><li>Why does higher density altitude hurt aircraft performance?</li></ol><details><summary>Show answers</summary><ol><li>Lower, by 500 ft (30.42 is 0.50 in. Hg above 29.92, so subtract 500 ft).</li><li>Increase.</li><li>The air is thinner, producing less lift and less engine/propeller efficiency, which lengthens takeoff and landing distances and reduces climb performance.</li></ol></details></div><div class="tasks-box"><div class="sc-title">Tasks</div><ul class="tasks"><li><label><input type="checkbox" data-task="d2-t0"> <span>Read AWH Chapters 7-9: Atmospheric Pressure and Altimetry, Global Circulations and Jet Streams</span></label></li><li><label><input type="checkbox" data-task="d2-t1"> <span>Practice pressure-altitude and density-altitude calculations until they are automatic</span></label></li><li><label><input type="checkbox" data-task="d2-t2"> <span>Daily question sets: 15-20 questions from your bank, atmosphere and altimetry category</span></label></li></ul></div></div></section>
+<section id="quiz" class="quiz-section"><div class="container">
+  <div class="section-label">Week 5 · Knowledge check</div>
+  <h2>Knowledge Check</h2>
+  <p style="color: var(--muted); margin-bottom: 32px;">6 questions covering this week.</p>
+  <div id="quizContainer"></div>
+  <div class="score-bar" id="scoreBar"><div class="score-number" id="scoreNum"></div><div class="score-label" id="scoreLabel"></div>
+  <button class="restart-btn" onclick="restartQuiz()">Try Again</button></div>
+  <div class="pager"><a href="week-04-human-factors.html"><small>&larr; Previous</small>Week 4: Human Factors Deep Dive, Month 1 Checkpoint</a><a class="next" href="week-06-fronts-stability-clouds.html"><small>Next &rarr;</small>Week 6: Fronts, Air Masses, Stability, Clouds</a></div>
+</div></section>
+<script>
+const questions = [{"q": "What is the standard lapse rate?", "options": ["1°C per 1,000 ft", "2°C per 1,000 ft", "3°C per 1,000 ft", "5°C per 1,000 ft"], "correct": 1, "explanation": "About 2°C (3.5°F) per 1,000 ft, up to the tropopause."}, {"q": "You are climbing and the outside temperature stops dropping and levels off at about 34,000 ft. What have you most likely reached?", "options": ["The jet stream core only", "The tropopause", "The mesosphere", "The top of the cloud layer"], "correct": 1, "explanation": "Temperature stops falling at the tropopause; above it, in the stratosphere, temperature is stable or rises."}, {"q": "What are the standard sea-level pressure and temperature?", "options": ["29.92 in. Hg and 15°C", "30.00 in. Hg and 15°C", "29.92 in. Hg and 0°C", "1013 in. Hg and 59°C"], "correct": 0, "explanation": "29.92 in. Hg (1013.25 mb) and 15°C (59°F)."}, {"q": "Field elevation 3,000 ft, altimeter setting 29.42. What is the pressure altitude?", "options": ["2,500 ft", "3,000 ft", "3,500 ft", "4,000 ft"], "correct": 2, "explanation": "29.92 − 29.42 = 0.50 in. Hg below standard, so add 500 ft: 3,500 ft."}, {"q": "Temperature rises well above standard for a given pressure altitude. What happens to density altitude and performance?", "options": ["Density altitude decreases; performance improves", "Density altitude increases; performance degrades", "Density altitude is unchanged; only the engine is affected", "Density altitude increases; performance improves"], "correct": 1, "explanation": "Hotter air is thinner. Density altitude rises, lift and power fall, and takeoff and landing distances grow."}, {"q": "Flying from a high-pressure area toward a low-pressure area without resetting the altimeter, the altimeter will read:", "options": ["Lower than true altitude", "Higher than true altitude", "Exactly true altitude", "Zero"], "correct": 1, "explanation": "&ldquo;High to low, look out below&rdquo;: the altimeter over-reads, so you are lower than it indicates."}];
+let answers = new Array(questions.length).fill(null);
+let answered = 0;
+function buildQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  answers = new Array(questions.length).fill(null);
+  answered = 0;
+  document.getElementById('scoreBar').classList.remove('show');
+  questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card'; card.id = 'q' + qi;
+    const num = document.createElement('div'); num.className = 'q-number';
+    num.textContent = 'QUESTION ' + (qi + 1) + ' OF ' + questions.length; card.appendChild(num);
+    const text = document.createElement('div'); text.className = 'q-text'; text.textContent = q.q; card.appendChild(text);
+    const opts = document.createElement('div'); opts.className = 'q-options';
+    q.options.forEach((opt, oi) => {
+      const btn = document.createElement('div'); btn.className = 'q-option';
+      btn.innerHTML = '<div class="option-letter">' + 'ABCD'[oi] + '</div><div class="option-text">' + opt + '</div>';
+      btn.addEventListener('click', () => selectAnswer(qi, oi)); opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+    const exp = document.createElement('div'); exp.className = 'q-explanation';
+    exp.innerHTML = '<strong>Explanation:</strong> ' + q.explanation; card.appendChild(exp);
+    container.appendChild(card);
+  });
+}
+function selectAnswer(qi, oi) {
+  if (answers[qi] !== null) return;
+  answers[qi] = oi; answered++;
+  const card = document.getElementById('q' + qi);
+  card.querySelectorAll('.q-option').forEach((opt, idx) => {
+    opt.classList.add('disabled');
+    if (idx === questions[qi].correct) opt.classList.add('correct');
+    else if (idx === oi) opt.classList.add('wrong');
+  });
+  card.querySelector('.q-explanation').classList.add('show');
+  if (answered === questions.length) showScore();
+  updateProgress();
+}
+function showScore() {
+  const correct = answers.filter((a, i) => a === questions[i].correct).length;
+  const pct = Math.round((correct / questions.length) * 100);
+  document.getElementById('scoreNum').textContent = correct + '/' + questions.length;
+  document.getElementById('scoreLabel').textContent = pct + '% — ' + (pct >= 80 ? 'Solid grasp of this week.' : pct >= 60 ? 'Review the days above, then retry.' : 'Work back through the week before moving on.');
+  document.getElementById('scoreBar').classList.add('show');
+}
+function restartQuiz() { buildQuiz(); updateProgress(); }
+buildQuiz();
+
+const sectionIds = [...document.querySelectorAll('.lesson-section[id], .quiz-section[id]')].map(e => e.id);
+function updateProgress() {
+  const scrolled = sectionIds.filter(id => { const el = document.getElementById(id); return el && el.getBoundingClientRect().top < window.innerHeight * 0.6; }).length;
+  const total = (scrolled / sectionIds.length) * 0.7 + (answered / questions.length) * 0.3;
+  document.getElementById('progressFill').style.width = Math.round(total * 100) + '%';
+}
+const navItems = document.querySelectorAll('.nav-item');
+navItems.forEach(item => item.addEventListener('click', () => {
+  const t = document.getElementById(item.dataset.section); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}));
+window.addEventListener('scroll', () => {
+  let current = sectionIds[0];
+  sectionIds.forEach(id => { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top < 120) current = id; });
+  navItems.forEach(item => item.classList.toggle('active', item.dataset.section === current));
+  updateProgress();
+}, { passive: true });
+
+(function () {
+  const key = 'ifr-tasks-w5';
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(key) || '{}'); } catch (e) {}
+  document.querySelectorAll('input[data-task]').forEach(cb => {
+    cb.checked = !!saved[cb.dataset.task];
+    cb.addEventListener('change', () => {
+      saved[cb.dataset.task] = cb.checked;
+      try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+    });
+  });
+})();
+</script>
+</body>
+</html>

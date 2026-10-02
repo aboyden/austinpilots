@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>IFR Ground School — Week 7: Aviation Weather Hazards</title>
+<style>
+  :root {
+    --bg: #0f1117; --surface: #1a1d27; --surface2: #22263a; --border: #2e3348;
+    --accent: #38bdf8; --accent-rgb: 56,189,248; --accent2: #818cf8; --ink: #04202b;
+    --green: #34d399; --red: #f87171; --yellow: #fbbf24;
+    --text: #e2e8f0; --muted: #8892aa; --heading: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 16px; }
+  a { color: var(--accent); }
+  .header { background: linear-gradient(135deg, #0a0e1a 0%, #1a2040 100%); border-bottom: 1px solid var(--border); padding: 24px 0; text-align: center; }
+  .module-tag { display: inline-block; background: var(--accent); color: var(--ink); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
+  .header h1 { font-size: 32px; font-weight: 800; color: var(--heading); margin-bottom: 8px; padding: 0 16px; }
+  .header p { color: var(--muted); font-size: 15px; padding: 0 16px; }
+  .progress-bar { width: 200px; height: 4px; background: var(--surface2); border-radius: 2px; margin: 16px auto 0; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.5s; }
+  .section-nav { position: sticky; top: 0; z-index: 100; background: rgba(15,17,23,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .section-nav::-webkit-scrollbar { display: none; }
+  .nav-item { padding: 14px 16px; font-size: 13px; font-weight: 600; color: var(--muted); white-space: nowrap; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; }
+  .nav-item:hover { color: var(--text); }
+  .nav-item.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  .lesson-section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .lesson-section h2 { font-size: 26px; font-weight: 800; color: var(--heading); margin-bottom: 6px; }
+  .day-meta { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+  .lesson-section p { margin-bottom: 16px; }
+  .lesson-section p:last-child { margin-bottom: 0; }
+  .lesson-section h3 { font-size: 18px; font-weight: 700; color: var(--heading); margin: 28px 0 12px; }
+  .lesson-section h4 { font-size: 14px; font-weight: 700; color: var(--heading); margin: 20px 0 8px; }
+  .lesson-section ul, .lesson-section ol { margin: 0 0 16px 22px; }
+  .lesson-section li { margin-bottom: 6px; }
+  .lesson-section strong { color: var(--heading); }
+  .acs-ref { display: inline-block; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10.5px; font-weight: 700; color: var(--accent); background: rgba(var(--accent-rgb),0.12); border: 1px solid rgba(var(--accent-rgb),0.35); border-radius: 5px; padding: 1px 6px; margin: 0 2px; vertical-align: middle; white-space: nowrap; }
+  .acs-ref.risk { color: var(--yellow); background: rgba(251,191,36,0.12); border-color: rgba(251,191,36,0.35); }
+  .objectives { background: rgba(var(--accent-rgb),0.06); border: 1px solid rgba(var(--accent-rgb),0.25); border-radius: 12px; padding: 16px 20px 6px; margin-bottom: 24px; }
+  .obj-title, .sc-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .objectives ul { margin-bottom: 10px; }
+  .callout { border-radius: 10px; padding: 18px 22px; margin: 24px 0; border-left: 4px solid; font-size: 15px; }
+  .callout-key { background: rgba(var(--accent-rgb),0.08); border-color: var(--accent); }
+  .callout-warn { background: rgba(251,191,36,0.08); border-color: var(--yellow); }
+  .callout-tip { background: rgba(52,211,153,0.08); border-color: var(--green); }
+  .callout-danger { background: rgba(248,113,113,0.08); border-color: var(--red); }
+  .callout-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+  .callout-key .callout-title { color: var(--accent); } .callout-warn .callout-title { color: var(--yellow); }
+  .callout-tip .callout-title { color: var(--green); } .callout-danger .callout-title { color: var(--red); }
+  .data-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  .data-table th { background: var(--surface2); color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+  .data-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .table-wrap { overflow-x: auto; }
+  .concept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  .concept-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+  .concept-card h4 { margin: 0 0 6px !important; }
+  .concept-card p { font-size: 14px; color: var(--muted); margin: 0 !important; }
+  .reg-list { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 8px 24px; margin: 20px 0; }
+  .reg-item { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .reg-item:last-child { border-bottom: none; }
+  .reg-letter { background: var(--accent); color: var(--ink); min-width: 26px; height: 26px; padding: 0 6px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; margin-top: 2px; }
+  .reg-text { flex: 1; font-size: 15px; }
+  .scenario { background: linear-gradient(135deg, rgba(var(--accent-rgb),0.08), rgba(124,106,247,0.05)); border: 1px solid rgba(var(--accent-rgb),0.25); border-radius: 14px; padding: 26px 28px; margin: 28px 0; }
+  .scenario-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  .scenario h4 { font-size: 16px !important; margin: 0 0 10px !important; }
+  .scenario p { font-size: 15px; }
+  .scenario .payoff { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--border); font-size: 14.5px; }
+  .steps { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; margin: 18px 0; }
+  .step-item { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 14px; }
+  .step-item:last-child { margin-bottom: 0; }
+  .step-num { background: var(--accent); color: var(--ink); min-width: 30px; height: 26px; padding: 0 8px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 11.5px; font-weight: 800; margin-top: 2px; white-space: nowrap; }
+  .step-text { flex: 1; font-size: 14.5px; }
+  .selfcheck, .tasks-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px 16px; margin: 28px 0 0; }
+  .tasks-box { margin-top: 16px; }
+  .selfcheck ol { margin: 0 0 14px 20px; }
+  details { margin-top: 4px; }
+  summary { cursor: pointer; font-weight: 700; font-size: 14px; color: var(--accent); padding: 6px 0; }
+  details ol { margin: 10px 0 4px 20px; color: var(--muted); font-size: 14.5px; }
+  ul.tasks { list-style: none; margin: 0 !important; }
+  ul.tasks li { margin-bottom: 8px; font-size: 14.5px; }
+  ul.tasks label { cursor: pointer; display: flex; gap: 10px; align-items: flex-start; }
+  ul.tasks input { margin-top: 6px; accent-color: var(--accent); }
+  ul.tasks input:checked + span { color: var(--muted); text-decoration: line-through; }
+  .takeaways { background: linear-gradient(135deg, rgba(var(--accent-rgb),0.08) 0%, rgba(124,106,247,0.08) 100%); border: 1px solid rgba(var(--accent-rgb),0.25); border-radius: 14px; padding: 32px; margin: 40px 0 0; }
+  .takeaways h3 { margin: 0 0 20px !important; }
+  .takeaway-item { display: flex; gap: 12px; margin-bottom: 14px; font-size: 15px; align-items: flex-start; }
+  .takeaway-dot { width: 8px; height: 8px; min-width: 8px; background: var(--accent); border-radius: 50%; margin-top: 9px; }
+  .quiz-section { padding: 56px 0; }
+  .quiz-section h2 { font-size: 26px; font-weight: 800; color: var(--heading); margin-bottom: 6px; }
+  .question-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin-bottom: 20px; }
+  .q-number { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: var(--accent); margin-bottom: 10px; }
+  .q-text { font-size: 16px; font-weight: 600; color: var(--heading); margin-bottom: 20px; line-height: 1.5; }
+  .q-options { display: flex; flex-direction: column; gap: 10px; }
+  .q-option { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: var(--surface2); border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 15px; }
+  .q-option:hover { border-color: var(--accent); background: rgba(var(--accent-rgb),0.06); }
+  .q-option.correct { border-color: var(--green); background: rgba(52,211,153,0.08); }
+  .q-option.wrong { border-color: var(--red); background: rgba(248,113,113,0.08); }
+  .q-option.disabled { pointer-events: none; }
+  .option-letter { width: 26px; height: 26px; min-width: 26px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--muted); }
+  .q-option.correct .option-letter { background: var(--green); color: #000; }
+  .q-option.wrong .option-letter { background: var(--red); color: #fff; }
+  .option-text { flex: 1; line-height: 1.5; }
+  .q-explanation { margin-top: 16px; padding: 14px 16px; background: rgba(var(--accent-rgb),0.07); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; font-size: 14px; display: none; line-height: 1.6; }
+  .q-explanation.show { display: block; }
+  .q-explanation strong { color: var(--accent); }
+  .score-bar { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-top: 24px; text-align: center; display: none; }
+  .score-bar.show { display: block; }
+  .score-number { font-size: 48px; font-weight: 800; color: var(--accent); }
+  .score-label { font-size: 15px; color: var(--muted); margin-top: 4px; }
+  .restart-btn { margin-top: 16px; padding: 10px 24px; background: var(--accent); color: var(--ink); border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; }
+  .pager { display: flex; justify-content: space-between; gap: 16px; padding: 28px 0 64px; flex-wrap: wrap; }
+  .pager a { flex: 1; min-width: 220px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; text-decoration: none; color: var(--text); }
+  .pager a:hover { border-color: var(--accent); }
+  .pager small { display: block; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+  .pager .next { text-align: right; }
+  .topbar { padding-top: 16px; }
+  .topbar a { font-size: 14px; font-weight: 600; text-decoration: none; }
+  @media (max-width: 640px) { .concept-grid { grid-template-columns: 1fr; } .header h1 { font-size: 24px; } .scenario { padding: 20px; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="module-tag">Week 7 · Month 2</div>
+  <h1>Aviation Weather Hazards</h1>
+  <p>Turbulence · Fog and visibility · Icing · Thunderstorms</p>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+<div class="container topbar"><a href="ifr.html">&larr; Course index</a></div>
+<nav class="section-nav"><div class="nav-item active" data-section="d1">Day 1: Turbulence & Fog</div><div class="nav-item" data-section="d2">Day 2: Icing</div><div class="nav-item" data-section="d3">Day 3: Thunderstorms</div><div class="nav-item" data-section="quiz">Quiz</div></nav>
+<section class="lesson-section" style="padding-bottom: 8px; border-bottom: none;"><div class="container">
+  <p style="color: var(--muted); font-size: 14px;"><strong>Month 2: Weather.</strong> Part of the 17-week IRA knowledge test study plan.
+  Regulatory and procedural content was checked against eCFR, AIM, and FAA handbook text when this plan was written —
+  cross-check against the editions current when you sit the test.</p>
+</div></section>
+<section id="d1" class="lesson-section"><div class="container"><div class="section-label">Day 1</div><h2>Turbulence and Obstructions to Visibility</h2><div class="day-meta">Topics: AWH Chapter 18 · About 60 min</div><div class="objectives"><div class="obj-title">Learning objectives</div><ul><li>Name the main sources of turbulence a GA IFR pilot will encounter</li><li>Explain how fog forms and why it matters for IFR planning</li></ul></div><h3>🌪️ Turbulence sources <span class="acs-ref">IR.I.B.K3g</span></h3><table class="data-table"><thead><tr><th>Source</th><th>Cause</th></tr></thead><tbody><tr><td><strong>Mechanical</strong></td><td>Wind flowing over rough terrain or buildings.</td></tr><tr><td><strong>Thermal</strong></td><td>Convective currents from surface heating; worst on warm afternoons.</td></tr><tr><td><strong>Frontal</strong></td><td>Lifting along a front, especially a fast cold front.</td></tr><tr><td><strong>Wake</strong></td><td>From preceding aircraft; strongest behind heavy, slow, clean aircraft.</td></tr><tr><td><strong>Clear air turbulence (CAT)</strong></td><td>Near the jet stream and the tropopause, with no visual warning at all since there is no cloud to see it in.</td></tr></tbody></table><h3>🌫️ Fog and obstructions to visibility <span class="acs-ref">IR.I.B.K3j</span> <span class="acs-ref">IR.I.B.K3l</span></h3><table class="data-table"><thead><tr><th>Fog type</th><th>How it forms</th><th>How it behaves</th></tr></thead><tbody><tr><td><strong>Radiation</strong></td><td>Clear, calm night: the ground radiates heat away and cools the air just above it to its dew point.</td><td>Typically burns off after sunrise as the ground reheats.</td></tr><tr><td><strong>Advection</strong></td><td>Warm, moist air moves horizontally over a colder surface (common near coastlines).</td><td>Does not depend on nighttime cooling; the wind keeps bringing in moist air, so it can persist through the day.</td></tr><tr><td><strong>Upslope</strong></td><td>Moist air is forced up rising terrain and cools adiabatically.</td><td>Persists while the upslope flow continues.</td></tr><tr><td><strong>Precipitation-induced</strong></td><td>Warm rain falls through cooler air near the surface and evaporates into it.</td><td>Tied to the precipitation area.</td></tr></tbody></table><p>Smoke, haze, blowing dust or sand, and volcanic ash also cut visibility without necessarily showing as cloud, and volcanic ash is a serious airframe and engine hazard distinct from normal IMC.</p><div class="scenario"><div class="scenario-label">🌫️ Worked example</div><h4>Fog that will not burn off</h4><p>A coastal airport reports fog persisting through the middle of the day despite a steady onshore breeze.</p><div class="payoff">Fog that does not burn off with the sun, is wind-driven, and sits near water points to <strong>advection fog</strong> rather than radiation fog. It will not clear until the wind shifts or the air mass changes, unlike radiation fog, which you can reasonably expect to lift by mid-morning.</div></div><div class="selfcheck"><div class="sc-title">Self-check</div><ol><li>Which turbulence type has no visual warning at all and occurs near the jet stream?</li><li>What causes radiation fog, and when does it typically clear?</li><li>How does advection fog differ from radiation fog in terms of persistence?</li></ol><details><summary>Show answers</summary><ol><li>Clear air turbulence (CAT).</li><li>Ground cooling on a clear, calm night radiates heat away and cools the air at the surface to its dew point; it typically clears shortly after sunrise as the ground reheats.</li><li>Advection fog is driven by wind bringing warm, moist air over a cold surface, so it does not depend on nighttime cooling and can persist through the day.</li></ol></details></div><div class="tasks-box"><div class="sc-title">Tasks</div><ul class="tasks"><li><label><input type="checkbox" data-task="d1-t0"> <span>Read AWH Chapter 18: Weather Hazards, turbulence and visibility sections</span></label></li><li><label><input type="checkbox" data-task="d1-t1"> <span>Build a table: fog type, formation cause, typical clearing behavior</span></label></li></ul></div></div></section><section id="d2" class="lesson-section"><div class="container"><div class="section-label">Day 2</div><h2>Icing</h2><div class="day-meta">Topics: AWH Chapter 19 · About 60 min</div><div class="objectives"><div class="obj-title">Learning objectives</div><ul><li>Name the three icing types and the conditions that produce each</li><li>Explain why structural icing is dangerous beyond just added weight</li></ul></div><h3>🧊 The three icing types <span class="acs-ref">IR.I.B.K3i</span></h3><table class="data-table"><thead><tr><th>Type</th><th>Forms from</th><th>Looks and behaves like</th></tr></thead><tbody><tr><td><strong>Clear ice</strong></td><td>Large supercooled droplets (freezing rain, or cumuliform clouds) that spread out before freezing</td><td>A hard, glossy layer that is hard to see and hard to remove. Generally considered the most hazardous.</td></tr><tr><td><strong>Rime ice</strong></td><td>Small supercooled droplets (typically stratiform clouds) that freeze almost instantly on contact</td><td>A rough, opaque, brittle deposit that traps air; easier to see and often easier to remove.</td></tr><tr><td><strong>Mixed ice</strong></td><td>A mix of large and small droplets, or cumuliform clouds with varying droplet sizes at different altitudes</td><td>Has characteristics of both.</td></tr></tbody></table><h3>⚠️ Why icing is dangerous</h3><p>Added weight is the least of it. Ice disrupts airflow over the wing, reducing lift and increasing stall speed, sometimes dramatically, even with what looks like a thin layer. It can also jam control surfaces, block pitot-static ports, and add drag that degrades climb and cruise performance. Structural icing requires visible moisture and a temperature at or below freezing (supercooled droplets can exist well below freezing without freezing until disturbed, which is exactly what an airframe does to them).</p><div class="callout callout-warn"><div class="callout-title">Frost <span class="acs-ref">IR.I.B.K3k</span></div>Frost forms on a cold-soaked airframe in humid air even when the ambient temperature is above freezing. It disrupts airflow over the wing enough to be a takeoff hazard, and it must be removed, not just &ldquo;brushed off.&rdquo;</div><div class="scenario"><div class="scenario-label">🧊 Worked example</div><h4>Rime or clear?</h4><p>You pick up a thin, rough, milky-white deposit on the leading edge while in a stratus layer at −8°C. That description (rough, opaque, stratiform cloud) is classic <strong>rime</strong>.</p><p>If instead you picked up a smooth, clear, hard-to-see coating while in freezing rain below a warm layer aloft, that is <strong>clear ice</strong>, the more dangerous of the two even though it might look less alarming.</p></div><div class="scenario"><div class="scenario-label">🧊 Real-World Scenario — The Encounter</div><h4>Level at 6,000, inside a cloud layer, in a non-FIKI 182</h4><p>Twenty minutes into a cloud deck the forecast did not flag for icing, you notice a thin rime buildup on the wing strut, maybe a quarter inch. Your airplane has pneumatic boots, but it is not certified for flight into known icing; the POH is clear they are for getting <em>out</em> of an inadvertent encounter, not staying <em>in</em> one.</p><div class="steps"><div class="step-item"><div class="step-num">1</div><div class="step-text">Cycle the boots per your POH and confirm the ice is shedding.</div></div><div class="step-item"><div class="step-num">2</div><div class="step-text">Ask ATC for a different altitude or a climb/descent out of the icing layer, toward warmer air below if terrain allows, or above the tops if you know them.</div></div><div class="step-item"><div class="step-num">3</div><div class="step-text">Turn on pitot heat if it is not already on, and watch the airspeed indicator for the first sign of a pitot blockage.</div></div></div><div class="payoff">The equipment bought you time and options; it did not make the airplane icing-capable. <span class="acs-ref risk">IR.II.A.R1</span> is this exact distinction.</div></div><div class="scenario"><div class="scenario-label">🌩️ Real-World Scenario — The Go/No-Go Call</div><h4>Saturday morning fly-out</h4><p>Your destination TAF shows the ceiling dropping to 1,500 broken with 4SM visibility around your arrival time. An AIRMET Zulu covers your route for icing between 6,000 and 10,000 ft, with the freezing level forecast at 7,000 ft. A PIREP from 20 minutes ago reports light rime ice at 8,000 ft along your route.</p><div class="payoff">None of this makes the flight illegal, but a non-FIKI trainer, a destination ceiling near your personal minimums, and a PIREP confirming the exact hazard the AIRMET warned about adds up to a <strong>no-go</strong> or a different altitude or route, not a &ldquo;let's see how it looks&rdquo; decision. <span class="acs-ref risk">IR.I.B.R1</span> is this judgment call.</div></div><div class="selfcheck"><div class="sc-title">Self-check</div><ol><li>Which icing type is generally considered most hazardous, and why?</li><li>What cloud type is rime ice most associated with?</li><li>Beyond added weight, name two ways icing degrades safety.</li></ol><details><summary>Show answers</summary><ol><li>Clear ice; it is smooth, hard, hard to remove, and hard to see, and it forms from larger supercooled droplets that spread before freezing.</li><li>Stratiform clouds (small, uniform supercooled droplets).</li><li>Any two of: disrupted airflow/increased stall speed, jammed control surfaces, blocked pitot-static ports, added drag/reduced climb performance.</li></ol></details></div><div class="tasks-box"><div class="sc-title">Tasks</div><ul class="tasks"><li><label><input type="checkbox" data-task="d2-t0"> <span>Read AWH Chapter 19: Icing</span></label></li><li><label><input type="checkbox" data-task="d2-t1"> <span>Memorize the icing types (rime, clear, mixed) and the conditions that produce each</span></label></li></ul></div></div></section><section id="d3" class="lesson-section"><div class="container"><div class="section-label">Day 3</div><h2>Thunderstorms</h2><div class="day-meta">Topics: AWH Chapter 20 · About 60 min</div><div class="objectives"><div class="obj-title">Learning objectives</div><ul><li>Describe the three thunderstorm life-cycle stages and the specific hazard of each</li><li>State the recommended lateral clearance from a severe thunderstorm</li></ul></div><h3>⛈️ Thunderstorm life cycle <span class="acs-ref">IR.I.B.K3h</span></h3><table class="data-table"><thead><tr><th>Stage</th><th>What is happening</th><th>Hazard</th></tr></thead><tbody><tr><td><strong>Cumulus</strong></td><td>Continuous updrafts building the cell; no precipitation reaching the ground yet.</td><td>Rapid vertical growth and turbulence.</td></tr><tr><td><strong>Mature</strong></td><td>Updrafts and downdrafts side by side; heavy rain, hail, lightning.</td><td>The most severe turbulence, hail, and microburst potential. The most hazardous stage by far.</td></tr><tr><td><strong>Dissipating</strong></td><td>Downdrafts dominate throughout the cell; rain tapers off.</td><td>Do not assume it is safe: gust fronts and residual turbulence can persist after the visible storm looks like it is winding down.</td></tr></tbody></table><h3>📏 Staying clear</h3><p>The standard guidance (AIM) is to avoid any thunderstorm identified as severe, or giving an intense radar echo, by <strong>at least 20 miles</strong>, especially under the anvil of a large cumulonimbus, and to give every cell a wide berth. Hazards are not confined to the visible cloud: hail can fall miles from the core, and a <strong>gust front</strong> (the leading edge of the storm's outflow) can produce severe low-level wind shear well ahead of the visible precipitation. A <strong>microburst</strong> is an intense, short-lived downdraft with extreme wind shear that has caused fatal accidents on approach.</p><div class="scenario"><div class="scenario-label">📡 Worked example</div><h4>A line of cells on datalink</h4><p>A line of cells shows a solid red/magenta core on datalink weather with an anvil spreading downwind. Your planned route passes 12 NM from the visible core.</p><div class="payoff">For a cell this intense, 12 NM is inside the recommended 20-mile buffer, and the anvil direction tells you which side is more likely to have hail or turbulence extending beyond the core itself. Remember that datalink radar is also several minutes old: use it for strategy, not for threading between cells.</div></div><div class="selfcheck"><div class="sc-title">Self-check</div><ol><li>Which thunderstorm stage has both updrafts and downdrafts present simultaneously, and why is that significant?</li><li>Is a dissipating-stage thunderstorm necessarily safe to fly near?</li><li>What is the standard recommended lateral clearance from a severe thunderstorm or one giving an intense radar echo?</li></ol><details><summary>Show answers</summary><ol><li>The mature stage; the collision of updrafts and downdrafts produces the most severe turbulence, hail, and microburst potential.</li><li>No; gust fronts and residual turbulence can persist even as visible precipitation tapers off.</li><li>At least 20 miles, and more is better; give every cell a wide berth.</li></ol></details></div><div class="tasks-box"><div class="sc-title">Tasks</div><ul class="tasks"><li><label><input type="checkbox" data-task="d3-t0"> <span>Read AWH Chapter 20: Thunderstorms</span></label></li><li><label><input type="checkbox" data-task="d3-t1"> <span>Memorize the thunderstorm life-cycle stages and the specific hazard of each</span></label></li><li><label><input type="checkbox" data-task="d3-t2"> <span>Daily question sets: 15-20 questions from your bank, weather hazards category</span></label></li></ul></div></div></section>
+<section id="quiz" class="quiz-section"><div class="container">
+  <div class="section-label">Week 7 · Knowledge check</div>
+  <h2>Knowledge Check</h2>
+  <p style="color: var(--muted); margin-bottom: 32px;">6 questions covering this week.</p>
+  <div id="quizContainer"></div>
+  <div class="score-bar" id="scoreBar"><div class="score-number" id="scoreNum"></div><div class="score-label" id="scoreLabel"></div>
+  <button class="restart-btn" onclick="restartQuiz()">Try Again</button></div>
+  <div class="pager"><a href="week-06-fronts-stability-clouds.html"><small>&larr; Previous</small>Week 6: Fronts, Air Masses, Stability, Clouds</a><a class="next" href="ifr.html"><small>Next &rarr;</small>Week 8: Weather Products and Briefings, Month 2 Checkpoint (not built yet)</a></div>
+</div></section>
+<script>
+const questions = [{"q": "Which turbulence type gives no visual warning and occurs near the jet stream?", "options": ["Mechanical", "Thermal", "Clear air turbulence", "Wake"], "correct": 2, "explanation": "Clear air turbulence has no cloud to warn you; it occurs near the jet stream and tropopause."}, {"q": "Fog persists all day at a coastal airport with a steady onshore breeze. Which type is most likely?", "options": ["Radiation fog", "Advection fog", "Upslope fog", "Frost"], "correct": 1, "explanation": "Wind-driven fog over a cold surface near water is advection fog; it does not depend on nighttime cooling and will not burn off with the sun."}, {"q": "Which icing type is generally considered most hazardous?", "options": ["Rime", "Clear", "Frost on the grass", "Mixed is always worse"], "correct": 1, "explanation": "Clear ice forms from large droplets that spread before freezing, producing a hard, glossy layer that is hard to see and hard to remove."}, {"q": "Rime ice is most associated with which clouds?", "options": ["Cumulonimbus only", "Stratiform clouds with small supercooled droplets", "Cirrus", "Clear air"], "correct": 1, "explanation": "Small, uniform supercooled droplets in stratiform clouds freeze almost instantly, trapping air and producing a rough, opaque deposit."}, {"q": "Which thunderstorm stage is the most hazardous?", "options": ["Cumulus", "Mature", "Dissipating", "They are equally hazardous"], "correct": 1, "explanation": "The mature stage has updrafts and downdrafts together, with heavy rain, hail, lightning, severe turbulence, and microburst potential."}, {"q": "How far should you stay from a thunderstorm identified as severe or giving an intense radar echo?", "options": ["5 miles", "10 miles", "At least 20 miles", "It depends only on cloud color"], "correct": 2, "explanation": "AIM guidance is at least 20 miles, especially under the anvil, and more room is better."}];
+let answers = new Array(questions.length).fill(null);
+let answered = 0;
+function buildQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  answers = new Array(questions.length).fill(null);
+  answered = 0;
+  document.getElementById('scoreBar').classList.remove('show');
+  questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card'; card.id = 'q' + qi;
+    const num = document.createElement('div'); num.className = 'q-number';
+    num.textContent = 'QUESTION ' + (qi + 1) + ' OF ' + questions.length; card.appendChild(num);
+    const text = document.createElement('div'); text.className = 'q-text'; text.textContent = q.q; card.appendChild(text);
+    const opts = document.createElement('div'); opts.className = 'q-options';
+    q.options.forEach((opt, oi) => {
+      const btn = document.createElement('div'); btn.className = 'q-option';
+      btn.innerHTML = '<div class="option-letter">' + 'ABCD'[oi] + '</div><div class="option-text">' + opt + '</div>';
+      btn.addEventListener('click', () => selectAnswer(qi, oi)); opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+    const exp = document.createElement('div'); exp.className = 'q-explanation';
+    exp.innerHTML = '<strong>Explanation:</strong> ' + q.explanation; card.appendChild(exp);
+    container.appendChild(card);
+  });
+}
+function selectAnswer(qi, oi) {
+  if (answers[qi] !== null) return;
+  answers[qi] = oi; answered++;
+  const card = document.getElementById('q' + qi);
+  card.querySelectorAll('.q-option').forEach((opt, idx) => {
+    opt.classList.add('disabled');
+    if (idx === questions[qi].correct) opt.classList.add('correct');
+    else if (idx === oi) opt.classList.add('wrong');
+  });
+  card.querySelector('.q-explanation').classList.add('show');
+  if (answered === questions.length) showScore();
+  updateProgress();
+}
+function showScore() {
+  const correct = answers.filter((a, i) => a === questions[i].correct).length;
+  const pct = Math.round((correct / questions.length) * 100);
+  document.getElementById('scoreNum').textContent = correct + '/' + questions.length;
+  document.getElementById('scoreLabel').textContent = pct + '% — ' + (pct >= 80 ? 'Solid grasp of this week.' : pct >= 60 ? 'Review the days above, then retry.' : 'Work back through the week before moving on.');
+  document.getElementById('scoreBar').classList.add('show');
+}
+function restartQuiz() { buildQuiz(); updateProgress(); }
+buildQuiz();
+
+const sectionIds = [...document.querySelectorAll('.lesson-section[id], .quiz-section[id]')].map(e => e.id);
+function updateProgress() {
+  const scrolled = sectionIds.filter(id => { const el = document.getElementById(id); return el && el.getBoundingClientRect().top < window.innerHeight * 0.6; }).length;
+  const total = (scrolled / sectionIds.length) * 0.7 + (answered / questions.length) * 0.3;
+  document.getElementById('progressFill').style.width = Math.round(total * 100) + '%';
+}
+const navItems = document.querySelectorAll('.nav-item');
+navItems.forEach(item => item.addEventListener('click', () => {
+  const t = document.getElementById(item.dataset.section); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}));
+window.addEventListener('scroll', () => {
+  let current = sectionIds[0];
+  sectionIds.forEach(id => { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top < 120) current = id; });
+  navItems.forEach(item => item.classList.toggle('active', item.dataset.section === current));
+  updateProgress();
+}, { passive: true });
+
+(function () {
+  const key = 'ifr-tasks-w7';
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(key) || '{}'); } catch (e) {}
+  document.querySelectorAll('input[data-task]').forEach(cb => {
+    cb.checked = !!saved[cb.dataset.task];
+    cb.addEventListener('change', () => {
+      saved[cb.dataset.task] = cb.checked;
+      try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+    });
+  });
+})();
+</script>
+</body>
+</html>
