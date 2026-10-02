@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>IFR Ground School — Week 14: Approach Charts Deep Dive</title>
+<style>
+  :root {
+    --bg: #0f1117; --surface: #1a1d27; --surface2: #22263a; --border: #2e3348;
+    --accent: #fb923c; --accent-rgb: 251,146,60; --accent2: #f87171; --accent2-rgb: 248,113,113; --ink: #2b1304;
+    --hdr1: #0a0e1a; --hdr2: #1a2040; --nav-bg: rgba(15,17,23,0.95);
+    --green: #34d399; --red: #f87171; --yellow: #fbbf24;
+    --text: #e2e8f0; --muted: #8892aa; --heading: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 16px; }
+  a { color: var(--accent); }
+  .header { background: linear-gradient(135deg, var(--hdr1) 0%, var(--hdr2) 100%); border-bottom: 1px solid var(--border); padding: 24px 0; text-align: center; }
+  .module-tag { display: inline-block; background: var(--accent); color: var(--ink); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
+  .header h1 { font-size: 32px; font-weight: 800; color: var(--heading); margin-bottom: 8px; padding: 0 16px; }
+  .header p { color: var(--muted); font-size: 15px; padding: 0 16px; }
+  .progress-bar { width: 200px; height: 4px; background: var(--surface2); border-radius: 2px; margin: 16px auto 0; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.5s; }
+  .section-nav { position: sticky; top: 0; z-index: 100; background: var(--nav-bg); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .section-nav::-webkit-scrollbar { display: none; }
+  .nav-item { padding: 14px 16px; font-size: 13px; font-weight: 600; color: var(--muted); white-space: nowrap; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; }
+  .nav-item:hover { color: var(--text); }
+  .nav-item.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  .lesson-section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .lesson-section h2 { font-size: 26px; font-weight: 800; color: var(--heading); margin-bottom: 6px; }
+  .day-meta { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+  .lesson-section p { margin-bottom: 16px; }
+  .lesson-section p:last-child { margin-bottom: 0; }
+  .lesson-section h3 { font-size: 18px; font-weight: 700; color: var(--heading); margin: 28px 0 12px; }
+  .lesson-section h4 { font-size: 14px; font-weight: 700; color: var(--heading); margin: 20px 0 8px; }
+  .lesson-section ul, .lesson-section ol { margin: 0 0 16px 22px; }
+  .lesson-section li { margin-bottom: 6px; }
+  .lesson-section strong { color: var(--heading); }
+  .acs-ref { display: inline-block; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10.5px; font-weight: 700; color: var(--accent); background: rgba(var(--accent-rgb),0.12); border: 1px solid rgba(var(--accent-rgb),0.35); border-radius: 5px; padding: 1px 6px; margin: 0 2px; vertical-align: middle; white-space: nowrap; }
+  .acs-ref.risk { color: var(--yellow); background: rgba(251,191,36,0.12); border-color: rgba(251,191,36,0.35); }
+  .objectives { background: rgba(var(--accent-rgb),0.06); border: 1px solid rgba(var(--accent-rgb),0.25); border-radius: 12px; padding: 16px 20px 6px; margin-bottom: 24px; }
+  .obj-title, .sc-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .objectives ul { margin-bottom: 10px; }
+  .callout { border-radius: 10px; padding: 18px 22px; margin: 24px 0; border-left: 4px solid; font-size: 15px; }
+  .callout-key { background: rgba(var(--accent-rgb),0.08); border-color: var(--accent); }
+  .callout-warn { background: rgba(251,191,36,0.08); border-color: var(--yellow); }
+  .callout-tip { background: rgba(52,211,153,0.08); border-color: var(--green); }
+  .callout-danger { background: rgba(248,113,113,0.08); border-color: var(--red); }
+  .callout-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+  .callout-key .callout-title { color: var(--accent); } .callout-warn .callout-title { color: var(--yellow); }
+  .callout-tip .callout-title { color: var(--green); } .callout-danger .callout-title { color: var(--red); }
+  .data-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  .data-table th { background: var(--surface2); color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+  .data-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(127,127,127,0.08); }
+  .table-wrap { overflow-x: auto; }
+  .concept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  .concept-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+  .concept-card h4 { margin: 0 0 6px !important; }
+  .concept-card p { font-size: 14px; color: var(--muted); margin: 0 !important; }
+  .reg-list { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 8px 24px; margin: 20px 0; }
+  .reg-item { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .reg-item:last-child { border-bottom: none; }
+  .reg-letter { background: var(--accent); color: var(--ink); min-width: 26px; height: 26px; padding: 0 6px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; margin-top: 2px; }
+  .reg-text { flex: 1; font-size: 15px; }
+  .scenario { background: linear-gradient(135deg, rgba(var(--accent-rgb),0.08), rgba(var(--accent2-rgb),0.05)); border: 1px solid rgba(var(--accent-rgb),0.25); border-radius: 14px; padding: 26px 28px; margin: 28px 0; }
+  .scenario-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  .scenario h4 { font-size: 16px !important; margin: 0 0 10px !important; }
+  .scenario p { font-size: 15px; }
+  .scenario .payoff { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--border); font-size: 14.5px; }
+  .steps { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; margin: 18px 0; }
+  .step-item { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 14px; }
+  .step-item:last-child { margin-bottom: 0; }
+  .step-num { background: var(--accent); color: var(--ink); min-width: 30px; height: 26px; padding: 0 8px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 11.5px; font-weight: 800; margin-top: 2px; white-space: nowrap; }
+  .step-text { flex: 1; font-size: 14.5px; }
+  .selfcheck, .tasks-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px 16px; margin: 28px 0 0; }
+  .tasks-box { margin-top: 16px; }
+  .selfcheck ol { margin: 0 0 14px 20px; }
+  details { margin-top: 4px; }
+  summary { cursor: pointer; font-weight: 700; font-size: 14px; color: var(--accent); padding: 6px 0; }
+  details ol { margin: 10px 0 4px 20px; color: var(--muted); font-size: 14.5px; }
+  ul.tasks { list-style: none; margin: 0 !important; }
+  ul.tasks li { margin-bottom: 8px; font-size: 14.5px; }
+  ul.tasks label { cursor: pointer; display: flex; gap: 10px; align-items: flex-start; }
+  ul.tasks input { margin-top: 6px; accent-color: var(--accent); }
+  ul.tasks input:checked + span { color: var(--muted); text-decoration: line-through; }
+  .takeaways { background: linear-gradient(135deg, rgba(var(--accent-rgb),0.08) 0%, rgba(var(--accent2-rgb),0.08) 100%); border: 1px solid rgba(var(--accent-rgb),0.25); border-radius: 14px; padding: 32px; margin: 40px 0 0; }
+  .takeaways h3 { margin: 0 0 20px !important; }
+  .takeaway-item { display: flex; gap: 12px; margin-bottom: 14px; font-size: 15px; align-items: flex-start; }
+  .takeaway-dot { width: 8px; height: 8px; min-width: 8px; background: var(--accent); border-radius: 50%; margin-top: 9px; }
+  .quiz-section { padding: 56px 0; }
+  .quiz-section h2 { font-size: 26px; font-weight: 800; color: var(--heading); margin-bottom: 6px; }
+  .question-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin-bottom: 20px; }
+  .q-number { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: var(--accent); margin-bottom: 10px; }
+  .q-text { font-size: 16px; font-weight: 600; color: var(--heading); margin-bottom: 20px; line-height: 1.5; }
+  .q-options { display: flex; flex-direction: column; gap: 10px; }
+  .q-option { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: var(--surface2); border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 15px; }
+  .q-option:hover { border-color: var(--accent); background: rgba(var(--accent-rgb),0.06); }
+  .q-option.correct { border-color: var(--green); background: rgba(52,211,153,0.08); }
+  .q-option.wrong { border-color: var(--red); background: rgba(248,113,113,0.08); }
+  .q-option.disabled { pointer-events: none; }
+  .option-letter { width: 26px; height: 26px; min-width: 26px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--muted); }
+  .q-option.correct .option-letter { background: var(--green); color: #000; }
+  .q-option.wrong .option-letter { background: var(--red); color: #fff; }
+  .option-text { flex: 1; line-height: 1.5; }
+  .q-explanation { margin-top: 16px; padding: 14px 16px; background: rgba(var(--accent-rgb),0.07); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; font-size: 14px; display: none; line-height: 1.6; }
+  .q-explanation.show { display: block; }
+  .q-explanation strong { color: var(--accent); }
+  .score-bar { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-top: 24px; text-align: center; display: none; }
+  .score-bar.show { display: block; }
+  .score-number { font-size: 48px; font-weight: 800; color: var(--accent); }
+  .score-label { font-size: 15px; color: var(--muted); margin-top: 4px; }
+  .restart-btn { margin-top: 16px; padding: 10px 24px; background: var(--accent); color: var(--ink); border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; }
+  .pager { display: flex; justify-content: space-between; gap: 16px; padding: 28px 0 64px; flex-wrap: wrap; }
+  .pager a { flex: 1; min-width: 220px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; text-decoration: none; color: var(--text); }
+  .pager a:hover { border-color: var(--accent); }
+  .pager small { display: block; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+  .pager .next { text-align: right; }
+  .topbar { padding-top: 16px; }
+  .topbar a { font-size: 14px; font-weight: 600; text-decoration: none; }
+  @media (max-width: 640px) { .data-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; } .concept-grid { grid-template-columns: 1fr; } .header h1 { font-size: 24px; } .scenario { padding: 20px; } }
+</style>
+<script>(function(){
+  var THEMES = [{"id": "default", "name": "Default", "swatch": "linear-gradient(135deg,#4f8ef7 50%,#38bdf8 50%)", "vars": null}, {"id": "ocean", "name": "Ocean", "swatch": "#38bdf8", "vars": {"--accent": "#38bdf8", "--accent-rgb": "56,189,248", "--accent2": "#818cf8", "--accent2-rgb": "129,140,248", "--ink": "#04202b"}}, {"id": "forest", "name": "Forest", "swatch": "#34d399", "vars": {"--accent": "#34d399", "--accent-rgb": "52,211,153", "--accent2": "#2dd4bf", "--accent2-rgb": "45,212,191", "--ink": "#04221a"}}, {"id": "sunset", "name": "Sunset", "swatch": "#fb923c", "vars": {"--accent": "#fb923c", "--accent-rgb": "251,146,60", "--accent2": "#f87171", "--accent2-rgb": "248,113,113", "--ink": "#2b1304"}}, {"id": "violet", "name": "Violet", "swatch": "#a78bfa", "vars": {"--accent": "#a78bfa", "--accent-rgb": "167,139,250", "--accent2": "#f472b6", "--accent2-rgb": "244,114,182", "--ink": "#1b1033"}}, {"id": "daylight", "name": "Daylight", "swatch": "linear-gradient(135deg,#ffffff 50%,#2563eb 50%)", "vars": {"--bg": "#f6f7fb", "--surface": "#ffffff", "--surface2": "#eef1f7", "--border": "#d5dae6", "--text": "#1f2937", "--muted": "#5b6475", "--heading": "#0f172a", "--hdr1": "#e8eefc", "--hdr2": "#dbe4fb", "--nav-bg": "rgba(246,247,251,0.95)", "--accent": "#2563eb", "--accent-rgb": "37,99,235", "--accent2": "#7c3aed", "--accent2-rgb": "124,58,237", "--ink": "#ffffff", "--green": "#059669", "--red": "#dc2626", "--yellow": "#b45309"}}];
+  window.__ifrThemes = THEMES;
+  window.__ifrApplyTheme = function(id){
+    var root = document.documentElement;
+    THEMES.forEach(function(t){ if (t.vars) Object.keys(t.vars).forEach(function(k){ root.style.removeProperty(k); }); });
+    var t = THEMES.filter(function(x){ return x.id === id; })[0];
+    if (t && t.vars) Object.keys(t.vars).forEach(function(k){ root.style.setProperty(k, t.vars[k]); });
+  };
+  var saved = 'default';
+  try { saved = localStorage.getItem('ifr-theme') || 'default'; } catch (e) {}
+  window.__ifrApplyTheme(saved);
+})();</script>
+</head>
+<body>
+<div class="header">
+  <div class="module-tag">Week 14 · Month 4</div>
+  <h1>Approach Charts Deep Dive</h1>
+  <p>Approach plate anatomy · DA vs. MDA · Categories and circling · Missed approaches</p>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+<div class="container topbar"><a href="ifr.html">&larr; Course index</a></div>
+<nav class="section-nav"><div class="nav-item active" data-section="d1">Day 1: Plate Anatomy</div><div class="nav-item" data-section="d2">Day 2: Minimums</div><div class="nav-item" data-section="d3">Day 3: Missed Approach</div><div class="nav-item" data-section="quiz">Quiz</div></nav>
+<section class="lesson-section" style="padding-bottom: 8px; border-bottom: none;"><div class="container">
+  <p style="color: var(--muted); font-size: 14px;"><strong>Month 4: Procedures, Approaches, and Test Prep.</strong> Part of the 17-week IRA knowledge test study plan.
+  Regulatory and procedural content was checked against eCFR, AIM, and FAA handbook text when this plan was written —
+  cross-check against the editions current when you sit the test.</p>
+</div></section>
+<section id="d1" class="lesson-section"><div class="container"><div class="section-label">Day 1</div><h2>Approach Plate Anatomy</h2><div class="day-meta">Topics: IPH Chapter 4 (first half) · About 75 min</div><div class="objectives"><div class="obj-title">Learning objectives</div><ul><li>Label the major elements of an instrument approach plate from memory</li></ul></div><h3>🗺️ The four parts of a plate</h3><div class="concept-grid"><div class="concept-card"><h4>Briefing strip</h4><p>Top of the page: approach name, frequencies, final approach course, MSA, airport and touchdown zone elevation, and notes.</p></div><div class="concept-card"><h4>Plan view</h4><p>The overhead picture: fixes, transitions, holding, the MSA circle, and the course to the runway.</p></div><div class="concept-card"><h4>Profile view</h4><p>The side picture: altitudes at each fix, the glidepath or descent, and the missed approach.</p></div><div class="concept-card"><h4>Minimums</h4><p>The DA or MDA and visibility for each line of minimums and each aircraft category.</p></div></div><h3>🔎 The elements, in the order you use them <span class="acs-ref">IR.VI.A.K1</span></h3><div class="reg-list"><div class="reg-item"><div class="reg-letter">MSA</div><div class="reg-text"><strong>Minimum Safe / Sector Altitude.</strong> Emergency-only obstacle clearance (1,000 ft) within 25 NM of the reference point, in the plan view's corner circle. Not for routine use, and it does not guarantee navigation signal reception.</div></div><div class="reg-item"><div class="reg-letter">PT</div><div class="reg-text"><strong>Procedure turn.</strong> A course reversal used to get established inbound when you are not already aligned with the final approach course. Not required if you are being radar vectored to the final approach course, or if the plate says <strong>NoPT</strong> for your transition.</div></div><div class="reg-item"><div class="reg-letter">SF</div><div class="reg-text"><strong>Stepdown fix.</strong> A charted fix on the final segment that lets you descend to a lower altitude once past it. Common on non-precision approaches.</div></div><div class="reg-item"><div class="reg-letter">FAF</div><div class="reg-text"><strong>Final approach fix.</strong> Where final descent begins. On a non-precision approach it is a charted fix marked with a <strong>Maltese cross</strong>; on a precision approach it is glideslope intercept, marked with a <strong>lightning bolt</strong>.</div></div><div class="reg-item"><div class="reg-letter">MAP</div><div class="reg-text"><strong>Missed approach point.</strong> The point where, if you do not have the required visual references, you must execute the missed approach. On an ILS it is the DA; on a non-precision approach it is a charted fix, navaid, or time.</div></div><div class="reg-item"><div class="reg-letter">Min</div><div class="reg-text"><strong>Minimums lines.</strong> The DA or MDA and required visibility for each approach category and each level of equipment (straight-in vs. circling, ILS vs. LOC-only, LPV vs. LNAV, and so on).</div></div></div><div class="scenario"><div class="scenario-label">🧭 Worked example</div><h4>A stepdown fix on final</h4><p>On a non-precision approach you cross the FAF at 2,200 ft and descend to the intermediate altitude of 1,800 ft. The MDA is 1,400 ft, and a stepdown fix sits between you and the runway.</p><div class="payoff">You may descend to 1,400 ft <strong>only after crossing the stepdown fix</strong>, not before, however confident you feel visually. Between the FAF and the stepdown fix, 1,800 ft is your floor.</div></div><div class="callout callout-warn"><div class="callout-title">Below the MDA <span class="acs-ref risk">IR.VI.A.R7</span></div>Operating below the MDA without the required visual references is its own named risk in the ACS. The rule is in 91.175(c), reviewed on Day 3.</div><div class="selfcheck"><div class="sc-title">Self-check</div><ol><li>What is the MSA for, and what is it explicitly not for?</li><li>When is a procedure turn not required?</li><li>What symbol typically marks the FAF on a non-precision approach plate?</li><li>What is the Missed Approach Point?</li></ol><details><summary>Show answers</summary><ol><li>Emergency-only obstacle clearance within 25 NM of the reference point; it is not for routine descent planning and does not guarantee signal reception.</li><li>When being radar vectored to the final approach course, or when the plate specifies NoPT for your transition.</li><li>A Maltese cross.</li><li>The point where, without the required visual references, you must execute the missed approach.</li></ol></details></div><div class="tasks-box"><div class="sc-title">Tasks</div><ul class="tasks"><li><label><input type="checkbox" data-task="d1-t0"> <span>Read IPH Chapter 4, approach chart anatomy sections</span></label></li><li><label><input type="checkbox" data-task="d1-t1"> <span>Pull 8-10 real approach plates (a mix of ILS, RNAV/GPS, and VOR) and label every element from memory: MSA, procedure turn, stepdown fixes, FAF, MAP, missed approach procedure, minimums lines</span></label></li></ul></div></div></section><section id="d2" class="lesson-section"><div class="container"><div class="section-label">Day 2</div><h2>Minimums, Categories, and Circling</h2><div class="day-meta">Topics: IPH Chapter 4 (minimums) · About 75 min</div><div class="objectives"><div class="obj-title">Learning objectives</div><ul><li>Recall the difference between DA and MDA and which approach types use each</li><li>Apply the circling approach category speed table from memory</li></ul></div><h3>⬇️ DA vs. MDA, revisited <span class="acs-ref">IR.VI.B.K1</span></h3><table class="data-table"><thead><tr><th></th><th>DA (Decision Altitude)</th><th>MDA (Minimum Descent Altitude)</th></tr></thead><tbody><tr><td>Approaches</td><td>With vertical guidance: ILS, LPV, LNAV/VNAV</td><td>Without vertical guidance: LOC-only, VOR, LNAV, LP, NDB</td></tr><tr><td>What it is</td><td>A <strong>decision point</strong> in a continuous descent; you never level off at it</td><td>A <strong>floor</strong> you may level off at and fly toward the runway</td></tr><tr><td>At the limit</td><td>Go missed if you lack the required references</td><td>Stay at or above it until the MAP or until you have the references to descend to land</td></tr></tbody></table><h3>📋 Approach type, minimums, and equipment</h3><table class="data-table"><thead><tr><th>Approach</th><th>Decision</th><th>Equipment</th></tr></thead><tbody><tr><td>ILS</td><td>DA</td><td>ILS receiver (localizer and glideslope)</td></tr><tr><td>LOC only (glideslope out)</td><td>MDA</td><td>Localizer receiver</td></tr><tr><td>LPV</td><td>DA</td><td>WAAS GPS</td></tr><tr><td>LNAV/VNAV</td><td>DA</td><td>WAAS, or approved baro-VNAV</td></tr><tr><td>LNAV</td><td>MDA</td><td>IFR-approved GPS with RAIM</td></tr><tr><td>LP</td><td>MDA</td><td>WAAS GPS</td></tr><tr><td>VOR / NDB</td><td>MDA</td><td>VOR or ADF</td></tr><tr><td>Circling</td><td>MDA</td><td>The navigation equipment for the underlying approach</td></tr></tbody></table><h3>🔄 Circling approach categories <span class="acs-ref">IR.VI.D.K1</span></h3><p>Approach category is based on <strong>V<sub>REF</sub></strong> at maximum certificated landing weight, or 1.3 &times; V<sub>SO</sub> if V<sub>REF</sub> is not published.</p><table class="data-table"><thead><tr><th>Category</th><th>Speed (knots)</th><th>Approx. circling radius</th></tr></thead><tbody><tr><td>A</td><td>Less than 91</td><td>1.3 NM</td></tr><tr><td>B</td><td>91 to 120</td><td>1.5 NM</td></tr><tr><td>C</td><td>121 to 140</td><td>1.7 NM</td></tr><tr><td>D</td><td>141 to 165</td><td>2.3 NM</td></tr><tr><td>E</td><td>166 and above</td><td>4.5 NM</td></tr></tbody></table><p style="font-size:13px; color:var(--muted);">Radii are the standard TERPS values and vary with airport elevation on actual charts. The speed ranges are what you need for the test.</p><div class="callout callout-key"><div class="callout-title">Never a lower category than you fly</div>If you fly the approach or the circle <em>faster</em> than your category's upper limit, you must use the minimums for the next higher category, since the protected circling area is sized for that speed range. You can never use a lower category than the speed you actually fly, even if the aircraft is normally certificated in a lower one.</div><div class="scenario"><div class="scenario-label">🧭 Worked example</div><h4>A gusty circle</h4><p>Your aircraft is certificated Category B, but gusty conditions have you flying the circle at 125 knots.</p><div class="payoff">125 knots is above Category B's 120-knot limit, so you must use <strong>Category C</strong> circling minimums. The wider turns at that speed need the larger Category C protected area.</div></div><div class="selfcheck"><div class="sc-title">Self-check</div><ol><li>Is DA a level-off altitude or a decision point in a continuous descent?</li><li>What approach types use an MDA rather than a DA?</li><li>Category B aircraft circling at 125 knots. Which category minimums must be used?</li></ol><details><summary>Show answers</summary><ol><li>A decision point in a continuous descent; you do not level off at DA.</li><li>Approaches without vertical guidance: LOC-only, VOR, LNAV, LP, NDB.</li><li>Category C (121-140 knots), since the actual speed flown exceeds Category B's upper limit.</li></ol></details></div><div class="tasks-box"><div class="sc-title">Tasks</div><ul class="tasks"><li><label><input type="checkbox" data-task="d2-t0"> <span>Read IPH Chapter 4, minimums and circling sections</span></label></li><li><label><input type="checkbox" data-task="d2-t1"> <span>Build a table: approach type, minimums line, equipment required</span></label></li></ul></div></div></section><section id="d3" class="lesson-section"><div class="container"><div class="section-label">Day 3</div><h2>Missed Approach Procedures and Practice</h2><div class="day-meta">Topics: IPH Chapter 4 (missed approach) · About 75 min</div><div class="objectives"><div class="obj-title">Learning objectives</div><ul><li>Describe the standard missed approach sequence</li><li>Practice flying labeled approach plates, including the missed approach</li></ul></div><h3>👀 What you need to see: 91.175(c)</h3><p>You may not operate below the DA or MDA unless <strong>all</strong> of the following are true:</p><div class="reg-list"><div class="reg-item"><div class="reg-letter">1</div><div class="reg-text">The aircraft is continuously in a position from which a descent to a landing on the intended runway can be made at a normal rate, using normal maneuvers.</div></div><div class="reg-item"><div class="reg-letter">2</div><div class="reg-text">The flight visibility is not less than the visibility prescribed for the approach.</div></div><div class="reg-item"><div class="reg-letter">3</div><div class="reg-text">At least one required visual reference is distinctly visible and identifiable: the approach light system, threshold, threshold markings or lights, REIL, visual approach slope indicator, touchdown zone or its markings and lights, or the runway, its markings, or its lights.</div></div></div><div class="callout callout-warn"><div class="callout-title">The approach-lights-only exception</div>If the approach light system is the only reference you can see, you may descend to no lower than <strong>100 ft above the touchdown zone elevation</strong>, and no lower unless the red terminating bars or red side row bars are also visible.</div><h3>⬆️ The missed approach, in sequence <span class="acs-ref">IR.VI.C.K1</span></h3><div class="steps"><div class="step-item"><div class="step-num">1</div><div class="step-text">At the MAP without the required references (or any time you discontinue the approach): apply go-around power and establish a climb.</div></div><div class="step-item"><div class="step-num">2</div><div class="step-text">Configure for the climb (flaps and gear per the POH).</div></div><div class="step-item"><div class="step-num">3</div><div class="step-text">Follow the charted missed approach procedure <strong>exactly as published</strong>, unless ATC has already issued alternate instructions.</div></div><div class="step-item"><div class="step-num">4</div><div class="step-text">Tell ATC you are missing the approach and what you need (another approach, holding, or an alternate).</div></div></div><p>The published procedure exists to keep you clear of obstacles during the climb from that particular approach, so fly it as charted rather than improvising, even when you feel you could see enough to do something else. If you go missed <em>before</em> the MAP, continue to the MAP along the final approach course before turning, unless told otherwise <span class="acs-ref risk">IR.VI.C.R4</span>.</p><div class="callout callout-key"><div class="callout-title">Missing the approach while circling <span class="acs-ref risk">IR.VI.D.R7</span></div>If you lose sight of the airport while circling, make an initial climbing turn <strong>toward the landing runway</strong>, continue the turn until established on the missed approach course, and then follow the published missed approach.</div><div class="scenario"><div class="scenario-label">🧭 Worked example</div><h4>Approach lights only at DA</h4><p>You reach the DA on an ILS with only the approach lights in sight, no red terminating bars, and you cannot see the runway environment.</p><div class="payoff">The lights alone let you continue descending, but only to <strong>100 ft above the touchdown zone</strong>. If you still have nothing more by then, go missed, flying the published procedure and not an improvised climbing turn toward where you think the runway is.</div></div><div class="selfcheck"><div class="sc-title">Self-check</div><ol><li>What is the first action at the MAP without the required references?</li><li>Why is it important to fly the published missed approach procedure exactly as charted, rather than improvising?</li><li>Approach lights are the only reference you see at DA. How low may you descend?</li></ol><details><summary>Show answers</summary><ol><li>Apply go-around power and establish a climb.</li><li>It is specifically designed for obstacle clearance during the climb from that particular approach.</li><li>To 100 ft above the touchdown zone elevation, and no lower unless the red terminating bars or red side row bars are also visible.</li></ol></details></div><div class="tasks-box"><div class="sc-title">Tasks</div><ul class="tasks"><li><label><input type="checkbox" data-task="d3-t0"> <span>Read IPH Chapter 4, missed approach section</span></label></li><li><label><input type="checkbox" data-task="d3-t1"> <span>Optional: fly 3-4 of your labeled approaches in MSFS with the chart in hand, including the missed approach</span></label></li><li><label><input type="checkbox" data-task="d3-t2"> <span>Daily question sets: 15-20 questions from your bank, approaches category</span></label></li></ul></div></div></section>
+<section id="quiz" class="quiz-section"><div class="container">
+  <div class="section-label">Week 14 · Knowledge check</div>
+  <h2>Knowledge Check</h2>
+  <p style="color: var(--muted); margin-bottom: 32px;">8 questions covering this week.</p>
+  <div id="quizContainer"></div>
+  <div class="score-bar" id="scoreBar"><div class="score-number" id="scoreNum"></div><div class="score-label" id="scoreLabel"></div>
+  <button class="restart-btn" onclick="restartQuiz()">Try Again</button></div>
+  <div class="pager"><a href="week-13-ifr-flight-plans-en-route.html"><small>&larr; Previous</small>Week 13: IFR Flight Plans and En Route Procedures</a><a class="next" href="week-15-emergencies-review.html"><small>Next &rarr;</small>Week 15: Emergencies and Full Content Review</a></div>
+</div></section>
+<script>
+const questions = [{"q": "What is the Minimum Safe Altitude (MSA) on an approach plate for?", "options": ["Normal descent planning", "Emergency obstacle clearance within 25 NM, with no guarantee of signal reception", "Guaranteed navigation reception", "Procedure turn altitude"], "correct": 1, "explanation": "MSA is emergency-only: 1,000 ft of obstacle clearance within 25 NM, but it does not assure navigation signal reception."}, {"q": "A procedure turn is NOT required when:", "options": ["Flying any ILS", "Being radar vectored to the final approach course or the plate says NoPT for your transition", "The weather is VFR", "Using GPS"], "correct": 1, "explanation": "Radar vectors to final or a NoPT transition remove the requirement."}, {"q": "What symbol marks the FAF on a non-precision approach?", "options": ["Lightning bolt", "Maltese cross", "Triangle", "Star"], "correct": 1, "explanation": "A Maltese cross marks the non-precision FAF. A lightning bolt marks glideslope intercept on a precision approach."}, {"q": "On a non-precision approach with a stepdown fix, you may descend to the MDA:", "options": ["As soon as you cross the FAF", "Only after crossing the stepdown fix", "Whenever you feel visually confident", "Only at the MAP"], "correct": 1, "explanation": "The stepdown fix altitude is your floor until you cross it."}, {"q": "Which approach types use a DA rather than an MDA?", "options": ["LOC-only and VOR", "LNAV and NDB", "ILS, LPV, and LNAV/VNAV", "All approaches"], "correct": 2, "explanation": "Approaches with vertical guidance use a DA. Those without (LOC-only, VOR, LNAV, LP, NDB) use an MDA."}, {"q": "A Category B aircraft circles at 125 knots. Which minimums apply?", "options": ["Category A", "Category B", "Category C", "Category D"], "correct": 2, "explanation": "125 knots exceeds Category B's 120-knot limit, so Category C circling minimums apply."}, {"q": "At DA you see only the approach lights, no red terminating bars. How low may you descend?", "options": ["To the runway", "To 100 ft above the touchdown zone elevation", "To the MDA", "You must go missed immediately"], "correct": 1, "explanation": "91.175(c): with only the approach lights, no lower than 100 ft above TDZE unless red terminating or side row bars are also visible."}, {"q": "What is the first action at the MAP without the required visual references?", "options": ["Call ATC", "Apply go-around power and establish a climb", "Turn toward the airport", "Level off at the MDA"], "correct": 1, "explanation": "Climb first, then follow the published missed approach procedure and communicate."}];
+let answers = new Array(questions.length).fill(null);
+let answered = 0;
+function buildQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  answers = new Array(questions.length).fill(null);
+  answered = 0;
+  document.getElementById('scoreBar').classList.remove('show');
+  questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card'; card.id = 'q' + qi;
+    const num = document.createElement('div'); num.className = 'q-number';
+    num.textContent = 'QUESTION ' + (qi + 1) + ' OF ' + questions.length; card.appendChild(num);
+    const text = document.createElement('div'); text.className = 'q-text'; text.textContent = q.q; card.appendChild(text);
+    const opts = document.createElement('div'); opts.className = 'q-options';
+    q.options.forEach((opt, oi) => {
+      const btn = document.createElement('div'); btn.className = 'q-option';
+      btn.innerHTML = '<div class="option-letter">' + 'ABCD'[oi] + '</div><div class="option-text">' + opt + '</div>';
+      btn.addEventListener('click', () => selectAnswer(qi, oi)); opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+    const exp = document.createElement('div'); exp.className = 'q-explanation';
+    exp.innerHTML = '<strong>Explanation:</strong> ' + q.explanation; card.appendChild(exp);
+    container.appendChild(card);
+  });
+}
+function selectAnswer(qi, oi) {
+  if (answers[qi] !== null) return;
+  answers[qi] = oi; answered++;
+  const card = document.getElementById('q' + qi);
+  card.querySelectorAll('.q-option').forEach((opt, idx) => {
+    opt.classList.add('disabled');
+    if (idx === questions[qi].correct) opt.classList.add('correct');
+    else if (idx === oi) opt.classList.add('wrong');
+  });
+  card.querySelector('.q-explanation').classList.add('show');
+  if (answered === questions.length) showScore();
+  updateProgress();
+}
+function showScore() {
+  const correct = answers.filter((a, i) => a === questions[i].correct).length;
+  const pct = Math.round((correct / questions.length) * 100);
+  document.getElementById('scoreNum').textContent = correct + '/' + questions.length;
+  document.getElementById('scoreLabel').textContent = pct + '% — ' + (pct >= 80 ? 'Solid grasp of this week.' : pct >= 60 ? 'Review the days above, then retry.' : 'Work back through the week before moving on.');
+  document.getElementById('scoreBar').classList.add('show');
+}
+function restartQuiz() { buildQuiz(); updateProgress(); }
+buildQuiz();
+
+const sectionIds = [...document.querySelectorAll('.lesson-section[id], .quiz-section[id]')].map(e => e.id);
+function updateProgress() {
+  const scrolled = sectionIds.filter(id => { const el = document.getElementById(id); return el && el.getBoundingClientRect().top < window.innerHeight * 0.6; }).length;
+  const total = (scrolled / sectionIds.length) * 0.7 + (answered / questions.length) * 0.3;
+  document.getElementById('progressFill').style.width = Math.round(total * 100) + '%';
+}
+const navItems = document.querySelectorAll('.nav-item');
+navItems.forEach(item => item.addEventListener('click', () => {
+  const t = document.getElementById(item.dataset.section); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}));
+window.addEventListener('scroll', () => {
+  let current = sectionIds[0];
+  sectionIds.forEach(id => { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top < 120) current = id; });
+  navItems.forEach(item => item.classList.toggle('active', item.dataset.section === current));
+  updateProgress();
+}, { passive: true });
+
+(function () {
+  const key = 'ifr-tasks-w14';
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(key) || '{}'); } catch (e) {}
+  document.querySelectorAll('input[data-task]').forEach(cb => {
+    cb.checked = !!saved[cb.dataset.task];
+    cb.addEventListener('change', () => {
+      saved[cb.dataset.task] = cb.checked;
+      try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+    });
+  });
+})();
+</script>
+</body>
+</html>

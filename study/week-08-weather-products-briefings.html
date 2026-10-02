@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>IFR Ground School — Week 8: Weather Products and Briefings, Month 2 Checkpoint</title>
+<style>
+  :root {
+    --bg: #0f1117; --surface: #1a1d27; --surface2: #22263a; --border: #2e3348;
+    --accent: #38bdf8; --accent-rgb: 56,189,248; --accent2: #818cf8; --accent2-rgb: 129,140,248; --ink: #04202b;
+    --hdr1: #0a0e1a; --hdr2: #1a2040; --nav-bg: rgba(15,17,23,0.95);
+    --green: #34d399; --red: #f87171; --yellow: #fbbf24;
+    --text: #e2e8f0; --muted: #8892aa; --heading: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 16px; }
+  a { color: var(--accent); }
+  .header { background: linear-gradient(135deg, var(--hdr1) 0%, var(--hdr2) 100%); border-bottom: 1px solid var(--border); padding: 24px 0; text-align: center; }
+  .module-tag { display: inline-block; background: var(--accent); color: var(--ink); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
+  .header h1 { font-size: 32px; font-weight: 800; color: var(--heading); margin-bottom: 8px; padding: 0 16px; }
+  .header p { color: var(--muted); font-size: 15px; padding: 0 16px; }
+  .progress-bar { width: 200px; height: 4px; background: var(--surface2); border-radius: 2px; margin: 16px auto 0; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.5s; }
+  .section-nav { position: sticky; top: 0; z-index: 100; background: var(--nav-bg); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .section-nav::-webkit-scrollbar { display: none; }
+  .nav-item { padding: 14px 16px; font-size: 13px; font-weight: 600; color: var(--muted); white-space: nowrap; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; }
+  .nav-item:hover { color: var(--text); }
+  .nav-item.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  .lesson-section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .lesson-section h2 { font-size: 26px; font-weight: 800; color: var(--heading); margin-bottom: 6px; }
+  .day-meta { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+  .lesson-section p { margin-bottom: 16px; }
+  .lesson-section p:last-child { margin-bottom: 0; }
+  .lesson-section h3 { font-size: 18px; font-weight: 700; color: var(--heading); margin: 28px 0 12px; }
+  .lesson-section h4 { font-size: 14px; font-weight: 700; color: var(--heading); margin: 20px 0 8px; }
+  .lesson-section ul, .lesson-section ol { margin: 0 0 16px 22px; }
+  .lesson-section li { margin-bottom: 6px; }
+  .lesson-section strong { color: var(--heading); }
+  .acs-ref { display: inline-block; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10.5px; font-weight: 700; color: var(--accent); background: rgba(var(--accent-rgb),0.12); border: 1px solid rgba(var(--accent-rgb),0.35); border-radius: 5px; padding: 1px 6px; margin: 0 2px; vertical-align: middle; white-space: nowrap; }
+  .acs-ref.risk { color: var(--yellow); background: rgba(251,191,36,0.12); border-color: rgba(251,191,36,0.35); }
+  .objectives { background: rgba(var(--accent-rgb),0.06); border: 1px solid rgba(var(--accent-rgb),0.25); border-radius: 12px; padding: 16px 20px 6px; margin-bottom: 24px; }
+  .obj-title, .sc-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .objectives ul { margin-bottom: 10px; }
+  .callout { border-radius: 10px; padding: 18px 22px; margin: 24px 0; border-left: 4px solid; font-size: 15px; }
+  .callout-key { background: rgba(var(--accent-rgb),0.08); border-color: var(--accent); }
+  .callout-warn { background: rgba(251,191,36,0.08); border-color: var(--yellow); }
+  .callout-tip { background: rgba(52,211,153,0.08); border-color: var(--green); }
+  .callout-danger { background: rgba(248,113,113,0.08); border-color: var(--red); }
+  .callout-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+  .callout-key .callout-title { color: var(--accent); } .callout-warn .callout-title { color: var(--yellow); }
+  .callout-tip .callout-title { color: var(--green); } .callout-danger .callout-title { color: var(--red); }
+  .data-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  .data-table th { background: var(--surface2); color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+  .data-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(127,127,127,0.08); }
+  .table-wrap { overflow-x: auto; }
+  .concept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  .concept-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+  .concept-card h4 { margin: 0 0 6px !important; }
+  .concept-card p { font-size: 14px; color: var(--muted); margin: 0 !important; }
+  .reg-list { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 8px 24px; margin: 20px 0; }
+  .reg-item { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .reg-item:last-child { border-bottom: none; }
+  .reg-letter { background: var(--accent); color: var(--ink); min-width: 26px; height: 26px; padding: 0 6px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; margin-top: 2px; }
+  .reg-text { flex: 1; font-size: 15px; }
+  .scenario { background: linear-gradient(135deg, rgba(var(--accent-rgb),0.08), rgba(var(--accent2-rgb),0.05)); border: 1px solid rgba(var(--accent-rgb),0.25); border-radius: 14px; padding: 26px 28px; margin: 28px 0; }
+  .scenario-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  .scenario h4 { font-size: 16px !important; margin: 0 0 10px !important; }
+  .scenario p { font-size: 15px; }
+  .scenario .payoff { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--border); font-size: 14.5px; }
+  .steps { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; margin: 18px 0; }
+  .step-item { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 14px; }
+  .step-item:last-child { margin-bottom: 0; }
+  .step-num { background: var(--accent); color: var(--ink); min-width: 30px; height: 26px; padding: 0 8px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 11.5px; font-weight: 800; margin-top: 2px; white-space: nowrap; }
+  .step-text { flex: 1; font-size: 14.5px; }
+  .selfcheck, .tasks-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px 16px; margin: 28px 0 0; }
+  .tasks-box { margin-top: 16px; }
+  .selfcheck ol { margin: 0 0 14px 20px; }
+  details { margin-top: 4px; }
+  summary { cursor: pointer; font-weight: 700; font-size: 14px; color: var(--accent); padding: 6px 0; }
+  details ol { margin: 10px 0 4px 20px; color: var(--muted); font-size: 14.5px; }
+  ul.tasks { list-style: none; margin: 0 !important; }
+  ul.tasks li { margin-bottom: 8px; font-size: 14.5px; }
+  ul.tasks label { cursor: pointer; display: flex; gap: 10px; align-items: flex-start; }
+  ul.tasks input { margin-top: 6px; accent-color: var(--accent); }
+  ul.tasks input:checked + span { color: var(--muted); text-decoration: line-through; }
+  .takeaways { background: linear-gradient(135deg, rgba(var(--accent-rgb),0.08) 0%, rgba(var(--accent2-rgb),0.08) 100%); border: 1px solid rgba(var(--accent-rgb),0.25); border-radius: 14px; padding: 32px; margin: 40px 0 0; }
+  .takeaways h3 { margin: 0 0 20px !important; }
+  .takeaway-item { display: flex; gap: 12px; margin-bottom: 14px; font-size: 15px; align-items: flex-start; }
+  .takeaway-dot { width: 8px; height: 8px; min-width: 8px; background: var(--accent); border-radius: 50%; margin-top: 9px; }
+  .quiz-section { padding: 56px 0; }
+  .quiz-section h2 { font-size: 26px; font-weight: 800; color: var(--heading); margin-bottom: 6px; }
+  .question-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin-bottom: 20px; }
+  .q-number { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: var(--accent); margin-bottom: 10px; }
+  .q-text { font-size: 16px; font-weight: 600; color: var(--heading); margin-bottom: 20px; line-height: 1.5; }
+  .q-options { display: flex; flex-direction: column; gap: 10px; }
+  .q-option { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: var(--surface2); border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 15px; }
+  .q-option:hover { border-color: var(--accent); background: rgba(var(--accent-rgb),0.06); }
+  .q-option.correct { border-color: var(--green); background: rgba(52,211,153,0.08); }
+  .q-option.wrong { border-color: var(--red); background: rgba(248,113,113,0.08); }
+  .q-option.disabled { pointer-events: none; }
+  .option-letter { width: 26px; height: 26px; min-width: 26px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--muted); }
+  .q-option.correct .option-letter { background: var(--green); color: #000; }
+  .q-option.wrong .option-letter { background: var(--red); color: #fff; }
+  .option-text { flex: 1; line-height: 1.5; }
+  .q-explanation { margin-top: 16px; padding: 14px 16px; background: rgba(var(--accent-rgb),0.07); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; font-size: 14px; display: none; line-height: 1.6; }
+  .q-explanation.show { display: block; }
+  .q-explanation strong { color: var(--accent); }
+  .score-bar { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-top: 24px; text-align: center; display: none; }
+  .score-bar.show { display: block; }
+  .score-number { font-size: 48px; font-weight: 800; color: var(--accent); }
+  .score-label { font-size: 15px; color: var(--muted); margin-top: 4px; }
+  .restart-btn { margin-top: 16px; padding: 10px 24px; background: var(--accent); color: var(--ink); border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; }
+  .pager { display: flex; justify-content: space-between; gap: 16px; padding: 28px 0 64px; flex-wrap: wrap; }
+  .pager a { flex: 1; min-width: 220px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; text-decoration: none; color: var(--text); }
+  .pager a:hover { border-color: var(--accent); }
+  .pager small { display: block; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+  .pager .next { text-align: right; }
+  .topbar { padding-top: 16px; }
+  .topbar a { font-size: 14px; font-weight: 600; text-decoration: none; }
+  @media (max-width: 640px) { .data-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; } .concept-grid { grid-template-columns: 1fr; } .header h1 { font-size: 24px; } .scenario { padding: 20px; } }
+</style>
+<script>(function(){
+  var THEMES = [{"id": "default", "name": "Default", "swatch": "linear-gradient(135deg,#4f8ef7 50%,#38bdf8 50%)", "vars": null}, {"id": "ocean", "name": "Ocean", "swatch": "#38bdf8", "vars": {"--accent": "#38bdf8", "--accent-rgb": "56,189,248", "--accent2": "#818cf8", "--accent2-rgb": "129,140,248", "--ink": "#04202b"}}, {"id": "forest", "name": "Forest", "swatch": "#34d399", "vars": {"--accent": "#34d399", "--accent-rgb": "52,211,153", "--accent2": "#2dd4bf", "--accent2-rgb": "45,212,191", "--ink": "#04221a"}}, {"id": "sunset", "name": "Sunset", "swatch": "#fb923c", "vars": {"--accent": "#fb923c", "--accent-rgb": "251,146,60", "--accent2": "#f87171", "--accent2-rgb": "248,113,113", "--ink": "#2b1304"}}, {"id": "violet", "name": "Violet", "swatch": "#a78bfa", "vars": {"--accent": "#a78bfa", "--accent-rgb": "167,139,250", "--accent2": "#f472b6", "--accent2-rgb": "244,114,182", "--ink": "#1b1033"}}, {"id": "daylight", "name": "Daylight", "swatch": "linear-gradient(135deg,#ffffff 50%,#2563eb 50%)", "vars": {"--bg": "#f6f7fb", "--surface": "#ffffff", "--surface2": "#eef1f7", "--border": "#d5dae6", "--text": "#1f2937", "--muted": "#5b6475", "--heading": "#0f172a", "--hdr1": "#e8eefc", "--hdr2": "#dbe4fb", "--nav-bg": "rgba(246,247,251,0.95)", "--accent": "#2563eb", "--accent-rgb": "37,99,235", "--accent2": "#7c3aed", "--accent2-rgb": "124,58,237", "--ink": "#ffffff", "--green": "#059669", "--red": "#dc2626", "--yellow": "#b45309"}}];
+  window.__ifrThemes = THEMES;
+  window.__ifrApplyTheme = function(id){
+    var root = document.documentElement;
+    THEMES.forEach(function(t){ if (t.vars) Object.keys(t.vars).forEach(function(k){ root.style.removeProperty(k); }); });
+    var t = THEMES.filter(function(x){ return x.id === id; })[0];
+    if (t && t.vars) Object.keys(t.vars).forEach(function(k){ root.style.setProperty(k, t.vars[k]); });
+  };
+  var saved = 'default';
+  try { saved = localStorage.getItem('ifr-theme') || 'default'; } catch (e) {}
+  window.__ifrApplyTheme(saved);
+})();</script>
+</head>
+<body>
+<div class="header">
+  <div class="module-tag">Week 8 · Month 2</div>
+  <h1>Weather Products and Briefings, Month 2 Checkpoint</h1>
+  <p>METAR and TAF · Advisories · PIREPs · Forecast products · Month 2 checkpoint</p>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+<div class="container topbar"><a href="ifr.html">&larr; Course index</a></div>
+<nav class="section-nav"><div class="nav-item active" data-section="d1">Day 1: METAR & TAF</div><div class="nav-item" data-section="d2">Day 2: Advisories</div><div class="nav-item" data-section="d3">Day 3: Charts & Checkpoint</div><div class="nav-item" data-section="quiz">Quiz</div></nav>
+<section class="lesson-section" style="padding-bottom: 8px; border-bottom: none;"><div class="container">
+  <p style="color: var(--muted); font-size: 14px;"><strong>Month 2: Weather.</strong> Part of the 17-week IRA knowledge test study plan.
+  Regulatory and procedural content was checked against eCFR, AIM, and FAA handbook text when this plan was written —
+  cross-check against the editions current when you sit the test.</p>
+</div></section>
+<section id="d1" class="lesson-section"><div class="container"><div class="section-label">Day 1</div><h2>METAR and TAF</h2><div class="day-meta">Topics: AWH Chapters 24–25 · About 70 min</div><div class="objectives"><div class="obj-title">Learning objectives</div><ul><li>Decode a METAR and a TAF without reference material</li><li>Identify the ceiling layer in a METAR/TAF sky condition group</li></ul></div><h3>📋 METAR: a snapshot <span class="acs-ref">IR.I.B.K2a</span></h3><p>A METAR reports <em>actual</em> conditions at the time of observation (hourly, plus a SPECI whenever conditions change significantly). Elements, in order: station, date/time (UTC), wind, visibility, weather phenomena, sky condition, temperature/dew point, altimeter setting, and remarks.</p><div class="scenario"><div class="scenario-label">📋 Worked example</div><h4>Decoding a METAR</h4><p><code>KAUS 021653Z 14012G20KT 8SM BKN035 OVC060 27/19 A2998 RMK AO2 SLP151</code></p><table class="data-table"><thead><tr><th>Group</th><th>Meaning</th></tr></thead><tbody><tr><td>KAUS 021653Z</td><td>Austin-Bergstrom, day 02, 1653 UTC</td></tr><tr><td>14012G20KT</td><td>Wind from 140° at 12 knots, gusting 20</td></tr><tr><td>8SM</td><td>Visibility 8 statute miles</td></tr><tr><td>BKN035 OVC060</td><td>Broken at 3,500 ft AGL, overcast at 6,000 ft AGL. <strong>Ceiling = 3,500 ft</strong> (lowest broken or overcast layer)</td></tr><tr><td>27/19</td><td>Temperature 27°C, dew point 19°C</td></tr><tr><td>A2998</td><td>Altimeter 29.98 in. Hg</td></tr></tbody></table><div class="payoff"><strong>Ceiling rule:</strong> the ceiling is the lowest <em>broken</em> or <em>overcast</em> layer, or vertical visibility (VV) into an obscuration. FEW and SCT layers never make a ceiling.</div></div><h3>🚦 Flight categories</h3><table class="data-table"><thead><tr><th>Category</th><th>Ceiling</th><th>and/or</th><th>Visibility</th></tr></thead><tbody><tr><td><strong>VFR</strong></td><td>Greater than 3,000 ft</td><td>and</td><td>Greater than 5 SM</td></tr><tr><td><strong>MVFR</strong></td><td>1,000 to 3,000 ft</td><td>and/or</td><td>3 to 5 SM</td></tr><tr><td><strong>IFR</strong></td><td>500 to below 1,000 ft</td><td>and/or</td><td>1 to below 3 SM</td></tr><tr><td><strong>LIFR</strong></td><td>Below 500 ft</td><td>and/or</td><td>Below 1 SM</td></tr></tbody></table><p>The <em>worse</em> of ceiling and visibility sets the category.</p><h3>🔮 TAF: a forecast <span class="acs-ref">IR.I.B.K2c</span></h3><p>A TAF forecasts conditions at an airport for 24 or 30 hours (issued four times a day), using the same coding as a METAR for the base forecast and then modifying groups for changes:</p><table class="data-table"><thead><tr><th>Group</th><th>Meaning</th></tr></thead><tbody><tr><td><strong>FM</strong> (from)</td><td>A complete, rapid change at a stated time. Everything before it is superseded.</td></tr><tr><td><strong>BECMG</strong> (becoming)</td><td>A gradual, lasting change over a stated time range.</td></tr><tr><td><strong>TEMPO</strong></td><td>Temporary fluctuations expected for less than an hour at a time, and covering less than half of the stated period.</td></tr><tr><td><strong>PROB30</strong></td><td>A 30% chance of the stated conditions during the stated period. (PROB40 appears in some international TAFs.)</td></tr></tbody></table><p><code>P6SM</code> in a TAF means visibility <em>greater than</em> 6 statute miles.</p><div class="scenario"><div class="scenario-label">🔮 Worked example</div><h4>TEMPO and the alternate decision</h4><p><code>FM021900 21015G25KT P6SM SCT040 TEMPO 0219/0221 4SM -RA BKN015</code></p><p>From 1900Z the base forecast is wind 210° at 15 gusting 25, visibility greater than 6 SM, scattered at 4,000. Between 1900Z and 2100Z, temporary periods of 4 SM in light rain with a broken layer at 1,500 ft.</p><p>Your ETA is 2030Z, so the 1-2-3 window runs from 1930Z to 2130Z.</p><div class="payoff">The TEMPO group sits inside your window, and its 1,500-ft ceiling is <strong>below 2,000 ft</strong>, so an alternate is required even though the base forecast looks fine. Visibility (4 SM) meets the 3 SM requirement; the ceiling is what trips the rule. Any qualifying group inside the window counts, not just the prevailing forecast.</div></div><div class="selfcheck"><div class="sc-title">Self-check</div><ol><li>In sky condition coding, which layer defines the ceiling?</li><li>What is the difference between a TEMPO and a BECMG group in a TAF?</li><li>For the 1-2-3 rule, does a TEMPO group inside your ETA window count toward the alternate decision?</li></ol><details><summary>Show answers</summary><ol><li>The lowest broken or overcast layer (or vertical visibility into an obscuration). Scattered and few layers do not count.</li><li>TEMPO is a temporary fluctuation expected for less than an hour at a time within a stated period; BECMG is a gradual, lasting change over a stated time range.</li><li>Yes. Any qualifying forecast group inside the window counts, not just the prevailing (base) forecast.</li></ol></details></div><div class="tasks-box"><div class="sc-title">Tasks</div><ul class="tasks"><li><label><input type="checkbox" data-task="d1-t0"> <span>Read AWH Chapter 24: Observations (METAR)</span></label></li><li><label><input type="checkbox" data-task="d1-t1"> <span>Read AWH Chapter 25 (or the relevant TAF section) for forecast coding</span></label></li><li><label><input type="checkbox" data-task="d1-t2"> <span>Decode 10 real METARs and 10 real TAFs cold, with no reference material</span></label></li></ul></div></div></section><section id="d2" class="lesson-section"><div class="container"><div class="section-label">Day 2</div><h2>AIRMET, SIGMET, and PIREP</h2><div class="day-meta">Topics: AWH Chapter 26 · About 70 min</div><div class="objectives"><div class="obj-title">Learning objectives</div><ul><li>State what each AIRMET and SIGMET category covers and how long each is valid</li><li>Explain how a PIREP fits into the weather picture</li></ul></div><h3>⚠️ AIRMETs: Sierra, Tango, Zulu <span class="acs-ref">IR.I.B.K2g</span></h3><p>AIRMETs cover conditions significant to smaller GA aircraft but less severe than a SIGMET:</p><table class="data-table"><thead><tr><th>AIRMET</th><th>Covers</th></tr></thead><tbody><tr><td><strong>Sierra</strong></td><td>IFR conditions (widespread ceilings below 1,000 ft and/or visibility below 3 SM) and mountain obscuration</td></tr><tr><td><strong>Tango</strong></td><td>Moderate turbulence, sustained surface winds of 30 knots or more, and non-convective low-level wind shear</td></tr><tr><td><strong>Zulu</strong></td><td>Moderate icing, with freezing-level information</td></tr></tbody></table><div class="callout callout-key"><div class="callout-title">G-AIRMET replaced the text bulletins</div>As of January 27, 2025, the textual Sierra/Tango/Zulu bulletins were retired for the contiguous US. The same hazard categories now come as the graphical <strong>G-AIRMET</strong> (forecast snapshots at roughly 3-hour steps out to 12 hours). Alaska and Hawaii still issue text AIRMETs.</div><h3>🚨 SIGMETs, Convective SIGMETs, and CWAs</h3><table class="data-table"><thead><tr><th>Product</th><th>Covers</th><th>Valid</th></tr></thead><tbody><tr><td><strong>SIGMET</strong></td><td>Non-convective hazards significant to <em>all</em> aircraft: severe icing, severe or extreme turbulence, dust or sandstorms, volcanic ash</td><td>4 hours (6 for a hurricane)</td></tr><tr><td><strong>Convective SIGMET</strong></td><td>Thunderstorm hazards: severe or embedded thunderstorms, lines of thunderstorms, hail, tornadoes</td><td>2 hours; issued hourly at 55 minutes past the hour</td></tr><tr><td><strong>CWA</strong> (Center Weather Advisory)</td><td>A short-fuse, local product from a Center Weather Service Unit, supplementing or refining an existing advisory, or covering something not yet in one</td><td>Short (about 2 hours)</td></tr></tbody></table><h3>🛩️ PIREPs <span class="acs-ref">IR.I.B.K2a</span></h3><p>A pilot report is the one weather product built entirely from what someone actually experienced in the air, minutes ago, rather than a forecast or a ground sensor. A routine PIREP starts with <strong>UA</strong>; an <strong>urgent</strong> one (severe turbulence, severe icing, wind shear, hail, tornado or funnel cloud, volcanic ash, or any other hazard) starts with <strong>UUA</strong>. Filing your own PIREPs is part of being a good IFR citizen: forecasters cannot observe cloud tops, icing, or ride quality directly.</p><table class="data-table"><thead><tr><th>Field</th><th>Meaning</th></tr></thead><tbody><tr><td>/OV</td><td>Location</td></tr><tr><td>/TM</td><td>Time (UTC)</td></tr><tr><td>/FL</td><td>Altitude</td></tr><tr><td>/TP</td><td>Aircraft type</td></tr><tr><td>/SK</td><td>Sky cover</td></tr><tr><td>/WX</td><td>Weather and visibility</td></tr><tr><td>/TA</td><td>Temperature</td></tr><tr><td>/WV</td><td>Wind</td></tr><tr><td>/TB</td><td>Turbulence</td></tr><tr><td>/IC</td><td>Icing</td></tr><tr><td>/RM</td><td>Remarks</td></tr></tbody></table><div class="scenario"><div class="scenario-label">🧭 Worked example</div><h4>Tango and a Convective SIGMET on the same route</h4><p>A G-AIRMET Tango covers your route for moderate turbulence, and a Convective SIGMET was just issued for an embedded thunderstorm cluster along the same line.</p><div class="payoff">The AIRMET says expect a bumpy ride generally. The Convective SIGMET is the <strong>more urgent, more specific, shorter-fuse</strong> warning about actual thunderstorms, and it should carry more weight in an immediate go/no-go or reroute decision. <span class="acs-ref risk">IR.I.B.R2b</span> covers the limits of these products.</div></div><div class="selfcheck"><div class="sc-title">Self-check</div><ol><li>What does AIRMET Zulu cover?</li><li>How long is a standard (non-hurricane) SIGMET valid, versus a Convective SIGMET?</li><li>What changed about how AIRMETs are issued in the contiguous US as of January 2025?</li><li>What prefix marks an urgent PIREP?</li></ol><details><summary>Show answers</summary><ol><li>Moderate icing conditions, with freezing-level information.</li><li>A SIGMET is valid 4 hours (6 for a hurricane); a Convective SIGMET is valid 2 hours and issued hourly at 55 minutes past the hour.</li><li>The text Sierra/Tango/Zulu bulletins were retired and replaced by the graphical G-AIRMET; the same hazard categories are shown graphically.</li><li>UUA (a routine PIREP uses UA).</li></ol></details></div><div class="tasks-box"><div class="sc-title">Tasks</div><ul class="tasks"><li><label><input type="checkbox" data-task="d2-t0"> <span>Read AWH Chapter 26: Advisories</span></label></li><li><label><input type="checkbox" data-task="d2-t1"> <span>Know the difference between an AIRMET, SIGMET, Convective SIGMET, and CWA: who issues each, what triggers it, how long it is valid</span></label></li></ul></div></div></section><section id="d3" class="lesson-section"><div class="container"><div class="section-label">Day 3</div><h2>Forecasts, Charts, and Briefings: Month 2 Checkpoint</h2><div class="day-meta">Topics: AWH Chapters 27–28, checkpoint · About 90 min</div><div class="objectives"><div class="obj-title">Learning objectives</div><ul><li>Identify the major forecast and analysis products used in preflight planning</li><li>Consolidate Month 2 (weather) before moving to systems and navigation</li></ul></div><h3>🗺️ Products the ACS names <span class="acs-ref">IR.I.B.K2b</span> <span class="acs-ref">IR.I.B.K2d</span> <span class="acs-ref">IR.I.B.K2e</span> <span class="acs-ref">IR.I.B.K2f</span></h3><div class="concept-grid"><div class="concept-card"><h4>Surface analysis chart</h4><p><em>Current</em> fronts, pressure centers, and station observations. An analysis, not a forecast.</p></div><div class="concept-card"><h4>Ceiling and visibility chart (CVA)</h4><p>A quick look at where it is IFR, MVFR, and VFR right now.</p></div><div class="concept-card"><h4>Graphical Forecasts for Aviation (GFA)</h4><p>The graphical forecast tool: clouds, visibility, icing, turbulence, winds, and more, as time-stepped maps.</p></div><div class="concept-card"><h4>Winds and temperatures aloft (FB)</h4><p>Forecast wind and temperature at set altitudes. Coded <code>DDff±TT</code>: direction in tens of degrees, speed in knots, temperature in °C. <code>9900</code> means light and variable. Speeds of 100 knots or more add 50 to the direction code (<code>7715</code> is 270° at 115 knots).</p></div><div class="concept-card"><h4>Convective outlook (AC)</h4><p>Issued by the Storm Prediction Center: where thunderstorms are likely, and how severe, for the coming days.</p></div><div class="concept-card"><h4>Area Forecast Discussion (AFD)</h4><p>A forecaster's plain-language explanation of their reasoning and confidence. Genuinely useful reading, not just data.</p></div></div><div class="callout callout-tip"><div class="callout-title">Older products you may still see</div>Prognostic (&ldquo;prog&rdquo;) charts, the weather depiction chart, and the radar summary chart have largely been replaced by GFA and the ceiling and visibility chart, but they still turn up in test questions and older study material. Recognize what each one shows.</div><h3>📝 Month 2 reference sheet</h3><table class="data-table"><thead><tr><th>Topic</th><th>Remember</th></tr></thead><tbody><tr><td>Standard atmosphere</td><td>29.92 in. Hg / 1013.25 mb, 15°C / 59°F, lapse rate 2°C (3.5°F) per 1,000 ft</td></tr><tr><td>Fronts</td><td>Cold = narrow, intense, fast. Warm = wide, steady, slow. Occluded = a cold front catches a warm front.</td></tr><tr><td>Stability</td><td>Unstable = cumuliform, showery, turbulent. Stable = stratiform, steady, smoother but poorer visibility.</td></tr><tr><td>Icing</td><td>Clear = large droplets, smooth, most hazardous. Rime = small droplets, stratiform, rough and opaque. Mixed = both.</td></tr><tr><td>Thunderstorms</td><td>Cumulus (updrafts only), Mature (updrafts and downdrafts, most hazardous), Dissipating (downdrafts, still dangerous). Stay at least 20 NM from severe or intense storms (AIM).</td></tr><tr><td>AIRMET</td><td>Sierra (IFR / mountain obscuration), Tango (turbulence / 30-kt winds / shear), Zulu (icing). Graphical G-AIRMET in the contiguous US since January 2025.</td></tr><tr><td>SIGMET</td><td>4 hours (6 for a hurricane), non-convective hazards for all aircraft. Convective SIGMET: 2 hours, hourly at :55, thunderstorm hazards.</td></tr><tr><td>Ceiling</td><td>Lowest broken or overcast layer (or vertical visibility into an obscuration).</td></tr></tbody></table><div class="selfcheck"><div class="sc-title">Self-check</div><ol><li>What is an Area Forecast Discussion, and why is it worth reading beyond the coded products?</li><li>Which chart shows current fronts, pressure centers, and station observations, as opposed to a forecast?</li><li>Which is more hazardous, rime ice or clear ice, and why?</li><li>What thunderstorm stage produces the most severe turbulence and microburst potential?</li><li>How long is a Convective SIGMET valid, and how often is it issued?</li></ol><details><summary>Show answers</summary><ol><li>It is the forecaster's own plain-language explanation of their reasoning and confidence, giving context the coded METAR/TAF/AIRMET products do not.</li><li>The surface analysis chart.</li><li>Clear ice; it is smooth, harder to remove, and harder to see, forming from larger supercooled droplets that spread before freezing.</li><li>The mature stage, where updrafts and downdrafts exist side by side.</li><li>Valid 2 hours, issued hourly at 55 minutes past the hour.</li></ol></details></div><div class="tasks-box"><div class="sc-title">Tasks</div><ul class="tasks"><li><label><input type="checkbox" data-task="d3-t0"> <span>Read AWH Chapters 27-28: Forecasts, Aviation Weather Tools</span></label></li><li><label><input type="checkbox" data-task="d3-t1"> <span>CHECKPOINT: full 60-question practice exam weighted toward weather</span></label></li><li><label><input type="checkbox" data-task="d3-t2"> <span>Review your Month 2 missed-question log before starting Month 3 (systems and navigation)</span></label></li></ul></div></div></section>
+<section id="quiz" class="quiz-section"><div class="container">
+  <div class="section-label">Week 8 · Knowledge check</div>
+  <h2>Knowledge Check</h2>
+  <p style="color: var(--muted); margin-bottom: 32px;">7 questions covering this week.</p>
+  <div id="quizContainer"></div>
+  <div class="score-bar" id="scoreBar"><div class="score-number" id="scoreNum"></div><div class="score-label" id="scoreLabel"></div>
+  <button class="restart-btn" onclick="restartQuiz()">Try Again</button></div>
+  <div class="pager"><a href="week-07-weather-hazards.html"><small>&larr; Previous</small>Week 7: Aviation Weather Hazards</a><a class="next" href="week-09-flight-instruments-systems.html"><small>Next &rarr;</small>Week 9: Flight Instruments and Systems</a></div>
+</div></section>
+<script>
+const questions = [{"q": "A METAR reads BKN008 OVC020. What is the ceiling?", "options": ["800 ft", "2,000 ft", "Both layers, so 800 and 2,000 ft", "There is no ceiling"], "correct": 0, "explanation": "The ceiling is the lowest broken or overcast layer: BKN008 gives 800 ft."}, {"q": "Which forecast group describes a gradual, lasting change over a stated time range?", "options": ["FM", "TEMPO", "BECMG", "PROB30"], "correct": 2, "explanation": "BECMG (becoming) is gradual and lasting. FM is a complete, rapid change at a stated time; TEMPO is temporary."}, {"q": "Your ETA is 2030Z and the TAF shows a TEMPO 1900Z to 2100Z with a 1,500-ft broken ceiling. Under the 1-2-3 rule:", "options": ["The TEMPO group is ignored", "An alternate is required, because a forecast ceiling below 2,000 ft falls inside your window", "An alternate is required only if visibility is also below 3 SM", "An alternate is required only for the base forecast"], "correct": 1, "explanation": "Any qualifying group inside the window (1 hour before to 1 hour after ETA) counts. A 1,500-ft ceiling is below the 2,000-ft requirement."}, {"q": "AIRMET Tango covers:", "options": ["Moderate icing", "IFR conditions and mountain obscuration", "Moderate turbulence, sustained surface winds of 30 knots or more, and low-level wind shear", "Severe turbulence"], "correct": 2, "explanation": "Tango is turbulence, strong sustained surface wind, and low-level wind shear. Sierra is IFR/mountain obscuration; Zulu is icing."}, {"q": "How long is a Convective SIGMET valid?", "options": ["1 hour", "2 hours", "4 hours", "6 hours"], "correct": 1, "explanation": "2 hours, issued hourly at 55 minutes past the hour. A standard SIGMET is valid 4 hours (6 for a hurricane)."}, {"q": "Which prefix marks an urgent pilot report?", "options": ["UA", "UUA", "PIREP-U", "URG"], "correct": 1, "explanation": "UUA marks an urgent PIREP (severe turbulence, severe icing, wind shear, hail, and similar). Routine reports use UA."}, {"q": "Which chart shows current fronts, pressure centers, and station observations?", "options": ["Prognostic chart", "Surface analysis chart", "Winds aloft forecast", "Convective outlook"], "correct": 1, "explanation": "The surface analysis chart is an analysis of current conditions. The others are forecasts."}];
+let answers = new Array(questions.length).fill(null);
+let answered = 0;
+function buildQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  answers = new Array(questions.length).fill(null);
+  answered = 0;
+  document.getElementById('scoreBar').classList.remove('show');
+  questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card'; card.id = 'q' + qi;
+    const num = document.createElement('div'); num.className = 'q-number';
+    num.textContent = 'QUESTION ' + (qi + 1) + ' OF ' + questions.length; card.appendChild(num);
+    const text = document.createElement('div'); text.className = 'q-text'; text.textContent = q.q; card.appendChild(text);
+    const opts = document.createElement('div'); opts.className = 'q-options';
+    q.options.forEach((opt, oi) => {
+      const btn = document.createElement('div'); btn.className = 'q-option';
+      btn.innerHTML = '<div class="option-letter">' + 'ABCD'[oi] + '</div><div class="option-text">' + opt + '</div>';
+      btn.addEventListener('click', () => selectAnswer(qi, oi)); opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+    const exp = document.createElement('div'); exp.className = 'q-explanation';
+    exp.innerHTML = '<strong>Explanation:</strong> ' + q.explanation; card.appendChild(exp);
+    container.appendChild(card);
+  });
+}
+function selectAnswer(qi, oi) {
+  if (answers[qi] !== null) return;
+  answers[qi] = oi; answered++;
+  const card = document.getElementById('q' + qi);
+  card.querySelectorAll('.q-option').forEach((opt, idx) => {
+    opt.classList.add('disabled');
+    if (idx === questions[qi].correct) opt.classList.add('correct');
+    else if (idx === oi) opt.classList.add('wrong');
+  });
+  card.querySelector('.q-explanation').classList.add('show');
+  if (answered === questions.length) showScore();
+  updateProgress();
+}
+function showScore() {
+  const correct = answers.filter((a, i) => a === questions[i].correct).length;
+  const pct = Math.round((correct / questions.length) * 100);
+  document.getElementById('scoreNum').textContent = correct + '/' + questions.length;
+  document.getElementById('scoreLabel').textContent = pct + '% — ' + (pct >= 80 ? 'Solid grasp of this week.' : pct >= 60 ? 'Review the days above, then retry.' : 'Work back through the week before moving on.');
+  document.getElementById('scoreBar').classList.add('show');
+}
+function restartQuiz() { buildQuiz(); updateProgress(); }
+buildQuiz();
+
+const sectionIds = [...document.querySelectorAll('.lesson-section[id], .quiz-section[id]')].map(e => e.id);
+function updateProgress() {
+  const scrolled = sectionIds.filter(id => { const el = document.getElementById(id); return el && el.getBoundingClientRect().top < window.innerHeight * 0.6; }).length;
+  const total = (scrolled / sectionIds.length) * 0.7 + (answered / questions.length) * 0.3;
+  document.getElementById('progressFill').style.width = Math.round(total * 100) + '%';
+}
+const navItems = document.querySelectorAll('.nav-item');
+navItems.forEach(item => item.addEventListener('click', () => {
+  const t = document.getElementById(item.dataset.section); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}));
+window.addEventListener('scroll', () => {
+  let current = sectionIds[0];
+  sectionIds.forEach(id => { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top < 120) current = id; });
+  navItems.forEach(item => item.classList.toggle('active', item.dataset.section === current));
+  updateProgress();
+}, { passive: true });
+
+(function () {
+  const key = 'ifr-tasks-w8';
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(key) || '{}'); } catch (e) {}
+  document.querySelectorAll('input[data-task]').forEach(cb => {
+    cb.checked = !!saved[cb.dataset.task];
+    cb.addEventListener('change', () => {
+      saved[cb.dataset.task] = cb.checked;
+      try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+    });
+  });
+})();
+</script>
+</body>
+</html>
