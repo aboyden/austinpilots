@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>IFR Ground School — Study</title>
+<style>
+  :root { --bg:#0f1117; --surface:#1a1d27; --surface2:#22263a; --border:#2e3348; --accent:#4f8ef7; --accent-rgb:79,142,247; --accent2:#7c6af7; --accent2-rgb:124,106,247; --ink:#ffffff;
+          --green:#34d399; --red:#f87171; --yellow:#fbbf24; --text:#e2e8f0; --muted:#8892aa; --heading:#ffffff; --hdr1:#0a0e1a; --hdr2:#1a2040; --nav-bg:rgba(15,17,23,.95); }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+  a { color: var(--accent); }
+  .header { background:linear-gradient(135deg,var(--hdr1) 0%,var(--hdr2) 100%); border-bottom:1px solid var(--border); padding:48px 24px 36px; text-align:center; }
+  .tag { display:inline-block; background:var(--accent); color:var(--ink); font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; padding:4px 12px; border-radius:20px; margin-bottom:14px; }
+  .header h1 { font-size:32px; font-weight:800; color:var(--heading); margin-bottom:10px; }
+  .header p { color:var(--muted); font-size:15px; max-width:660px; margin:0 auto; }
+  .container { max-width:880px; margin:0 auto; padding:28px 24px 80px; }
+  .themebar { display:flex; align-items:center; gap:14px; flex-wrap:wrap; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:12px 16px; }
+  .themelabel { font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); }
+  .themes { display:flex; gap:8px; flex-wrap:wrap; }
+  .theme-btn { display:inline-flex; align-items:center; gap:8px; background:var(--surface2); color:var(--text); border:1.5px solid var(--border); border-radius:999px; padding:6px 14px 6px 8px; font:inherit; font-size:13px; font-weight:600; cursor:pointer; }
+  .theme-btn:hover { border-color:var(--accent); }
+  .theme-btn[aria-pressed="true"] { border-color:var(--accent); background:rgba(var(--accent-rgb),.14); }
+  .swatch { width:18px; height:18px; border-radius:50%; border:1px solid rgba(127,127,127,.5); display:inline-block; }
+  h2.month { font-size:15px; font-weight:800; letter-spacing:.5px; color:var(--heading); margin:36px 0 12px; }
+  .weeks { display:flex; flex-direction:column; gap:10px; }
+  .week { display:flex; align-items:center; gap:16px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:14px 18px; text-decoration:none; color:var(--text); flex-wrap:wrap; }
+  .week.built { border-color:rgba(var(--accent-rgb),.4); }
+  .week.built:hover { border-color:var(--accent); }
+  .wn { width:36px; height:36px; min-width:36px; border-radius:10px; background:var(--surface2); display:flex; align-items:center; justify-content:center; font-weight:800; font-family:ui-monospace,Menlo,monospace; color:var(--muted); }
+  .week.built .wn { background:rgba(var(--accent-rgb),.14); color:var(--accent); }
+  .wt { flex:1; font-weight:600; min-width:200px; }
+  .interim { display:block; font-weight:400; font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .badge { font-size:10.5px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; padding:3px 10px; border-radius:999px; color:var(--muted); background:rgba(127,127,127,.1); border:1px solid var(--border); }
+  .badge.ok { color:var(--accent); background:rgba(var(--accent-rgb),.12); border-color:rgba(var(--accent-rgb),.4); }
+  .note { background:rgba(var(--accent-rgb),.06); border:1px solid rgba(var(--accent-rgb),.25); border-radius:10px; padding:14px 18px; font-size:13.5px; color:var(--muted); margin-top:32px; }
+</style>
+<script>(function(){
+  var THEMES = [{"id": "default", "name": "Default", "swatch": "linear-gradient(135deg,#4f8ef7 50%,#38bdf8 50%)", "vars": null}, {"id": "ocean", "name": "Ocean", "swatch": "#38bdf8", "vars": {"--accent": "#38bdf8", "--accent-rgb": "56,189,248", "--accent2": "#818cf8", "--accent2-rgb": "129,140,248", "--ink": "#04202b"}}, {"id": "forest", "name": "Forest", "swatch": "#34d399", "vars": {"--accent": "#34d399", "--accent-rgb": "52,211,153", "--accent2": "#2dd4bf", "--accent2-rgb": "45,212,191", "--ink": "#04221a"}}, {"id": "sunset", "name": "Sunset", "swatch": "#fb923c", "vars": {"--accent": "#fb923c", "--accent-rgb": "251,146,60", "--accent2": "#f87171", "--accent2-rgb": "248,113,113", "--ink": "#2b1304"}}, {"id": "violet", "name": "Violet", "swatch": "#a78bfa", "vars": {"--accent": "#a78bfa", "--accent-rgb": "167,139,250", "--accent2": "#f472b6", "--accent2-rgb": "244,114,182", "--ink": "#1b1033"}}, {"id": "daylight", "name": "Daylight", "swatch": "linear-gradient(135deg,#ffffff 50%,#2563eb 50%)", "vars": {"--bg": "#f6f7fb", "--surface": "#ffffff", "--surface2": "#eef1f7", "--border": "#d5dae6", "--text": "#1f2937", "--muted": "#5b6475", "--heading": "#0f172a", "--hdr1": "#e8eefc", "--hdr2": "#dbe4fb", "--nav-bg": "rgba(246,247,251,0.95)", "--accent": "#2563eb", "--accent-rgb": "37,99,235", "--accent2": "#7c3aed", "--accent2-rgb": "124,58,237", "--ink": "#ffffff", "--green": "#059669", "--red": "#dc2626", "--yellow": "#b45309"}}];
+  window.__ifrThemes = THEMES;
+  window.__ifrApplyTheme = function(id){
+    var root = document.documentElement;
+    THEMES.forEach(function(t){ if (t.vars) Object.keys(t.vars).forEach(function(k){ root.style.removeProperty(k); }); });
+    var t = THEMES.filter(function(x){ return x.id === id; })[0];
+    if (t && t.vars) Object.keys(t.vars).forEach(function(k){ root.style.setProperty(k, t.vars[k]); });
+  };
+  var saved = 'default';
+  try { saved = localStorage.getItem('ifr-theme') || 'default'; } catch (e) {}
+  window.__ifrApplyTheme(saved);
+})();</script>
+</head>
+<body>
+<div class="header">
+  <div class="tag">IFR Ground School</div>
+  <h1>Study</h1>
+  <p>Two ways into the material: work the 17-week course in order, or dip into the ACS reference archive for a specific Area of Operation.</p>
+</div>
+<div class="container">
+  <div class="themebar"><span class="themelabel">Color theme</span><div class="themes" id="themes"></div></div>
+  <h2 class="month">Start Here</h2>
+  <div class="weeks">
+    <a class="week built" href="ifr.html"><span class="wn">1</span><span class="wt">17-Week Knowledge Test Course<span class="interim">A week-by-week path to the FAA Instrument Rating (IRA) knowledge test. All 17 weeks are available.</span></span><span class="badge ok">Start here</span></a>
+    <a class="week built" href="acs.html"><span class="wn">2</span><span class="wt">ACS Reference Archive<span class="interim">Area-by-Area pages for every Area of Operation in the Instrument Rating ACS, plus the Instruments and VOR modules.</span></span><span class="badge ok">Reference</span></a>
+  </div>
+  <div class="note">The 17-week course is the current, corrected curriculum — start there. The ACS Reference Archive keeps the original Area-by-Area pages and modules; where a page differs from a week page, trust the week page.</div>
+</div>
+<script>
+(function () {
+  var wrap = document.getElementById('themes');
+  var current = 'default';
+  try { current = localStorage.getItem('ifr-theme') || 'default'; } catch (e) {}
+  function render() {
+    wrap.innerHTML = '';
+    window.__ifrThemes.forEach(function (t) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'theme-btn';
+      b.setAttribute('aria-pressed', String(t.id === current));
+      b.innerHTML = '<span class="swatch" style="background:' + t.swatch + '"></span>' + t.name;
+      b.addEventListener('click', function () {
+        current = t.id;
+        window.__ifrApplyTheme(current);
+        try { localStorage.setItem('ifr-theme', current); } catch (e) {}
+        render();
+      });
+      wrap.appendChild(b);
+    });
+  }
+  render();
+})();
+</script>
+<script src="resources.js"></script>
+</body>
+</html>
