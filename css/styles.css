@@ -528,3 +528,5 @@ p, dd, li, h1, h2, h3, strong, a { overflow-wrap: anywhere; }
   margin-right: 6px;
   vertical-align: middle;
 }
+
+.card[hidden] { display: none; }
